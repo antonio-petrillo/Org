@@ -1,0 +1,82 @@
+#+title:      Queue
+#+date:       [2023-09-30 Sat 12:52]
+#+filetags:   :algorithm:datastructure:math:programming:
+#+identifier: 20230930T125218
+
+* Queue
+Use to model problem where the order in which the element arrive matters, for example a queue at a postal office or market's cash
+* Definition
+It is a [[denote:20230930T124219][List]] with special rule for adding and removing element.
++ It is possible to add element only on the tail.
++ It is possible to remove element only on the head
+This create a FIFO (First In First Out) structure
+#+begin_src c
+typedef struct node {
+    struct node* next;
+    type value;
+}* node;
+
+typedef struct queue {
+    struct node* head;
+    struct node* tail;
+    // others optional
+    // size
+    // etc...
+}* queue;
+#+end_src
+* Operation
+** Enqueue
+#+begin_src c
+void enqueue(queue q, type element){
+    node newnode = malloc(type);
+    newnode->value = element;
+    newnode->next = NULL;
+    if (q->head == q->tail == NULL){
+        q->head = q->tail = newnode;
+    } else {
+        q->tail->next = newnode;
+        q->tail = newnode;
+    }
+}
+#+end_src
+** Dequeue
+#+begin_src c
+type dequeue(queue* q){
+    if((*q)->head == NULL){
+        //raise error
+    }
+    type value = q->head->value;
+    if((*q)->head == (*q)->tail){
+        free((*q)->head);
+        (*q)->head = (*q)->tail = NULL;
+    }else{
+        node = (*q)->head;
+        (*q)->head = (*q)->head->next;
+        free(node);
+    }
+    return value;
+}
+#+end_src
+** Peek
+#+begin_src c
+type push(queue q){
+    if(q->head == NULL){
+        //raise error
+    }
+    return q->head->value;
+}
+#+end_src
+* Properties
++ Inherited from list.
++ FIFO
+* Extension
+** Min Queue
+Instead of the first element it retrieve the minimum element in the queue in constant time (usually the insertion or deletion is more complext, see [[denote:20230930T123354][Heap Sort]]).
+** Max Queue
+Dual of a Min Queue.
+* Time complexity
+| operation | time complexity |
+|-----------+-----------------|
+| enqueue   | $O(1)$          |
+| dequeue   | $O(1)$          |
+| peek      | $O(1)$          |

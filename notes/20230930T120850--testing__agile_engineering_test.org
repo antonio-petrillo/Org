@@ -1,0 +1,19 @@
+#+title:      Testing
+#+date:       [2023-09-30 Sat 12:08]
+#+filetags:   :agile:engineering:test:
+#+identifier: 20230930T120850
+
+* Testing
+This phase is extremely crucial, nowadays ~70%~ of the resource are spent for the testing and the remaining ~30%~ for the rest.
+* Black Box Testing
+Test the code as a black box, without looking at the code, basically test without inspecting the code.
+The test should be based on a list of expected results.
+* White Box Testing
+The opposite of black box, in this case we should look at the code and test.
+This type of test are targeted to see if there are unexpected side effects.
+* Integration Testing
+This type of testing show if the components developed separately work together.
+* Alpha & Beta release
+Let a small part of the end users try the software and see how it behave in a real world scenario.
+* See also
++ [[denote:20230930T115857][Test Driven Development]] (aka TDD)

@@ -1,0 +1,18 @@
+#+title:      Omega
+#+date:       [2023-09-30 Sat 12:23]
+#+filetags:   :math:programming:
+#+identifier: 20230930T122352
+
+* Omega $\Omega(.)$
+$f(n) = O(g(n))$ if and only if:
+$\exist c \in \mathbb{R}^+ \forall n_0 \gt n \implies g(n) \ge c f(n)$
+* Theorem 1
+Given $f(n)$ and $g(n)$:
+$$\lim_{n \to \infty} \frac{f(n)}{g(n)} = \infty \implies f(n) = \Omega(g(n))$$
+** Proof
+If $\frac{f(n)}{g(n)} = \infty$ then:
+$$\forall c \in \mathbb{R}^+, \exist n_0 \gt n such that f(n) > c\cdot g(n)$$
+$$\blacksquare$$
+** Note
+This is a stronger definition, the [[math/calculus/asymptotic growth/LittleOmega notation]] :
+$$f(n) = \omega(g(n))$$

@@ -1,0 +1,11 @@
+#+title:      Package Diagram
+#+date:       [2023-09-30 Sat 11:42]
+#+filetags:   :architecture:engineering:uml:
+#+identifier: 20230930T114218
+
+* What is it used for
+Show how the code/functionality should be arranged in packages, modules, etc...
+* Characteristics
+Similar to the [[denote:20230930T110644][Class Diagram]] but it used the ~package~ symbol to identify the modules.
+* Example
+[[../assets/package-diagram.png]]

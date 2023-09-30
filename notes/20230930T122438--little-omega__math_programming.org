@@ -1,0 +1,8 @@
+#+title:      Little Omega
+#+date:       [2023-09-30 Sat 12:24]
+#+filetags:   :math:programming:
+#+identifier: 20230930T122438
+
+* LittleOmega $\omega(.)$
+$f(n) = O(g(n))$ if and only if:
+$\forall c \in \mathbb{R}^+ \forall n_0 \gt n \implies g(n) \ge c f(n)$

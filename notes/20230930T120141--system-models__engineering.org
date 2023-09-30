@@ -1,0 +1,33 @@
+#+title:      System Models
+#+date:       [2023-09-30 Sat 12:01]
+#+filetags:   :engineering:
+#+identifier: 20230930T120141
+
+* System Models
+They are used for:
++ deduce [[denote:20230930T114814][Software]]
++ describe the system to the programmers
++ document the architecture and the interactions
+* What they don't contain
++ detailed structure of the system
+* Type of systems models
++ external pov: model the context and the environment in which the software operate
++ iteraction pov: see how different part collaborate, context and env. can be also included
++ structural pov: high level overview of the system
++ behavioral pov: see how the system behave dynamically
+* What they are used for
++ focus the attention on an already existing system or a new one
++ document an existing system
++ create a detailed docs of the system (complete and correct) to start modeling the software
+* Objectives of this phase
++ Identify the boundaries of the system
++ Produce an high level scheme of the architecture
+* UML
+The most important one are:
++ [[denote:20230930T110442][Activity Diagram]]
++ [[denote:20230930T114356][Use Case Diagram]]
++ [[denote:20230930T114322][Sequence Diagram]]
++ [[denote:20230930T110644][Class Diagram]]
++ [[denote:20230930T114502][State Diagram]]
+** Resources
++ UML distilled (M. Fowler)

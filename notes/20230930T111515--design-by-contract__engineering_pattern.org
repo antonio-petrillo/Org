@@ -1,0 +1,155 @@
+#+title:      Design by Contract
+#+date:       [2023-09-30 Sat 11:15]
+#+filetags:   :engineering:pattern:
+#+identifier: 20230930T111515
+
+* Design by Contract
+It is a technique, firstly introduced in the [[https://en.wikipedia.org/wiki/Eiffel_(programming_language)][eiffel]] programming language, that help design a more robust code.
+The main idea is to define a contract in which a client and a producer agree on some condition that should be respected by both part.
+The following consideration will be done using java as reference language
+* Design by Contract on a methods
+** Pre Condition
+The pre condition is all about:
++ The value passed to the methods
++ The state on which the methods is called
+It shoudl be:
++ Verifiable by the client
+*** Penalty
+When the precondition is not respected, usually, the methods throw an unchecked exception.
+There are many example in the java language, i.e. ~ArrayIndexOutOfBound~ when we use an index outside the range.
+*** Notes
+Basically the pre condition describe the correct use of the methods by the clients.
+A violation on the precondition means that the client called the methods improperly.
+** Post Condition
+The post condition is all about:
++ The return value
++ The object's new state
++ Side effects (when any)
+*** Notes
+If a method throw a checked exception that is a part of the post condition.
+As said above an unchecked exception is part of the pre condition, but the checked one are different.
+A checked exception usually is not verifiable by the client, like a printer that doesn't have enough paper, hence it's not a job of the client to check that.
+
+In other words a post condition describe the expected behaviour of a method.
+
+A violation of the post condition means that there is a bug in the methods itself.
+** Client POV
++ The job done by the methods is a benefit
++ The _pre condition_ are requirement
+** Method POV
++ The job to do is a requirement
++ The _pre condition_ are a benefit
+** Contracts & Overrinds
+A contract should be considered /binding/ also for eventual subclass and methods overrides.
+Formally:
+#+begin_quote
+An overrided method should respect the original contract.
+#+end_quote
+This is direct consequence of the /LSP principle/.
+There are some caveats:
+An overrided method should guarantee the *same benefits* requiring *at most* the *same pre condition*.
+*** Definition
+This is known as the *co-variant* rule:
++ An overriding can reinforce the *post condition*
++ An overriding can relax the *pre condition*
+*** Example
+Considering a method:
+#+begin_src java
+visibility T foo(U1, ..., Un) throws E1, ...,En {...}
+#+end_src
+In an overriding become:
+#+begin_src java
+visibility' T' foo(U1, ..., Un) throws F1, ..., Fm {...}
+#+end_src
+Where ~visibility'~ can be larger, guarantee more.
+~T'~ can be more specific, guarantee more.
+$\forall i \in {1,...,m}, j \in {1, ..., n} \implies$  Fi  subtype of some  Ej, also guarantee more.
+*** Java's notes
+In java there is no way to specify that the method require less, this can be seen only with an implementation, i.e. don't throw an unchecked exception that is not required in the override.
+
+The *co-variant* rule allows us to change the input parameters using some more general type, but the java's projectist take the decision to not allow that because it is really difficult to implement and also it is shown that it is not really useful in production, to say some more usually when this is the case (the override should use more general parameters) then is a sign that the superclass is not well engineered.
+*** Special Case
+This rule written here should not be considered as a bible to follow blindly, there are some case in which they can be ingnored to lead to a better code.
+Take the example of the methods ~equals~.
+It is defined in ~Object~ and behave like a comparison between references, when we override ~equals~, in the most cases, we don't compare the references breaking the contract of ~equals in Object~.
+Use the comparison by references is not useful but it should be defined in some way in Object so the projectists deciced to define like that and leave the eventual override to do some more complicate checks.
+To identify this kind of cases we can identify a *local contract* and a *general contract*.
+**** General
+This part is what the subclasses should respect.
+Taking ~Object's equals~ as an example:
+#+begin_quote
+A comparison with null should return false.
+The method should be reflexive, symmetric and transitive (it should be an equivalence relation).
+
+In other words:
++ x.equals(x) => true
++ x.equals(y) = true => y.equals(x) = true
++ x.equals(y) and y.equals(z) => x.equals(z)
+#+end_quote
+**** Local
+Describe the contract to this level on the hierarchy of classes, it is not a constraint for the subclasses.
+Taking ~Object's equals~ as an example:
+#+begin_quote
+Equals compare the references and return true if they point to the same Object.
+If the other Object is null it return false.
+#+end_quote
+* Examples
+** Bad examples
+*** Method max
+Definition:
+#+begin_quote
+The method accept 2 Objects and return the bigger one
+#+end_quote
+This is not well defined because it isn't clear which [[math/order relationship]] the method is gonna use.
+A better version is:
+#+begin_quote
+The method accept 2 Objects that belongs to a class that has a [[math/order relationship]]
+#+end_quote
+*** Method reverse
+Definition:
+#+begin_quote
+This method accept a collection of Objects and reverse the order of the elements in the collection.
+#+end_quote
+
+This definion is not good enough because not all the collections are ordered, an hash map doesn't have any order on the key-value pairs.
+
+A better version is:
+#+begin_quote
+This method accept a List, SortedSet, SortedMap, etc. of Objects and reverse the order of the elements in the collection.
+#+end_quote
+** Good examples
+*** Iterator contract
+Given the java class ~Iterator<T>~ that has the follwing methods:
++ ~hasNext~
++ ~next~
++ ~remove~
+The contract is defined, for each method, as follow:
+**** hasNext
+***** Pre condition
+None.
+All the calls to this method are legit.
+***** Post condition
+Return true if there are still elements to iterate.
+It *DOES NOT* modify the status of the iterator.
+***** Penaly
+None.
+**** next
+***** Pre condition
+There are still elements to iterate, a call to ~next~ is legit if and only if a call to ~hasNext~ return true.
+***** Post condition
+Return the next element in the sequence.
+Change the internal state of the iterator to the next element.
+***** Penalty
+Throw ~NoSuchElementException~ if there are no more elements to iterate.
+**** remove
+***** Pre condition
+Before the ~remove~ call there is a call to ~next~.
+After the last call to ~next~ the method ~remove~ was not called (~remove~ can be called only once after each ~next~).
+***** Post condition
+Remove the elements in the collection and return the removed element.
+~remove~ does not modify the state of the iterator.
+***** Penalty
+Throw ~IllegalStateException~ if the pre condition is not respected.
+***** Notes
+This method is optional, an implementation is not forced to implement it.
+If this is the case the method should throw ~UnsupportedOperationException~.

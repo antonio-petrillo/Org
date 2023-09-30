@@ -1,0 +1,16 @@
+#+title:      Data Structure and Algorithm
+#+date:       [2023-09-30 Sat 12:14]
+#+filetags:   :algorithm:datastructure:math:programming:
+#+identifier: 20230930T121441
+
+* About the discipline
+The main focus is to produce an algorithm that solve a problem, proving its properties, mainly correctness and completeness.
+It also aim to produce data structure with particular properties that are useful in some contexts.
+* Correctness
+If the algorithm studied give an answer the answer is correct.
+* Completeness
+If there is a solution to the problem the algorithm will find the solution (there can be multiple solution).
+* Time complexity
+An approximation of the number of operation that the algorithm does to solve a problem.
+* Space complexity
+Amount of memory required to solve a problem.

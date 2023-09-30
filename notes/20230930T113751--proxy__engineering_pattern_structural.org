@@ -1,0 +1,31 @@
+#+title:      Proxy
+#+date:       [2023-09-30 Sat 11:37]
+#+filetags:   :engineering:pattern:structural:
+#+identifier: 20230930T113751
+
+* Intent
+Provide a placeholder for an Object, basically is layer of indirection.
+It should behave like the original one, but the original one is protected, not yet loaded or something else, see below.
+* Use it when
+The placeholder can have more than one purpouse:
++ /Remote proxy/, provide a local representative for a remote object.
++ /Virtual proxy/, defer the loading of a heavyweight object.
++ /Protection proxy/, control the access to the original object.
++ /Smart reference/, replace a pointer and add functionality to it.
+* Class Diagram
+[[../assets/proxy-cl.png]]
+** Example
+[[../assets/proxy-example-cl.png]]
+* Participants
+** Object Proxied
+The object that should be hided/loaded/etc.
+** Proxy
+Interface that conform to the proxied object, it store a reference to such object.
+Each request made to the proxy are forwarded to that reference.
+* Consequences
++ lazy initialization.
++ access control.
++ smart reference.
++ remote reference.
+* Drawbacks
+Not very reusable, yes of course it could be reused, but the really reused code is the one hided by the proxy.

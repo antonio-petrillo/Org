@@ -1,0 +1,44 @@
+#+title:      Design
+#+date:       [2023-09-30 Sat 11:49]
+#+filetags:   :engineering:pattern:
+#+identifier: 20230930T114906
+
+* Why Design pattern?
+Often in [[denote:20230930T114814][Software]] similar problem arise in different contest, a pattern is a solution (or approach if you prefer) to solve this common problem.
+
+Since they are used and well know they tend to produce a more robust & maintainable code.
+* How to describe a pattern
+1. *Name*
+2. *Problem*, context in which the pattern arise
+3. *Solution*, how the problem solved
+
+4. *Consequences*,  trade off
+
+In other words, from the *GoF* book:
+#+BEGIN_QUOTE
+The patterns are descriptions of communicating objects and classes that are customized to solve a general design problem in a particular context.
+#+END_QUOTE
+** A more detailed way to describe a pattern is the following list
+1. Pattern name
+2. Classification
+3. Intent
+4. Also known as
+5. Motivation
+6. Applicability
+7. Structure
+8. Participants
+9. Collaborations
+10. Consequences
+11. Implementation
+12. Sample Code
+13. Known Use
+14. Related Pattern
+* Patterns catalog
+** GoF patterns
+[[../assets/design-pattern-organization_1678561006250_0.gif]]
+** How they are related.
+[[../assets/design-pattern-relation-gof.png]]
+* Resource
++ [[https://en.wikipedia.org/wiki/Design_Patterns][Design Pattern. Gang of Four]]
++ [[http://mishadoff.com/blog/clojure-design-patterns/][Design pattern in clojure]]
++ [[https://refactoring.guru/design-patterns/][Refactoring Guru]]

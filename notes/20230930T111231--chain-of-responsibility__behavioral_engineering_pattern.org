@@ -1,0 +1,25 @@
+#+title:      Chain of Responsibility
+#+date:       [2023-09-30 Sat 11:12]
+#+filetags:   :behavioral:engineering:pattern:
+#+identifier: 20230930T111231
+
+* Intent
+Decouple sender and receiver of a message.
+Define a /chain/ of possible /handler/ for a message, such message start from the first and goes on until one handle it.
+* Use it when
++ Decouple sender and receiver.
++ Organize /handlers/ in a hierarchy (works well with [[Design Pattern/Structural/Composite]]).
+* Class Diagram
+[[../assets/chain-of-responsibility-cl.png]]
+* Participants
+** Handler
++ Define an interface for the request to handle.
++ (Optional) Link to the successor in the chain (/explicit chain/).
+** Concrete Handelr
+Implementation of the /handler/ interface.
+** Client
+Initiates the request to one of the Concrete Handler available.
+* Consequences
+Decouple sender and receiver
+* Examples
+An example of /chain of responsibility/ is the *Exception systems* in language like Java.

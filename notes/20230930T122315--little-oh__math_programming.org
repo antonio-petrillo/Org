@@ -1,0 +1,8 @@
+#+title:      Little Oh
+#+date:       [2023-09-30 Sat 12:23]
+#+filetags:   :math:programming:
+#+identifier: 20230930T122315
+
+* LittleOh $o(.)$
+$f(n) = o(g(n))$ if and only if:
+$\forall c \in \mathbb{R}^+ \forall n_0 \gt n \implies g(n) \le c f(n)$

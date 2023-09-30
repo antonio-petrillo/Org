@@ -1,0 +1,35 @@
+#+title:      Observer
+#+date:       [2023-09-30 Sat 11:10]
+#+filetags:   :behavioral:engineering:pattern:
+#+identifier: 20230930T111023
+
+* Intent
+Define a relation between one Object (Subject) and many other Object (Observer) such that when a change happen on the /Subject/ automatically reflect on the /Observers/.
+* Use it when
++ You hava a one to many relationship
++ You want to uncouple different abstraction layer in a system.
++ You have one or many object that depends on the state of another
++ When an object should be able to notify another object.
+* Class Diagram
+[[../assets/observer-cl.png]]
+* Participants
+** Subject
+The object that play to roles of ~1~ in the ~1:n~ relationship.
+Define an iterface to manage and notify its /Observer/, at least the following operation should be given:
++ attach
++ detach
++ notiry
+** Observer
+The object that play to roles of ~n~ in the ~1:n~ relationship.
+Define the operations to update it.
+** Concrete Subject
+Implements the /Subject/ interface.
+** Concrete Observer
+It store a reference to the /Subject/.
+Implements the /Observer/ interface.
+* Consequences
++ Abstract coupling between Subject and Obserer.
++ Support for broadcast communication.
+* Drawbacks
++ Unexpected update.
+  If there is a cycle in the relationship this may cause an infinite cycle of updates.

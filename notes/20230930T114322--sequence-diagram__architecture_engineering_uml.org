@@ -1,0 +1,21 @@
+#+title:      Sequence Diagram
+#+date:       [2023-09-30 Sat 11:43]
+#+filetags:   :architecture:engineering:uml:
+#+identifier: 20230930T114322
+
+* What is it used for
+Model, in detail, the interaction (as a series of steps) between an actor and a functionality of the system.
+It could also be used to specify in detail how the interaction should be implemented at a software level, so it could be used to generate a /STUB/ for the code.
+Usually each use cases [[denote:20230930T114356][Use Case Diagram]] have an associated sequence diagram.
+* Summary
+| Symbol     | Role         | Description                                                 |
+|------------+--------------+-------------------------------------------------------------|
+| stickman   | actor        | the actor that start the action                             |
+| life box   |              | indicate when the current part is active in the process     |
+| arrows     | control flow | indicate how the flow move from one participants to another |
+| alt block  | control flow | alternative (if/else)                                       |
+| loop block | control flow | repeat the inner part as it is in a loop                    |
+* Example
+[[../assets/sequence-uml.jpeg]]
+* Full Example
+[[../assets/sequence-uml-complete.jpeg]]

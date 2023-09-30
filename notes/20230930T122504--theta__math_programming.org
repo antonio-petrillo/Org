@@ -1,0 +1,71 @@
+#+title:      Theta
+#+date:       [2023-09-30 Sat 12:25]
+#+filetags:   :math:programming:
+#+identifier: 20230930T122504
+
+* Theta notation $\Theta$
+$f(n) = \Theta(g(n))$ if and only if:
+$\exist c_1, c_2 \in \mathbb{R}^+, \forall n_0 \gt n \implies c_1 f(n) \le g(n) \le c_2 f(n)$
+* Theorem 1
+If $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$ then $f(n) = \Theta(g(n))$
+** Proof
+This is pretty simple, just pick the two constant from the $O(.)$ and the $\Omega(.)$ and $\max(n_O, n_{\Omega})$.
+$$\blacksquare$$
+* Theorem 2
+Given $f(n)$ and $g(n)$:
+$$\lim_{n to \infty} \frac{f(n)}{g(n)} = k, where, k \in \mathbb{R}^+ \implies f(n) = \Theta(g(n))$$
+** Proof
+There are two cases to consider (one is the dual of the other):
+*** Case 1
+When $\frac{f(n)}{g(n)}$ approaches the asymptote from below:
+
+$$\frac{f(n)}{g(n)} \le k$$
+
+We can pick $k$ as the $c_2$ from the definition and $\frac{f(n_0)}{g(n_0)}$ as $c_1$.
+This satisfies the definition $\blacksquare$
+*** Case 2
+When $\frac{f(n)}{g(n)}$ approaches the asymptote from above:
+
+$$\frac{f(n)}{g(n)} \ge k$$
+
+We can pick $k$ as the $c_1$ from the definition and $\frac{f(n_0)}{g(n_0)}$ as $c_2$.
+This satisfies the definition $\blacksquare$
+* Theorem 3
+If $f(n) = \Theta(g(n))$ then $\log{f(n)} = \Theta(\log{g(n)})$.
+** Proof
+We know that:
+$\exist c_1, c_2 \in \mathbb{R}^+, \forall n_0 \gt n, such ~ that, c_1 f(n) \le g(n) \le c_2 f(n)$
+The logarithm function, with $base \ge 2$ is growing monotonous so:
+$$x \ge y \implies \log x \ge \log y$$
+Applying this to the definition:
+$$\log(c_1 \cdot g(n)) \le \log {f(n)} \le \log (c_2 \cdot g(n))$$
+
+Using one of the property of logarithm:
+$$\log(c_1) + \log (g(n)) \le \log {f(n)} \le \log (c_2) + \log(g(n))$$
+
+For definition of $\Theta$:
+$$k * \log{f(n)} = \Theta(\log{f(n)})$$
+
+focusing only on the left part of the inequality:
+$$\lim_{n \to \infty} \frac{\log{c_1} + \log{g(n)}}{\log{g(n)}}$$
+$$\lim_{n \to \infty} \frac{\log{c_1}}{\log{g(n)}} + 1$$
+$$\lim_{n \to \infty} 0 + 1$$
+
+This implies that
+$$\log{c_1} + \log{g(n)} = \Theta(g(n))$$
+
+Putting this in the previous formula we get:
+$$k_1 \cdot \log{g(n)} \le \log{c_1} + \log{g(n)} \le \log{f(n)} \le \log{c_2} + \log{g(n)} \le k_2 \cdot \log{g(n)}$$
+$$k_1 \cdot \log{g(n)}  \le \log{f(n)} \le k_2 \cdot \log{g(n)}$$
+$$\log{f(n)} = \Theta(\log{g(n)})$$
+$$\blacksquare$$
+** Note
+This not apply for every function.
+If instead of $\log(f(n))$ we use $2^{f(n)}$ we get:
+*** Counterexample:
+$$f(n)=n, g(n)=2n, h(n)=2^n$$
+$$f(n) = \Theta(g(n))$$
+but
+$$\lim_{n \to \infty} \frac{2^{2n}}{2^n} = 2^n = \infty$$
+$$h(f(n)) \ne h(g(n))$$
+$$\square$$

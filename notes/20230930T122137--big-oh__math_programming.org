@@ -1,0 +1,18 @@
+#+title:      Big Oh
+#+date:       [2023-09-30 Sat 12:21]
+#+filetags:   :math:programming:
+#+identifier: 20230930T122137
+
+* BigOh $O(.)$
+$f(n) = O(g(n))$ if and only if:
+$\exist c \in \mathbb{R}^+ \forall n_0 \gt n \implies g(n) \le c f(n)$
+* Theorem 1
+Given $f(n)$ and $g(n)$:
+$$\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0 \implies f(n) = O(g(n))$$
+*** Proof
+If $\frac{f(n)}{g(n)} = \infty$ then:
+$$\forall c \in \mathbb{R}^+, \exist n_0 \gt n such that f(n) \lt c\cdot g(n)$$
+$$\blacksquare$$
+** Note
+This is a stronger definition, the [[math/calculus/asymptotic growth/LittleOh notation]] :
+$$f(n) = o(g(n))$$

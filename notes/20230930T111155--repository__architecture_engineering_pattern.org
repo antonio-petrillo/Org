@@ -1,0 +1,15 @@
+#+title:      Repository
+#+date:       [2023-09-30 Sat 11:11]
+#+filetags:   :architecture:engineering:pattern:
+#+identifier: 20230930T111155
+
+* Description
+All the data is stored in a central database and all the components access this central database to do computation.
+* Example
+[[../assets/repository-architecture.jpeg]]
+* Pros
++ No functionality need to know the needing of other components.
++ Easy to manage the data and the configuration.
+* Cons
++ Sometimes it is impossible to create a database, or a schema of data that satisfies all the requirement of the functionality.
++ Difficult to distribute.

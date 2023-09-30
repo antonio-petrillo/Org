@@ -1,0 +1,28 @@
+#+title:      Prototype
+#+date:       [2023-09-30 Sat 11:29]
+#+filetags:   :creational:engineering:pattern:
+#+identifier: 20230930T112941
+
+* Intent
+Use a prototype instance to create instances of objects cloning that prototype.
+* Use it when
+When you have a class hierarchy and in a particular spot there a lot of /brother/ that differ for a (or a few) field you can use the prototype to prefer the composition over the subclassing.
+In a pure OO language is not that useful, but in a language in which Classes are not first-class citizien, like C++, it could be useful.
+* Class Diagram
+[[../assets/prototype-class.png]]
+* Participants
+** Prototype
+Declare the interface of the prototypes.
+** ConcretPrototype
+Implements an operation for cloning itself.
+** Client
+Create a new Object by asking the Prototype (interface of course) to clone itself.
+* Consequences
+** Add and remove products at run-time
+** Specifying new objects by varying a values
+** Specifying new objects by varying a structure
+** Reduced subclassing
+** Configuring an application with classes dynamically
+** Drawbacks
++ Prototype relies on (deep) copy, which is, according to [[https://en.wikipedia.org/wiki/Joshua_Bloch][Joshua Block]], is deeply broken.
++ Often conflict with others patterns, like [[denote:20230930T112014][Factory Method]]

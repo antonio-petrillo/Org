@@ -1,0 +1,32 @@
+#+title:      Bellman-Ford
+#+date:       [2023-09-30 Sat 12:56]
+#+filetags:   :algorithm:graph:math:programming:visit:
+#+identifier: 20230930T125627
+
+* TODO See CLRS
+* Pseudocode
+#+BEGIN_EXAMPLE
+Bellman-Ford:
+At each node x:
+
+Initialization:
+    for each destination y in N:
+        Dx[y] = if y.isIn(x.neighbors()) ? c(x, y) : ∞
+    for each w in x.neighbors():
+        Dw[y] = [? | _ <- [for each destination in N]]
+    for each w in  x.neighbors():
+        send (Dx = [Dx(y) : y in N]) to w
+
+Cycle:
+    wait-until:
+        change in a link with a neighbors
+        OR
+        receive a new distance vector
+    then:
+        for each y in N:
+            Dx[y] = min_v {c(x,v) + Dv[y]}
+
+        if Dx[y] has changed for some y:
+        then:
+            send (Dx = [Dx(y) : y in N]) to all neighbors
+#+END_EXAMPLE

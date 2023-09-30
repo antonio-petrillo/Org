@@ -1,0 +1,31 @@
+#+title:      Agile
+#+date:       [2023-09-30 Sat 11:52]
+#+filetags:   :agile:engineering:incremental
+#+identifier: 20230930T115213
+
+* [[https://agilemanifesto.org/][Agile manifesto]]
+* Scalability
+This section apply to any Agile method.
+In the beginning agile's methods were intended for small teams, but since they work so well even in the big company they started to use it.
+They main difference is that they use a /divide et impera/ approach, they split the resource in teams small enough to apply agile correctly.
+* Pros
++ Let you produce new software more quickly
++ The software quality is, usually, higher compared to [[denote:20230930T115357][Cascade]]
++ The clients are involved in the creation process
+* Cons
++ Incompatible with the legal approach of big companies
++ Not that good for a legacy software, only for a new one
++ Created with a small team in mind
+* Agile for large systems
+Here are some guideline and common traps with agile for large projects:
++ System of systems
+    A large system can be modeled as a /system of systems/, in each subsytems you can apply the agile method.
++  [[https://en.wikipedia.org/wiki/Brownfield_(software_development)][Brownfield Development]]
++  System integration
+    If we spend too much time on this kind of phase then we might abandon the agile.
++ External rules
+    Our software may need to respect some external requirement, i.e. /ISO specs/.
++ Team management
+    In a very large team is difficult to maintain the /peace/, futhermore it may often change.
++ Inconsistent requirement
+    When there are to many stakeholders the functional requirement may be incoheret.

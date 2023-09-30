@@ -1,0 +1,12 @@
+#+title:      Client-Server
+#+date:       [2023-09-30 Sat 11:08]
+#+filetags:   :architecture:engineering:pattern:
+#+identifier: 20230930T110806
+
+* Description
+The system is represented as a group of services, each can be provided by a different server.
+* Pros
++ Acceess data from multiple end point, even in differents points.
+* Cons
++ A failure of a service makes that functionality unusable.
++ Soffer Denial of Services attacks. (aka DOS)

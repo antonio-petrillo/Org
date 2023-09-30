@@ -1,0 +1,375 @@
+#+title:      Binary Search Tree
+#+date:       [2023-09-30 Sat 12:44]
+#+filetags:   :algorithm:datastructure:math:programming:
+#+identifier: 20230930T124422
+
+* Definition
+$T \in BST ~ class$ if and only if:
+$$T.root \gt T.left.root$$
+$$T.root \lt T.right.root$$
+$$T.left \in BST$$
+$$T.right \in BST$$
+$$\emptyset \in BST$$
+$${T.root} \cap T.left \cap T.right = \emptyset$$
+$${T.root} \cup T.left \cup T.right = T$$
+* Code definition
+In the insertion I will not consider the ~type value~.
+#+begin_src c
+typedef struct node{
+    struct node* left;
+    struct node* right;
+    int key;
+    type value;
+}* node;
+
+typedef struct bst{
+    node root;
+}
+#+end_src
+* Operation
+** Insert
+#+begin_src c
+static node insert_helper(node root, int newkey, type value){
+    if(root == NULL){
+       root = malloc(node);
+       root->left = NULL;
+       root->right = NULL;
+       root->key = newkey;
+       root->type = value;
+    }else{
+       if (root->key > newkey){
+           root->left = insert_helper(root->left, newkey, value);
+       }else if(root->key < newkey){
+           root->right = insert_helper(root->right, newkey, value);
+       }else{
+           // up to you:
+           // + update
+           // + ignore
+       }
+    }
+    return root;
+}
+
+void insert(bst* t, int newkey, type value){
+   (*t)->root = insert_helper((*t)->root, newkey);
+}
+#+end_src
+** Remove
+#+begin_src c
+static node remove_helper(node root, int key){
+    if (root){
+       if(root->value > key){
+           node->left = remove_helper(node->left, key);
+       } else if(root->value < key){
+           node->right = remove_helper(node->right, key);
+       } else {
+           node = delete_root(node);
+       }
+    }
+    return root;
+}
+
+void remove(bst* t, int key){
+    (*t)->root = remove_helper((*t)->root, key);
+}
+#+end_src
+*** Helper function
+**** Delete root
+#+begin_src c
+node delete_root(node root){
+   if (root->left == NULL || root->right == NULL){
+       node tmp = node;
+       if(root->left == NULL){
+           root = root->right;
+       } else {
+           root = root->left;
+       }
+       free(tmp);
+   }else {
+       node min_on_right = minimum_deconnection(root, root->right);
+       root->key = min_on_right->key;
+       root->value = min_on_right->value;
+       free(min_on_right);
+   }
+   return node;
+}
+#+end_src
+**** Minimum Deconnection
+#+begin_src c
+node minimum_deconnection(node parent, node child){
+    if(child->left == NULL){
+        if(parent->left == child){
+            parent->left = child->right;
+        }else{
+            parent->right = child->right;
+        }
+        return child;
+    } else {
+        node tmp = minimum_deconnection(child, child->left);
+        return tmp;
+    }
+}
+#+end_src
+** Search
+#+begin_src c
+type insert(bst t, int key){
+    node iter = t->root;
+    type value = NULL;
+    while(iter != NULL){
+        if (iter->value > key){
+            iter = iter->left;
+        }else if (iter->value < key){
+            iter = iter->right;
+        }else{
+            value = iter->value;
+            break;
+        }
+    }
+    return value;
+}
+#+end_src
+** Successor
+#+begin_src c
+int successor_helper(node root, int key){
+    node candidate = NULL;
+    node iter = root;
+    while (iter != NULL && iter->key != key){
+        if (iter->key < key){
+            iter = iter->right;
+        }else{
+            candidate = iter;
+            iter = iter->left;
+        }
+    }
+    return candidate;
+}
+
+int successor(bst t, int key){
+    return successor_helper(t->root, key);
+};
+#+end_src
+** Predecessor
+#+begin_src c
+int predecessor_helper(node root, int key){
+    node candidate = NULL;
+    node iter = root;
+    while (iter != NULL && iter->key != key){
+        if (iter->key > key){
+            iter = iter->left;
+        }else{
+            candidate = iter;
+            iter = iter->right;
+        }
+    }
+    return candidate;
+}
+
+int predecessor(bst* t, int key){
+    return predecessor_helper((*t)->root, key);
+};
+#+end_src
+** Minimum
+#+begin_src c
+type min(bst t){
+    type value = NULL;
+    node iter = t->root;
+    while (iter != NULL && iter->left != NULL){
+       iter = iter->left;
+    }
+    if(iter != NULL){
+        value = iter->value;
+    }
+    return value;
+}
+#+end_src
+** Maximum
+#+begin_src c
+type max(bst t){
+    type value = NULL;
+    node iter = t->root;
+    while (iter != NULL && iter->right != NULL){
+       iter = iter->right;
+    }
+    if(iter != NULL){
+        value = iter->value;
+    }
+    return value;
+}
+#+end_src
+** Is BST
+#+begin_src c
+static bool is_bst_helper(node root, int lower_bound, int upper_bound){
+    bool result = true;
+    if(root != NULL){
+        if (root->value > lower_bound && root->value < upper_bound){
+            result = is_bst_helper(root->left, lower_bound, root->value);
+            if (result){
+                result = is_bst_helper(root->right, root->value, upper_bound);
+            }
+        } else {
+            result = false;
+        }
+    }
+    return result;
+}
+
+bool is_bst(bst t){
+    return is_bst_helper(t->root, -∞, ∞);
+}
+#+end_src
+** In order visit
+#+begin_src c
+static void helper_in_order_visit(node root){
+    if(root != NULL){
+        helper_in_order_visit(root->left);
+        visit_operation(root);
+        helper_in_order_visit(root->right);
+    }
+}
+
+void in_order_visit(bst t){
+    helper_in_order_visit(t->root);
+}
+#+end_src
+*** Iterative version
+#+begin_src c
+void iterative_in_order_visit(bst t){
+    node current = t->root;
+    node previous = NULL;
+    stack stack_nodes = new_stack();
+    while (current != NULL || !is_empty(stack_nodes)){
+        if (current != NULL){
+           push(&stack_nodes, current);
+           current = current->left;
+        } else {
+           current = top(stack_nodes);
+           if (current->right != NULL && previous != current->right){
+               visit_operation(current);
+               current = current->right;
+           } else {
+               if (current->right == NULL){
+                   visit_operation(current);
+               }
+               pop(&stack_nodes);
+               previous = current;
+               current = NULL;
+           }
+        }
+    }
+}
+#+end_src
+** Pre order visit
+#+begin_src c
+static void helper_pre_order_visit(node root){
+    if(root != NULL){
+        helper_pre_order_visit(root->left);
+        helper_pre_order_visit(root->right);
+        visit_operation(root);
+    }
+}
+
+void pre_order_visit(bst t){
+    helper_pre_order_visit(t->root);
+}
+#+end_src
+*** Iterative version
+#+begin_src c
+void iterative_pre_order_visit(bst t){
+    node current = t->root;
+    node previous = NULL;
+    stack stack_nodes = new_stack();
+    while (current != NULL || !is_empty(stack_nodes)){
+        if (current != NULL){
+           visit_operation(current);
+           push(&stack_nodes, current);
+           current = current->left;
+        } else {
+           current = top(stack_nodes);
+           if (current->right != NULL && previous != current->right){
+               current = current->right;
+           } else {
+              pop(&stack_nodes);
+              previous = current;
+              current = NULL;
+           }
+        }
+    }
+}
+#+end_src
+** Post order visit
+#+begin_src c
+static void helper_post_order_visit(node root){
+    if(root != NULL){
+        visit_operation(root);
+        helper_post_order_visit(root->left);
+        helper_post_order_visit(root->right);
+    }
+}
+
+void post_order_visit(bst t){
+    helper_post_order_visit(t->root);
+}
+#+end_src
+*** Iterative version
+#+begin_src c
+void iterative_post_order_visit(bst t){
+    node current = t->root;
+    node previous = NULL;
+    stack stack_nodes = new_stack();
+    while (current != NULL || !is_empty(stack_nodes)){
+        if (current != NULL){
+           push(&stack_nodes, current);
+           current = current->left;
+        } else {
+           current = top(stack_nodes);
+           visit_operation(current);
+           if (current->right != NULL && previous != current->right){
+               current = current->right;
+           } else {
+              pop(&stack_nodes);
+              previous = current;
+              current = NULL;
+           }
+        }
+    }
+}
+#+end_src
+** Breadth visit
+#+begin_src c
+void breadth_visit(bst t){
+    queue q = new_queue();
+    enqueue(&q, t->root);
+    while(!is_empty(q)){
+       node root = dequeue(&q);
+       visit_operation(root);
+       if(root->left != NULL){
+          enqueue(&q, root->left);
+       }
+       if(root->right != NULL){
+          enqueue(&q, root->right);
+       }
+    }
+}
+#+end_src
+* Properties
+The same of the [[denote:20230930T124219][List]].
+It could have better performance if the ~height~ is logarithmic on the number of node.
+* Extensions
++ [[denote:20230930T124819][Red Black Trees]]  logarithmic height
++ [[denote:20230930T124648][AVL Trees]] logarithmic height
+* Time complexity
+Consider $h = height(Tree)$.
+| operation        | time complexity |
+|------------------+-----------------|
+| insert           | $O(h)$          |
+| remove           | $O(h)$          |
+| search           | $O(h)$          |
+| min              | $O(h)$          |
+| max              | $O(h)$          |
+| successor        | $O(h)$          |
+| predecessor      | $O(h)$          |
+| is_bst           | $O(n)$          |
+| pre_order_visit  | $O(n)$          |
+| post_order_visit | $O(n)$          |
+| in_order_visit   | $O(n)$          |
+| in_order_visit   | $O(n)$          |

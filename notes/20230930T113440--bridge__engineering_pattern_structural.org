@@ -1,0 +1,40 @@
+#+title:      Bridge
+#+date:       [2023-09-30 Sat 11:34]
+#+filetags:   :engineering:pattern:structural:
+#+identifier: 20230930T113440
+
+* Intent
+Decouple an abstraction from its implementation so that the two can vary independently.
+* Use it when
+Once again the GoF book has a very good example.
+Suppose you have a ~Window~ interface and 2 implementation ~XWindow~, ~PMWindow~.
+In this hierachy suppose we want to introduce a new abstraction the ~IconWindow~, this is a type of window but it is not a concrete one.
+To use it you need the a ~XIconWindow~ or ~PMIconWindow~, depending on your use case.
+Now the problem is noticeable, every time we introduce a new abstraction, even if it described in term of other abstraction, we need a new implementation for that abstraction.
+The *Bridge Pattern* solve this problem separating the abstraction from its implementation.
+A newly introduced abstraction could be defined in terms of other abstractions, this abstractions works in terms of some given implementations, this means that we can change the abstractions and the implementation independently.
+The following diagram futhermore explain the problem and the solution.
+** Window withoud Bridge pattern
+[[../assets/bridge-problem.png]]
+** Window with Bridge pattern
+[[../assets/bridge-solution.png]]
+* Class Diagram
+[[../assets/bridge-cl.png]]
+* Participants
+** Abstraction
+Define the abstraction.
+** Refined Abstraction
+Extends the abstraction in terms of preexisting abstractions.
+Despite the name it is an implementation.
+** Implementor
+Define the operation that an abstraction require to be useable (It is another abstraction technically).
+** ConcreteImplementor
+A concrete implementation of the Implementor.
+* Consequences
+** Decoupling interface and implementation.
+The sense of this is explained above.
+** Improved extensibility
+** Hiding implementation details from clients
+This techinique can be used as a sort of encapsulation in some languages, like ~C/C++~ (I don't know for sure, I trust GoF).
+* Drawbacks
+There are no particular disadvantages, but to use the Bridge pattern you must understand the problem.

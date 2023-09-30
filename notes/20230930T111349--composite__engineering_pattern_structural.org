@@ -1,0 +1,51 @@
+#+title:      Composite
+#+date:       [2023-09-30 Sat 11:13]
+#+filetags:   :engineering:pattern:structural:
+#+identifier: 20230930T111349
+
+* Intent
+Define a tree (n-ary tree) structure in which the leaves and the nodes can be used with same common interface.
+* Use it when
+** Example 1
+The principal example of this patter is, once again, with a GUI (but it not apply only to GUI).
+Suppose you want to represent the components in your GUI with only one structure, the Composite.
+The parts in the Composite should be leaves and composite.
+** Use case 1
+You want to represent part-whole hierarchicies of objects.
+** Use case 2
+You want clients to be able to ignore the differnce between compositions of objects and individual objects.
+Clients will treat all objects in the composite structure uniformly.
+* Class Diagram
+[[../assets/composite-cl.png]]
+* Participants
+** Component
++ Declare the interface for objects in the composition.
++ Implement the default behaviour for the interface common to all classes, as appropriate.
++ *(Optional)* Declares an interface for accessing and managing its child components.
+     Conflicts with an implementation in which the common interface won't introduce the methods to access any children.
++ *(Optional)* Declares an interface for accessing the parents structure in the recursive structure.
+    This also conflict with the implementations in which the parent pointer is omitted.
+** Leaf
++ Represent a leaf objects in the hierarchy.
++ Define common behaviour for primitive objects int he composition.
+** Composite
++ Define behaviour for components having children.
++ Stores child components (The data structure should be choosen based on your necessity).
++ Implements child-related operations (add, remove, etc)
+** Client
++ Manipulates objects in the composition through the Component (the common one) interface.
+* Consequences
+** Simplify the code for the client
+It never should check if a component have an actual type that can do some operation, i.e. with Composite it don't require to use write switch cases to check if a component and treat as that component, and use the common interface.
+** Make it easier to add new components
+** Can make a design more general
+* Drawbacks
+You must make the following choices:
++ Pointer to parent.
++ Add all the operations to the ~Component~.
+    Even the operations that don't make sense to some implementation, like ~addChild~ to a ~Leaf~.
+    Using the [[denote:20230930T111515][Design by Contract]] you can use these operation that don't make sense to express the pre conditions throwing unchecked exceptions (these kind of errors shows only at run-time).
+    Note that the GoF enhance this choices, but as usual in some case may not be optimal.
+    The operation affected by this choire are:
+  + Common operations
+  + Operations to manage the children

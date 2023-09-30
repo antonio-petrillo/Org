@@ -1,0 +1,35 @@
+#+title:      Selection Sort
+#+date:       [2023-09-30 Sat 12:31]
+#+filetags:   :algorithm:math:programming:sorting:
+#+identifier: 20230930T123143
+
+* Algorithm
+#+BEGIN_SRC java
+private <K extends Comparable<K>> int findMaxIndex(seq []K, int upTo){
+    int max = 0;
+    for (int i = 1; i <= upTo; i++){
+       if (seq[max] < seq[i]){
+           max = i;
+       }
+    }
+    return max;
+}
+
+public <K extends Comparable<K>> void selectionSort(seq []K){
+    for (int i = seq.length - 1; i > 0; i--){
+        int maxIndex = findMaxIndex(seq, i);
+        K tmp = seq[i];
+        seq[i] = seq[maxIndex];
+        seq[maxIndex] = tmp;
+    }
+}
+#+END_SRC
+* Time complexity
+Here the worst, best and average case are the same since there is no conditional that can stop or alter the flow.
+
+$$T_{findMaxIndex}(n) = O(n)$$
+$$T_{seletionSort}(n) = \sum_{i=0}^{n-1} T_{findMaxIndex}(i)$$
+
+Hence:
+$$T_{seletionSort}(n) \simeq n \times \Theta(n)$$
+$$T_{seletionSort}(n) = \Theta(n^2)$$

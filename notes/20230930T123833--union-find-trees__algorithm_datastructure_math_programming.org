@@ -1,0 +1,285 @@
+#+title:      Union Find Trees
+#+date:       [2023-09-30 Sat 12:38]
+#+filetags:   :algorithm:datastructure:math:programming:
+#+identifier: 20230930T123833
+
+* Union Find Trees
+This data structure is particularry efficient to represent disjointed set.
+The idea is simple, each element in the tree have a pointer to it's parent, a root have a pointer to itself, now all the elements in the tree doesn't have to connect to one root, in fact each root represents the _disjointed sets_.
+Each node that belong to the same set of the tree, instead of maintain the data into it's node, it store the information in the representative node, aka the root.
+** Example
+[[../assets/union-find-trees-example.png]]
+* Representation & Operation
+Parent link representation, each disjointed set is represented as a tree of elements.
++ Each node in the tree has an explicit parent pointer in the tree.
++ The root of each tree is the canonical element (representative element, think like the modulus class in $\mathbb{Z}_n$)
++ Find(x) -> return the root (canonical element) of a tree
++ Union(x, y) -> merge two trees containing *x* and *y*.
+** Before
+[[../assets/UnionFindBefore.png]]
+** After
+[[../assets/UnionFindAfter.png]]
+* Implementations
+The following java code can be improved with generics and other stuff, but to keep it simple here I've reduced the code at minimum.
+** Naïve linking
+#+begin_src java
+public class Node{
+    private Node parent;
+
+    // This basically create a new Set with one node (which is also the representative)
+    public Node(){
+        this.parent = parent;
+    }
+
+    // The void argument here can be interpreted as find the representative of this Node
+    public Node find(){
+        Node iter = this;
+        while (iter.parent != iter){
+            iter = iter.parent;
+        }
+        return iter;
+    }
+
+    // Union between this and other
+    public void union(Node other){
+        Node canonical1 = find();
+        Node canonical2 = other.find();
+        canonical1.parent = canonical2;
+    }
+
+}
+#+end_src
+*** Time complexity
+This is pretty simple, the operations are proportional to the height of the tree, hence, considering a tree with $n$ elements.
+$$T_{worst}(n) = O(n)$$
+**** Proof
+This is selfexplanatory, the most unbalanced tree is the one that become a list, so at most the height of a tree is $O(n)$, hence a naïve union find tree at most have complexity $O(n)$.
+** Link by size
+In this implementation, other than the pointer to the father each node maintain a _tree size_ (the number of nodes for each root).
+When linking the two trees there is a policy that specify that the smaller tree is linked to the bigger one.
+#+begin_src java
+public class Node{
+
+    private Node parent;
+    private int size;
+
+    public Node(){
+        parent = this;
+        size = 1;
+    }
+
+    public Node find(){
+        Node iter = this;
+        while (iter != iter.parent){
+            iter = iter.parent;
+        }
+        return iter;
+    }
+
+    public void union(Node other){
+        Node[] canonicals = new Node[2];
+        canonicals[0] = find();
+        canonicals[1] = other.find();
+        int big, small;
+        if(canonicals[0].size > canonicals[1].size){
+            big = 0;
+            small = 1;
+        } else {
+            big = 1;
+            small = 0;
+        }
+        canonicals[small].parent = canonicals[big];
+        canonicals[big].size += canonicals[small].size;
+    }
+
+}
+#+end_src
+*** Time complexity
+Using link by size, any Union Find operation takes $O(\log{n})$ in the worst case, where $n$ is the number of elements in the structure.
+**** Proof
+To prove this result we first need the following property.
+***** Property
+Using _link by size_, for every root node $r$, we have: $size[r] \ge 2^{height(r)}$
+****** Proof
+Proof by induction.
+******* Base Case
+Singleton tree has $size = 1$ and $height = 0$, hence:
+$$1 \ge 2ˆ0$$
+$$\blacksquare$$
+******* Induction step
+Assume true after $i$ links, prove for $i + 1$.
+The size of a root change only when another root is linked /under/ him.
+******** Case 1
+Given two roots, $r, s$ we have
+$$height(r) > height(s) \implies$$
+$$size'(r) > size(r) \ge 2^{height(r)}$$
+But in this case the height doesn't change, so $height'(r) = height(r)$.
+$$size'(r) > size(r) \ge 2^{height(r)} = 2^{height'(r)}$$
+$$\blacksquare$$
+******** Case 2
+Given two roots, $r, s$ we have
+$$height(r) \le height(s) \implies$$
+$$size'(r) = size(r) + size(s)$$
+$$size(r) + size(s) \ge 2 \cdot size(r)$$
+$$size(r) + size(s) \ge 2 \cdot 2^{height(r)}$$
+$$size(r) + size(s) \ge 2^{height(r) + 1}$$
+$$size(r) + size(s) \ge 2^{height'(r)}$$
+$$\blacksquare$$
+This conclude the proof of the property.
+***** Continuing the proof
+As in the naïve linking this implementation complexity is bounded to the height of the tree, but in this case the height growth logarithmetically (see the property), hence the height is logarithmic.
+$$T_{worst}(n) = O(\log{n})$$
+$$\blacksquare$$
+** Link by rank
+Each node have a $rank$ field, initially $0$.
+When linking two trees, link the node with the smaller rank to the bigger one, if the two nodes have the same rank, choose the new root as your linking and increase the rank of the new root.
+#+begin_src java
+public class Node{
+    private Node parent;
+    private int rank;
+
+    public Node(){
+        parent = this;
+        rank = 0;
+    }
+
+    public Node find(){
+        Node iter = this;
+        while(iter != iter.parent){
+            iter = iter.parent;
+        }
+        return iter;
+    }
+
+    public void union(Node other){
+        Node canonical1 = find();
+        Node canonical2 = other.find();
+        if(canonical1 != canonical2){
+            if(canonical1.rank > canonical2.rank){
+                canonical2.canonical = canonical1;
+            } else if (canonical1.rank > canonical2.rank){
+                canonical1.canonical = canonical2;
+            } else {
+                canonical1.parent = canonical2;
+                canonical2.rank += 1;
+            }
+        }
+    }
+}
+#+end_src
+*** Time complexity
+Using _link by rank_ union find trees operations takes $O(\log{n})$ on the worst case.
+**** Proof
+As in the link by size before we continue we need to prove some property first.
+***** Property 1
+If $x$ is not the root node, then $rank(x) < rank(x.parent)$
+****** Proof
+A generic node of rank $k$ is created only by linking two roots of rank $k - 1$.
+$$\blacksquare$$
+***** Property 2
+If $x$ is not a root node, then $rank(x)$ will never change again.
+****** Proof
+Rank changes only for roots, once a node is no more a root, its rank cannot be changed.
+$$\blacksquare$$
+***** Property 3
+If $x.parent$ changes, then $rank(x.parent)$ strictly increases.
+****** Proof
+The parents changes only for the roots, so before the linking (on the root) $x = x.parent$, after the link the new root, say $r$, (in any case) has rank such that:
+$$rank(r) > rank(x)$$
+$$\blacksquare$$
+***** Property 4
+Any root node of rank $k$ has $|nodes| \ge 2^k$ in its tree.
+****** Proof
+Proof by induction
+******* Base case
+A root of rank $k = 0$ has $1$ node:
+$$1 \ge 2^0$$
+$$\blacksquare$$
+******* Induction case
+Assume true for $k - 1$.
+A node of rank $k$ is created only when two nodes of rank $k - 1$ are linked.
+Each of these subtrees has more than $2^{k - 1}$ nodes.
+$$|nodes_K| = |nodes_{k-1}| + |nodes_{k-1}|$$
+$$|nodes_{k-1}| + |nodes_{k-1}| \ge 2^{k - 1} + 2^{k - 1}$$
+$$|nodes_{k-1}| + |nodes_{k-1}| \ge 2 \cdot 2^{k - 1}$$
+$$|nodes_{k-1}| + |nodes_{k-1}| \ge 2^{k - 1 + 1}$$
+$$|nodes_{k-1}| + |nodes_{k-1}| \ge 2^{k}$$
+$$|nodes_k| \ge 2^{k}$$
+The resulting tree has more than $2^k$ nodes.
+$$\blacksquare$$
+***** Property 5
+The highest rank of a node is $rank_max \le \log{n}$.
+****** Proof
+Consequence of property 1 and property 4.
+$$\blacksquare$$
+***** Property 6
+For any integer $k \ge 0$, there are $|nodes| \le \frac n {2^k}$ with $rank = k$.
+****** Proof
+This can be proved combining the previous properties:
+1. Any root of $rank = k$ has $\ge 2^k$ descendants (*Property 4*)
+2. Any non root node of $rank = k$ has $\ge 2^k$ descendants because:
+   1. it had this property just before it became a nonroot, furthermore, every node start as a root (also *Property 4*)
+   2. its rank doesn't change once it became a root (*Property 2*)
+   3. its set of descendants doesn't change once it became a nonroot
+3. Different nodes of $rank = k$ can't move common descendants (*Property 1*)
+4. $\blacksquare$
+***** Final proof
+The union find operations, as usual, are bounded to the height, the maximum height in any union find tree is $\log{n}$, by property 5.
+This mean that the operations are logarithmics.
+$$\blacksquare$$
+* Path Compression (Optimization)
+There is one key idea to improve furthermore the performance of the Union Find Trees and that is _PATH COMPRESSION_.
+We have already seen that all the operation, independently from the type of implementation, at most are linear on the height, but /there is a way to shrink the height/?
+Yes and that is the path compression.
+** Description
+When finding the root $r$ of the tree containing the nodes $x$, change the parent pointer of all nodes along the path to poing directly to r.
+*** Example
+**** Step 1
+[[../assets/union-find-path-compression-example-pt1.png]]
+**** Step 2
+[[../assets/union-find-path-compression-example-pt2.png]]
+**** Step 3
+[[../assets/union-find-path-compression-example-pt3.png]]
+**** Step 4
+[[../assets/union-find-path-compression-example-pt4.png]]
+**** Step 5
+[[../assets/union-find-path-compression-example-pt5.png]]
+*** Code
+Change the code for the ~find~ method (in the _link by rank_ see below) to:
+#+begin_src java
+
+public Node find(){
+    Node iter = this;
+    if(iter != iter.parent){
+        iter.parent = iter.parent.find();
+    }
+    return iter.parent;
+}
+
+#+end_src
+**** Note
+Path compression doesn't change the rank of a node
+** Time complexity
+We start this section with some facts:
+*** Property 1
+The tree roots, node ranks and elements within a tree are the same with or without path compression.
+**** Proof
+Path compression does not create new roots, change ranks or move elements from one tree to another $\blacksquare$.
+*** Consequences
+The property shown in _link by rank_ are still valid with _path compression_ but there some caveats, the property 1 and 3 must be rechecked.
+**** Property 3
+If $x.parent$ changes, then $rank(x.parent)$ strictly increases.
+***** Proof
+Path compression can make $x$ point to only an ancestor of $x.parent$.
+$$\blacksquare$$
+**** Property 1
+If $x$ is not the root node, then $rank(x) < rank(x.parent)$
+***** Proof
+Path compression doesn't change any ranks, but it can change the parents.
+If path compression does not change the ancestor then the property still holds (basically is the /old case/).
+If the parent changes then $rank(x.parent)$ strictly increases, this is guaranted by the Property 1 before the path compression (in its /old case/).
+*** Finally Time Complexity
+There is a theorem by [[https://en.wikipedia.org/wiki/Robert_Tarjan][R. Tarjan]] that states the follwing:
+Starting from an empty data structure, _link by size_ with path compression performs any intermixed sequence of $m \ge n$ ~MAKE-SET~, ~UNION~ and ~FIND~ operations on a set of $n$ elements in $O(m \cdot \alpha(m, n))$ time, where $\alpha(m, n)$ is a functional inverse of the [[https://en.wikipedia.org/wiki/Ackermann_function][Ackerman function]].
+**** Proof
+Not provide, for now.

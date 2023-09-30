@@ -1,0 +1,35 @@
+#+title:      Visitor
+#+date:       [2023-09-30 Sat 11:17]
+#+filetags:   :behavioral:engineering:pattern:
+#+identifier: 20230930T111711
+
+* Intent
+Enclose the operation that would be performed on a object's instance in a separated Object (the visitor) and perform the /visit/ passing the instance to the visitor.
+A visitor can have multiple type of visit, one for each object that can visit.
+* Use it when
++ Add new type of visit operations withoud changing the existing clients.
++ You have complex traversals.
++ You have many class of objects with different interface (Visitor is an augmented [[denote:20230930T111852][Iterator]] ).
++ You have many distincted unrelated operation on object structure, like a
+[[denote:20230930T111349][Composite]] and you want to decouple the operations from the structure.
+* Class Diagram
+[[../assets/visitor-cl.png]]
+* Participants
+** Visitor
+Interface that declare all the visit operations, one for each accepted object (it is possible to use overloading).
+** Concrete Visitor
+Implement the operations declared by the /Visitor/ interface.
+** Element
+Define the /accept/ operation that takes a /Visitor/ as input.
+** Concrete Element
+Implements the /accept/ method.
+** Object Structure
+The structure to visit, can be explicit or not.
+* Consequences
++ Easy to add new operations.
++ Gather related operations together.
++ Visit across hierarchy.
++ Accumulate state inside the /Visitor/ object.
+* Drawbacks
++ Adding new /Concrete Element/ is hard.
++ Breaking encapsulation, often to let the /Visitor/ do its job we have to expose too much from a visited class.

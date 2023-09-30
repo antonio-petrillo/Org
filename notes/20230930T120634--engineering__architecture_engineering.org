@@ -1,0 +1,11 @@
+#+title:      Engineering
+#+date:       [2023-09-30 Sat 12:06]
+#+filetags:   :architecture:engineering:
+#+identifier: 20230930T120634
+
+* Interactions
+The interaction can be designed with [[denote:20230930T114356][Use Case Diagram]] and [[denote:20230930T114502][State Diagram]].
+* Architectural Design
+Here are a good fit the [[denote:20230930T110644][Class Diagram]] and the [[denote:20230930T114218][Package Diagram]], also [[denote:20230930T114322][Sequence Diagram]] are used to describe how the Objects in the systems will cooperate.
+* [[denote:20230930T114906][Design]]
+The use of patterns increase the quality and reusability of the code.

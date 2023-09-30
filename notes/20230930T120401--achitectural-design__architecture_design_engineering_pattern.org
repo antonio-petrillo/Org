@@ -1,0 +1,55 @@
+#+title:      Achitectural Design
+#+date:       [2023-09-30 Sat 12:04]
+#+filetags:   :architecture:design:engineering:pattern:
+#+identifier: 20230930T120401
+
+* What does it do?
+In this phase the engineers produce a model (*architectural model*) that show how the software will be organized in modules.
+They may be multiple models with differents level of details.
+If the model is not well engineered then they may be some refactoring in the architecture later on, these kind of refactoring are *very expensive*.
+* Level of Abstractions
++ Little:
+    How each component interacta and also how it is splitted into others component, this type is the one that will represent the best the final product (in term of code).
++ Big:
+    Show how the system is splitted into big components, this is more abstract.
+* Architectural choices to make
++ There are some trades to make during the design process, these trades depends on the requirements of the project
++ There are also some /style/ that impose a structure on the design, like [[denote:20230930T110806][Client-Server]] or P2P
+The design process can be seen as a sequence of choice to make that will shape the final product, just like in algorithmic you may have to choose between trees and maps based on your problem (spoiler maps wins almost all the time).
+** Trades based on the properties
+*** Performance
+If the performance are critical to the system you may have to install all the components on the same machine to avoid exchanging messages between different machines.
+This approach reduce the /maintainability/.
+*** Protection
+In this case an architecture based on layers, where to most important ones have to be in the lowest tier (or the inner most if you prefer circles).
+*** Security
+In this case all the operations related to security should be confined in a single component and should be well tested to ensure the functionality.
+This slightly reduce /maintainability/ and increase the /develop time/.
+*** Availability (of resources)
+You should consider how to duplicate the interested resources and how distribute them to accomodate the requests.
+*** Maintainability
+Each component should be independent off the others and should be interchangeable with some others.
+Decrease the /performances/.
+
+* Architectural Views
++ Logic:
+  + show the keys abstractions
+  + show relation between requirements and entity)
+  + can be used to interact with the stakeholders
++ Process/Runtime:
+  + show how at runtime the system works
+  + used to analyze the non-functional requirements of the system
++ Develop:
+  + show how the software is splitted in components/modules
+  + useful for the programmers to implement the software
+  + useful for the software managers to analyze the project
++ Physic:
+  + show how the hardware and the components are deployed and configured
+* Architectural Scheme
+Common technique to produce more robust and reusable code, also known as /Design Patterns/.
+** Some common patterns/schemes
++ [[denote:20230930T110927][MVC]]
++ [[denote:20230930T110900][Layer]]
++ [[denote:20230930T111155][Repository]]
++ [[denote:20230930T110806][Client-Server]]
++ [[denote:20230930T111131][Pipe and Filter]]

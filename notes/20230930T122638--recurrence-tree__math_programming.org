@@ -1,0 +1,113 @@
+#+title:      Recurrence Tree
+#+date:       [2023-09-30 Sat 12:26]
+#+filetags:   :math:programming:
+#+identifier: 20230930T122638
+
+* Recurrence Tree
+Instead of a proper treatment this will be done by example.
+* Example 1
+$$
+\begin{equation}
+  T(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    2T(\frac n 2) + O(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+** Height
+At each level the height is halved, so we reach the base case when:
+$$\frac n {2^h} = 1$$
+$$n = 2^h$$
+$$h = \log{n}$$
+** Cost at each level
+At each level we have:
++ level 1: $n$
++ level 2: $\frac n 2 + \frac n 2 = n$
++ level 3: $\frac n 4 + \frac n 4 + \frac n 4 + \frac n 4 = n$
++ ...
++ level i: $\sum_{i=1}^{2^i} \frac n {2^i} = n$
+** Total Cost
+$$\sum_{i=1}^{\log n} n = n \log n$$
+$$T(n) = \Theta(n \log n)$$
+* Example 2
+$$
+\begin{equation}
+  T(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    2T(\frac n 2) + O(n^2), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+** Height
+At each level the height is halved, so we reach the base case when:
+$$\frac n {2^h} = 1$$
+$$n = 2^h$$
+$$h = \log{n}$$
+** Cost at each level
+At each level we have:
++ level 1: $n^2$
++ level 2: $(\frac n 2) ^2 + (\frac n 2) ^2 = \frac {n^2} 2$
++ level 3: $(\frac n 4) ^2 + (\frac n 4) ^2 + (\frac n 4) ^2 + (\frac n 4) ^2 = \frac {n^2} 4$
++ ...
++ level i: $\sum_{i=1}^{2^i} (\frac n {2^i})^2 = 2^i \cdot (\frac n {2^i})^2$
+** Total Cost
+$$\sum_{i=0}^{\log n} 2^i \cdot (\frac n {2^i})^2$$
+$$n^2 \cdot \sum_{i=0}^{\log n} (\frac {2^i} {2^{2i}})$$
+$$n^2 \cdot \sum_{i=0}^{\log n} (\frac 1 {2^i})$$
+$$n^2 \cdot (\lim_{n \to \infty} \sum_{i=0}^{\log n} (\frac 1 {2^i}))$$
+$$n^2 \cdot 2$$
+$$T(n) = \Theta(n^2)$$
+* Example 3
+$$
+\begin{equation}
+  T(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    5T(\frac n 4) + O(n^2), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+** Height
+At each level the height is divided by $4$.
+$$\frac n {4^h} = 1$$
+$$n = 4^h$$
+$$4^h = n$$
+$$h = \log_4 n$$
+$$h = \frac {\log_2 n} {\log_2 4} $$
+$$h = \frac {\log_2 n} 2 $$
+** Cost at each level
++ level 1: $n^2$
++ level 2: $(\frac n 4)^2 + (\frac n 4)^2 +(\frac n 4)^2 +(\frac n 4)^2 +(\frac n 4)^2 = 5 (\frac n 4)^2$
++ level 3: $(\frac n {16})^2 + ... ~ 21 ~ more ~ terms ~ ... +(\frac n 16)^2 = 25 (\frac n {16})^2$
++ ...
++ level i: $(\frac n {4^i})^2 + ... ~ {5^i}-2 ~ more ~ terms ~ ... +(\frac n {4^i})^2 = {5^i} (\frac n {4^i})^2$
+** Total cost
+$$\sum_{i=1}^{\frac {\log n} 2} {5^i} \cdot \frac {n^2} {2^{4i}}$$
+$$n^2 \cdot \sum_{i=1}^{\frac {\log n} 2} \frac {5^i} {2^{4i}}$$
+
+Power series with reaseon between $(0, 1)$.
+$$n^2 \cdot \frac 1 {1 - \frac 5 {16}}$$
+$$T(n) = \Theta(n^2)$$
+* Example 4
+$$
+\begin{equation}
+  T(n)=\begin{cases}
+    O(1), & \text{if $n \le 2$}.\\
+    \sqrt n T(\sqrt n) + O(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+** Height
+At each level the input is /square rooted/, so the base case is reached when $n^{\frac 1 {2^h}} = 2$
+$$n^{\frac 1 {2^h}} = 2$$
+$$\log{n^{\frac 1 {2^h}}} = \log 2$$
+$$\frac {\log{n}} {2^h} = 1$$
+$${\log{n}} = {2^h}$$
+$$h = \log{\log{n}}$$
+** Cost at each level
++ level 1: $\sqrt n \cdot \sqrt n = n$
++ level 2: $\sqrt n \cdot \sqrt{\sqrt n} \cdot \sqrt{\sqrt n} = n$
++ ...
++ level i: $\sum{i=1}^n 1 = n$
+** Total cost
+$$\sum_{i=1}^{\log{\log n}} n = n \log{\log n}$$
+$$T(n) = \Theta(n \log{\log n})$$
