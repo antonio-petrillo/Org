@@ -1,0 +1,45 @@
+#+title:      Saturday 30 September 2023
+#+date:       [2023-09-30 Sat 14:22]
+#+filetags:   :journal:
+#+identifier: 20230930T142248
+
+* [75%] Daily Metrics
+** TODO Read 25 pages
+** DONE Learn subject: 30 minutes
+** DONE Daily Exercise: 30 minutes
+** DONE Diet
+* Engineer's Daybook
+** Notes:
++ Migrated from logseq to denote.
++ Trying query
+  #+BEGIN: denote-links :regexp "math.*sorting" :missing-only t
+  - [[denote:20230930T122917][Sorting]]
+  - [[denote:20230930T123043][Insertion Sort]]
+  - [[denote:20230930T123143][Selection Sort]]
+  - [[denote:20230930T123203][Merge Sort]]
+  - [[denote:20230930T123354][Heap Sort]]
+  - [[denote:20230930T123451][Quick Sort]]
+  #+END:
+** Tasks:
++ ask paral. comp. prof.
++ ask nndl prof.
++ ask iot prof.
+* Time Blocker
+** Morning
+*** 9:00
+*** 10:00
+*** 11:00
+*** 12:00
+** Lunch
+*** 13:00
+** Afternoon
+*** 14:00
+*** 15:00
+*** 16:00
+*** 17:00
+*** 18:00
+** Night
+*** 19:00
+*** 20:00
+*** 21:00
+*** 22:00

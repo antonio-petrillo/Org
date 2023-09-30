@@ -1,0 +1,53 @@
+#+title:      NNDL lesson 4
+#+date:       [2023-09-30 Sat 13:51]
+#+filetags:   :course:master:math:nndl:
+#+identifier: 20230930T135120
+
+* Lezione 4
++ Spazi vettoriali
++ CPS
++ Analisi I
+* Problema attuale
++ Problema di classificazione:
+  The set where we attempt to solve the problem is _feature space_.
+  Usually this space is a _vector space_.
++ We have a finite set of classes
+* What we want to do
+To solve the classification problem means to find a partition of such space.
+The final target is to find the subsets (the partitions elements basically).
+This means that the classification methods we want to use must find a /good/ partition.
+A partition can be considered /good/ if it conform to the characteristics subsets.
+These subsets are called */decision regions/*.
+The boundaries of such regions are called */decision boundaries/*.
+* A classification boundaries can characterized by:
+1. decision regions
+2. decision boundaries
+* Supppose ment. exer.
+Suppose you know the classes of each element of the Space, from now on $X$.
+It's not that easy to separate, even graphically, all these classes.
+We have the simplest cases when we have only 2 classes.
+These two classes are not easily understandable by the pc, it will try to produce to classes that mimic, at his best, these two real classes.
+* Real class
+Not yer formally defined.
+I suppose from the beginning that the elements belongs to some classes, these we call ~real~ classes and then the ones finded by the IA are classes that they look alike the ~real~ ones.
+* Decision boundary
+Linearly separable $\iff$ Decision boundary:
++ 1D -> a point
++ 2D -> a line
++ 3D -> a plane
++ 4D and more -> an hyperplane
+* How to define such boundaries? Which procedure we can use?
+The general approach is the following:
+Given a problem with $K_{classes}$ we can define $K$ functions $\psi_1, \psi_2, \dots, \psi_k$,
+such that $\psi_i : x \in R_i \rightarrow y = \psi_i(x) \in {0, 1}$
+$$\psi_i(x) \implies x \in R_i \implies x \in C_i$$
+Where $R_i$ is the i-th region and $C_i$ the i-th class.
+These functions are the results of long computations.
+** Note
+For each  $x$ such that $\psi_i(x) = 1$ we have $psi_j(x) = 0, \forall i,j : i \ne j$
+These functions are known as *discriminant functions*.
+* Solution to the class. problem
+If $\psi_i(x) > psi_j(x), \forall i,j: i \ne j$ then $x \in R_i$ and $x \in C_i$.
+* Consequences
++ If we have $k \ge 2$ classes we have $k$ discriminant functions.
++ If $k = 2$ we can reduce the discriminant functions to one.
