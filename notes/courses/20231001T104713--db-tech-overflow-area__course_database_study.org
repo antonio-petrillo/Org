@@ -1,0 +1,11 @@
+#+title: #+title:      [DB tech] overflow area
+#+date:       [2023-10-01 Sun 10:47]
+#+filetags:   :course:database:study:
+#+identifier: 20231001T104713
+
+* What is an overflow area?
+Almost in all physical representation of data we have a file into which we use some policies (heap, hash, trees) to store the data, this is called *primary area*.
+The *Overflow Area*, also known as *secondary area*, is used when the primary is full and instead of performing expensive operation on the primary we add data to the overflow area to amortize the costs.
+When the overflow area grow to much we do a merge.
+* Which policies it uses?
+Usually it is implemented as an [[denote:20230930T215849][[DB tech] Hash Files]].

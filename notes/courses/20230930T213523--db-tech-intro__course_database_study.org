@@ -1,0 +1,19 @@
+#+title:      [DB tech] intro
+#+date:       [2023-09-30 Sat 21:35]
+#+filetags:   :course:database:study:
+#+identifier: 20230930T213523
+
+* What we will study
+** Physical organization of data
++ SQL
++ Indexes
++ Hashing
++ Trees
+** Optimization
++ Representation of operators
++ Query optimization
+** Transaction
+** Spatial Database
+** Multimedia Database
+* Textbook
++ Elmasri, Navathe

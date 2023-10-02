@@ -1,0 +1,63 @@
+#+title: #+title:      [DB tech] lesson 4
+#+date:       [2023-10-01 Sun 15:38]
+#+filetags:   :course:database:study:formulas:
+#+identifier: 20231001T153857
+
+* Lesson overview
++ Secondary index
++ Multilevel index
++ Indexes on multiple field
++ Cost Assesment
+* Indexes types
++ primary: based on a field that is used for sorting
+  + primary: the field is an *identifying key*
+  + cluster: the field is *not an identifying key*
++ secondary: use different sorting key than data file
++ dense: contains one entries per record in the file
++ scattered: contains fewer records
+  note that a cluster index is also a scattered index
+** Other consideration
++ A primary index can be *sparse*
++ A secondary index must be *dense*
++ [[denote:20230930T215849][[DB tech] Hash Files]] cannot have a primary index (they doesn't have an order)
+  If we use an index on a Hash File the index must be *secondary* (dense).
+* Size of an index
+With the following information:
++ $NR_F$ number of blocks in the file
++ $L_B$ block size
++ $L_R$  record length (fixed)
++ $L_K$ key field length
++ $L_P$ length of addresses (at block)
+We can compute:
++ Number of blocks for file $NB_F \sim \frac {NR_F} {\lfloor \frac {L_B} {L_R} \rfloor}$
++ Number of blocks for a dense index $NB_{ID} = \frac {NR_F} {\lfloor \frac {L_B} {L_K + L_P} \rfloor}$
++ Number of blocks for a scattered index $NB_{IS} = \frac {NB_F} {\lfloor \frac {L_B} {L_K + L_P} \rfloor$
+*  Characteristics of a Primary Index
++ Efficient direct access (on the key), both single and intervals
++ Efficient sequential order scanning
++ Inefficient insertion,modify,delete
+* Secondary index
+Is an additional index for a data file already with a primary index.
+Can be defined either on a field that is candidate or on a non-key field.
+Each entries is still represented a ~<Key, Value>~ pair.
+Slower than primary index but still faster than a linear scan.
+** Example
+Assuming:
++ number of records in the file $NR_F = 30000$
++ block size $B = 1024$ bytes
++ size of sorting key $V = 9$ bytes
++ block pointer size $P = 6$ bytes
++ secondary index available on a non-sorting key
+We can determine the number of block accesses to search for a record with a binary search.
++ key-valur pair size $R = (9 + 6)$ bytes
++ blocking factor $bfr =\lfloor \frac B R \rfloor = \lfloor \frac 1024 15 \rfloor = 68$
++ number of block needed for the file is $b = \lceil \frac r {bfr} \rceil = \lceil \frac 30000 68 \rceil = 442$ blocks
++ a binary search takes $n = \lceil \log_2(b) \rceil = \lceil \log_2(442) \rceil = 9$ accesses
+** Pointer to blocks and pointer to records
++ Pointer to blocks are more compact
++ Pointer to records allow to:
+    + simplify some opertion
+* Multilevel Index
+1. Use a sparse primary index
+2. Use a dense index for each cluster
+3. Repeat the step above

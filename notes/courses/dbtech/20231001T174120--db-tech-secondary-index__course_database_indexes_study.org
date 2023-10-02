@@ -1,0 +1,20 @@
+#+title:      [DB tech] Secondary Index
+#+date:       [2023-10-01 Sun 17:41]
+#+filetags:   :course:database:indexes:study:
+#+identifier: 20231001T174120
+
+
+* Secondary Indexes
+#+begin_center options
+They provide a secondary means of accessing a data file for which some primary access already exists.
+The data file could be ordered, hashed or even an heap, the secondary indexes order their key value pairs upon a givend order.
+To be more specific given a list of UNIQUE fields secondary indexes order their entries based on that list of fields.
+The entries are sorted based on the given Key.
+The Value in the entry could be a pointer to a block or to a record.
+#+end_center
+* Characteristics
+Secondary indexes can be *DENSE* or *SPARSE* depends what we using them for.
+Just for example:
++ data file hashed: the secondary index must be dense
+  a pointer to each record since we cannor rely on any order in the data file
++ data file ordered: the secondary index can be sparse, like a primary one

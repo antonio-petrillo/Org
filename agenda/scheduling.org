@@ -17,8 +17,3 @@
 | DataBase Technologies, DB Technologies     | db-tech | PT-II-L          |
 | Tirocinio presso logogramma                | tiro    | cittá d. scienza |
 | Free                                       | ∅       | ∅                |
-* Next appointments
-** TODO Nutrizionista
-SCHEDULED: <2023-10-13 Fri>
-** TODO Dentista
-SCHEDULED: <2023-10-20 Fri>

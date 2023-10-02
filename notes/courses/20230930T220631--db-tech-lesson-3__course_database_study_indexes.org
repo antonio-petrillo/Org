@@ -1,0 +1,92 @@
+#+title:      [DB tech] lesson 3
+#+date:       [2023-09-30 Sat 22:06]
+#+filetags:   :course:database:study:indexes:
+#+identifier: 20230930T220631
+
+* When to use hashing?
++ For the *primary* organization of data
+* Hash Organization
+** Static
+The number of buckets, that identify the *primary area*, it is known a prior.
+** Dynamic
+The number of buckets grow dinamically, like in a [[denote:20230930T124136][Hash Table]] when the $\alpha$ factor approaches the number of buckets.
+This approach requires *multiple hash functions*.
+* Extensible hash
+Use an auxiliary structure, called ~directory~.
+* Auxiliary facilities
+Improve performance of the queries avoid the requirement to scan all the data.
+** What are we looking for?
++ access time
++ insertion time
++ cancellation time
++ space occupation
+** On what can we made a search?
++ primary key
++ secondary key
++ range of values
++ combinations of the aboves
+** Why facilities
+To increase the performance of the operations on fields that are not in the list above, i.e. a non key field that has no order or the order cannot be determined, we can use a facilities.
+* What are indexes?
+They are an *auxiliary facilities*.
+Indexes are maintained in a ~(key . value)~ pair where the key is the _record_ and the _value_ is the address where it is stored.
+Once we have the index of a _key_ we can directly access them.
+Indexes are used to increase the performance of a database, we can _build indexes_ on secondary (but frequently used) fields to increase performance, although consuming more memory.
+They can be seen as the alphabetical index in a book.
+* Problems with the indexes
+If the data that we are indexing is too large we have the same problem of storing the data itself, overflow, how store indexes, etc...
+We can reuse the same technique explained for the *primary area*.
+#+begin_center
+Number of records: 50000
+Key (data to index) size: 20 byte
+Value (pointer) size: 4 byte
+Total Size for indexing = 24 * 50000 = 120000 ~ 1.2 MB
+#+end_center
+* Classify the indexes
++ uniqueness of the key values
++ sorting of records in the data file
++ number of entries in the index
++ number of levels
+* Primary Index
+Is a sorted file whose records are of fixed length and consist of two fields key and pointer, and also the following characteristics:
++ Key: same type of the sorting key field
++ Pointer: pointer to a disk block (in which we can find the record of course)
++ There is one entry in the index file for each *block* (note: blocks not records) in the data file
++ The first record in a block is called *ANCHOR BLOCK*
++ Smaller than a data file (few fields and possibly fewer entries)
++ We can perform binary search on him
++ A record whose primary key is $K$ is in the block whose address $P(i)$, such that $P(i) \le K \lt P(i + 1)$
+** Example
+*** With data fils
+Given:
++ Number of records $R = 30000$
++ Block size $B = 1024$ bytes
++ Lenght of a Record $L = 100$ bytes
+We want to determine the number of block accesses to search a record, using binary search on *data files*.
+Now we can calculate:
++ Blocking Factor $bfr = \lfloor \frac B L \rfloor = \lfloor \frac 1024 100 \rfloor = 10$
++ Number of Blocks needed $b = \lceil \frac R {bfr} \rceil = \lceil \frac 30000 10 \rceil = 3000$
+A binary search, in the average case, will require:
+$n = \lceil \log_2(b) \rceil =  \lceil \log_2(3000) \rceil = 12 $ accesses.
+*** With indexes
+Supposing, further, that:
++ Size of sorting key $V = 9$ bytes
++ Block pointer size $P = 6$ bytes
++ A primary index is available on the sorting key
+We can compute the number of access with indexes:
++ Size of each key-value pair $R = (V + P) = 15$ bytes
++ The Blocking Factor is $bfr = \lfloor \frac B R \rfloor = \lfloor \frac 1024 15 \rfloor = 68$ entries per block
++ The number of blocks needed for the index file is
+  $b = \lceil \frac r bfr \rceil = \lceil \frac 3000 68 \rceil = 45$ blocks
++ A binary search on the indexes costs
+  $n = \lceil \lob_2(b) \rceil = \lceil \log_2(45) \rceil = 6$ accesses
++ $3$ less than the data files
+* Primary Index Criticality
+The critical aspect of *Primary indexes* files is that we need to move data around on *insertion*, *deletion* (mark node as deleted) and in some case on *modify*.
+The problem with insertion can be solved with *OVERFLOW* files.
+* Cluster index
+If records are sorted based on a field that is *not a key* that field is called *CLUSTERING FIELD*.
+It is a *SPARSE* index, meaning that we don't need an entry for each record.
+The *entries* in the index files are a $<K(i), P(i)>$.
+There is one entry in the cluster index for each distinct value of the clustering field.
+Insertion and deletion are still problematic since the records are ordered.

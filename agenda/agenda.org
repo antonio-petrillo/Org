@@ -1,1 +1,6 @@
 #+title: Agenda
+
+* TODO Nutrizionista
+SCHEDULED: <2023-10-13 Fri>
+* TODO Dentista
+SCHEDULED: <2023-10-20 Fri>

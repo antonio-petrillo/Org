@@ -1,0 +1,8 @@
+#+title:      [DB tech] Lesson 1
+#+date:       [2023-09-30 Sat 21:31]
+#+filetags:   :course:database:study:
+#+identifier: 20230930T213157
+
+* Persistance
+The data in a database must be persistant hence we have to work with secondary memory.
+Since the secondary memory is slow, and also that presumably our data don't fit in memory, we must optimize how we write the data in physical memory.
