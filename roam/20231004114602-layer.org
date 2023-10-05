@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       5a4d0c74-a133-4915-96fe-e97a36dc1561
+:END:
+#+title: Layer
+#+filetags: :architecture:engineering:pattern:
+
+* Description
+Organize the system in layers, see [[https://en.wikipedia.org/wiki/OSI_model][OSI model]].
+Each layer can communicate only with the level above and level below.
+* Example
+[[../assets/layerd-architecture.png]]
+* Pros
++ You can substitute entire layer.
+  Provided that the newly inserted layer have at least the same communication messages needed at level below and the level above.
++ Enhance security.
+  Perform a security check at each level.
+* Cons
++ It's hard to obtain true isolation between distants layers, usually there is always something that escape the rules.
++ Usually this architecture schema result in lesser performance.

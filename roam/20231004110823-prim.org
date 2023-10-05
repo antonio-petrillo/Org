@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       66f74f59-7834-48d7-a278-8396e7b85a40
+:END:
+#+title: Prim
+#+filetags: :graph:algorithm:programming:
+
+* TODO See CLRS

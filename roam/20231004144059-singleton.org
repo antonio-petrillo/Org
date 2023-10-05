@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       6328d79e-66e6-4278-9002-20788c2a4caf
+:END:
+#+title: Singleton
+#+filetags: :creational:pattern:engineering:
+
+* Intent
+Provide a single instance, and a single point of access, to a class.
+* Use it when
+As sayd in the intent, when there is a resource that should be shared and that resource should have only one instance, like a file system, db connection, window manager.
+** Note
+Maybe the best way for a DB connection is to have a _singleton pool_ of many _singleton connection_.
+* Class Diagram
+[[../assets/singleton-class.png]]
+* Participants
+** Singleton
+Don't allow the clients to instantiate new istances and provide an /instance/ method to access the single instance.
+* Consequences
+** Control the access to the sole instance
+** Reduced name space
+That apply only in language that use them, like C++.
+** Permits refinement of operation adn represetation
+The singleton is easy to subclass, you just have to change the method.
+** Permits a variable number of instances
+See in /use it when/ the notes about the pool connection.
+** More flexible than class operations
+* Drawbacks

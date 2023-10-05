@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       43dd7ad7-7a96-43fc-85c4-c18c429c4ec8
+:ROAM_ALIASES: "State Machine Diagram"
+:END:
+#+title: State Diagram
+#+filetags: :architecture:uml:engineering:
+
+* What is it used for
++ Show how a system behave at runtime.
++ Model an event-driven system
+* Summary
+| Symbol               | Description                                                                           |
+|----------------------+---------------------------------------------------------------------------------------|
+| ●                    | Start of the diagram                                                                  |
+| ⦿                    | End of the diagram                                                                    |
+| rectangle + text     | State with description and loop action                                                |
+| arrow                | How the control pass from one state to another                                        |
+| trigger/guard/action | How the action of following an arrow is triggered, at which condition and wich operation perform |
+| container            | next an state diagram                                                                 |
+| ⊗                    | exchange between inner and outer state                                                |
+* Example
+[[../assets/state-uml.gif]]

@@ -1,0 +1,89 @@
+:PROPERTIES:
+:ID:       45c9aef8-82f1-4c47-abfa-7033a03eaaa7
+:END:
+#+title: Dynamic Array
+#+filetags: :datastructure:programming:amortized:
+
+* Dynamic Array
+The main problem of the arrays is that they have a fixed size and once they are full they need to be reallocated, this operation takes a lot of time generating a bad [[denote:20230930T122016][Asymptotic growth]].
+** Hands on the problem
+Consider a ~fixed length array~ of $size = 4$.
+
+Now we can count the number of insertion.
+Suppose we perform $4$ insertion.
+$$|Insertions| = (4 + 5 + 6 + \cdots + n)$$
+After the initial $4$ we have to allocate a new array of $size=5$ and perform $4$ insertion to copy the old values $+ 1$ for the fifth.
+Same for $6, 7, \cdots, n$.
+*** Time complexity (normal array)
+Starting from an array of $size = 1$
+$$\sum_{i=1}^{n} i = \frac{n \cdot (n + 1)} 2$$
+$$T(n) = O(n^2)$$
+* Key Idea
+During reallocation instead of increment the size to only insert the new value, we increase the size with a constant so we can perform more insertion before a new reallocation.
+This result in a good amortized time complexity.
+The amount with we increase the size cannot be fixed, let's say that we increase the size by $100$ element, with a little bit of math this give always a $T(n) = O(n^2)$.
+
+What if we use a multiplicative constant?
+** Double the size each time
+Let's count the number of insertion, up to reach a size such $size \ge n$.
+Start with a $size = 1$:
+
+$$Insertion = (1)$$
+
+Double the size, $size = 2$:
+$$Insertion = (1 + 2)$$
+
+Double the size, $size = 4$:
+$$Insertion = (1 + 2 + 4)$$
+
+Double the size, $size = 8$:
+$$Insertion = (1 + 2 + 4 + 8)$$
+
+Double the size, $size = 16$:
+$$Insertion = (1 + 2 + 4 + 8 + 16)$$
+
+$$\cdots$$
+
+Double the size, $size = 2^i$:
+$$Insertion = (1 + 2 + 4 + 8 + 16 + \cdots + 2^i)$$
+
+$$\cdots$$
+
+Reach $size \ge n$:
+$$Insertion = (1 + 2 + 4 + 8 + 16 + \cdots + 2^i + \cdots + n)$$
+** Closed formula
+This result in the geometric sum.
+$$\sum_{i=0}^{\log(n)} \frac n {2^i}$$
+$$\sum_{i=0}^{\log(n)} \frac n {2^i} = \frac {1 - 2^{\log(n) + 1}} {1 - 2}$$
+$$\sum_{i=0}^{\log(n)} \frac n {2^i} = \frac {1 - 2 \cdot n} {1 - 2}$$
+$$\sum_{i=0}^{\log(n)} \frac n {2^i} \approx 2 \cdot n$$
+$$T_{insertion}(n) = O(n)$$
+$$\blacksquare$$
+* Operation
+** Average
+Insertion:
+$$T_{insert ~ average} = O(1)$$
+Deletion:
+$$T_{delete ~ average} = O(1)$$
+Searching:
+$$T_{search ~ average} = O(1)$$
+** Worst case
+Insertion:
+$$T_{insert ~ average} = O(n)$$
+Deletion:
+$$T_{delete ~ average} = O(n)$$
+Searching:
+$$T_{search ~ average} = O(1)$$
+* Pay attention to the deletion
+If the size go below $\frac n 2$ we can shrink the size, but this create a problem.
+
+Following the following series of operation:
+1. Size go below $\frac n 2$, shrink $O(n)$
+2. Two insertion, $size \gt n$, reallocate $O(n)$
+3. Repeat ~1,2~
+4. $T(n) = O(n^2)$
+
+To avoid that the ~shrink~ on the deletion should be performed when size go far below $\frac n 2$.
+A good shrink factor is $\frac n 4$ or $\frac n 3$.
+* Note
+Usually an engrowth factor of ~2~ will wast to much space hence projectists usually prefer a smaller factor, it is important to choose him greater than ~1~ and the properties will hold.

@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       d2c8c8da-ab4e-4b0b-98b2-c248d4538edc
+:END:
+#+title: Insertion Sort
+#+filetags: :comparison:algorithm:sorting:programming:
+ 
+* Algorithm
+#+BEGIN_SRC java
+public <K extends Comparable<K>> void insertionSort(seq []K){
+    for (int i = 1; i < seq.lenght; i++){
+        K tmp = seq[i];
+        int j = 0
+        for(j = i -1; seq[j] > tmp || j >= 0; j--){
+            seq[j+1] = seq[j];
+        }
+        seq[j] = tmp;
+    }
+}
+#+END_SRC
+* Time complexity
+Take $n = seq.length$:
+$\sum_{i=1}^{n} \sum_{j=i-1}^{seq[j] > tmp \lor j >= 0} O(1)$
+The innermost for have a conditional that depends on the given sequence, hence we cant know before runtime how many times it's executed.
+To solve this problem we consider the expected value.
+
+We are gonna use a ~rank~ that indicates how many times the for is executed, i.e. ~rank = 1~ the inner for run one time, ~rank =2~ ir run 2 times and so on.
+The expected value of the rank is
+
+$$\frac{\sum_{i = 1}^{j}i}{j}$$.
+
+Hence:
+
+$$\frac{i \times (i + 1)} {2i} = \frac{i + 1} {2}$$
+
+Now we can rewrite:
+
+$\sum_{i=1}^{n} \frac{i+1} {2}$
+
+Know the runtime is:
+
+$$T_{average}(n) = O(n^2)$$
+
+This is the average runtime, a simple analysis considering everytime ~rank = 1~ and ~rank = j~ give the best and worst case, respectively:
+
+$$T_{best}(n) = O(n)$$
+
+$$ T_{worst}(n) = O(n^2)$$

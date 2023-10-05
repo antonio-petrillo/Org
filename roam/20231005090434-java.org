@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       7c21eed1-16f5-4f0f-a7d6-11739926de8d
+:END:
+#+title: Java
+#+filetags: :programming:language:oop:
+
+* TODO Add stuff about java

@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       db905660-a0c8-49f9-8b7f-4c03ec5aedb9
+:END:
+#+title: Pipe and Filter
+#+filetags: :architecture:engineering:pattern:
+
+* Description
+Basically a systems designed like a Unix shell.
+* Used in/when
++ Batch systems
++ Big stream of data input/output
+* Pros
++ Increase modularity (see bash shell, java streams or clojure sequenced collections)
+* Cons
++ The increased modularity require a great design between the various moving parts

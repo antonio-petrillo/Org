@@ -1,6 +1,0 @@
-#+title:      Prim
-#+date:       [2023-09-30 Sat 13:03]
-#+filetags:   :algorithm:graph:math:programming:visit:
-#+identifier: 20230930T130321
-
-* TODO study learn

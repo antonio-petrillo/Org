@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       e9be731d-1255-4fa2-b5d5-092109accc29
+:END:
+#+title: Universitá
+
+* Triennale
+Completa [[id:c085ab16-b94e-427e-b7b3-c3418bcbead2][Tircocinio]]
+* [[id:552c7a65-5fc1-497e-955f-8c17813f5b25][Master]]

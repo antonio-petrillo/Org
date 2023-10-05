@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       20860f37-cdeb-4b77-bb3a-dd191e9e396a
+:END:
+#+title: Data Structure
+#+filetags: :programming:datastructure:
+
+* Basics
++ [[id:e9a8cf7f-48e1-423f-8a74-776a0a1acf28][List]]
++ [[id:c636dc07-df77-48bd-965a-b0ca876b2d83][Stack]]
++ [[id:a253515e-a407-4097-bf60-bc534ac58ab3][Queue]]
+* Trees
++ [[id:521327ac-f3c5-42a9-a004-6edfccf6b29a][Tree]]
++ [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]]
++ [[id:7a4907c2-d7c9-4af8-8998-9f5fd0aab14c][AVL Tree]]
++ [[id:af07ecc4-755e-47dc-bd43-d9830a737b37][Red Black Tree]]
++ [[id:878f730a-7ba7-4a8b-b191-5328a650d8fd][Union Find Trees]]
+* Sets
++ [[id:878f730a-7ba7-4a8b-b191-5328a650d8fd][Union Find Trees]]
++ [[id:9932bdaf-f636-476a-b6da-78f27d75e236][Set]]  
+* Maps 
++ [[id:89b346f9-7d75-4bbf-a0f9-8bd5345e10af][Hash Table]]

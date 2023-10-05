@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       2dbbf71e-4a72-4fc6-9b4e-4f4178d876d1
+:END:
+#+title: Mediator
+#+filetags: :behavioral:engineering:pattern:
+
+* Use it when
+You have a lot of objects that cooperates together to do some work.
+As said in GoF, _encapsulates how a set of objects interact_.
+* Class Diagram
+[[../assets/mediator-cl.png]]
+* Participants
+** Mediator
+Define an interface with the operations, relations and collaborations that a /Mediator pattern/ should do.
+** ConcreteMediator
+implement The interface above, it should take care of instantiate the colleguaes and manage them.
+** Colleague classes
+Multiple class that should work together.
+* Consequences
+Decouple the various colleagues that collaborates together.
+As in the [[id:a4f4638c-4e2d-4df6-aa8e-9abd016807cb][Facade]] it is not that reusable, but it simplifies a lot the code.
+* Related
+/Mediator/ can be viewed as a kind of [[id:a4f4638c-4e2d-4df6-aa8e-9abd016807cb][Facade]].

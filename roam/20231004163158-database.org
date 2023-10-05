@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       d9a43605-d8af-4879-943a-e8816e7dda05
+:END:
+#+title: Database
+
+* Database Files
++ [[id:df0f92d7-7e9b-4b61-9cf8-7b79808e20dd][Heap Files]]
++ [[id:044cbe89-4577-45b8-abfd-b3797e23208f][Hash Files]]
+* Database Indexes
++ [[id:bfd29816-b292-4819-be40-1782110c26a1][Primary Index]]
++ [[id:df06bbdb-7d41-4b0a-afcc-aa174c1283d0][Secondary Index]]
++ [[id:068472c5-e01c-4e79-bba0-0f177958a022][Clustering Index]]
++ [[id:42d1d853-ffdb-48b6-b5ed-774e5334b965][Multilevel Index]] 

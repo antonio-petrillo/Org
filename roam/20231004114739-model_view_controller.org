@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       1fdede00-97e0-404d-b605-3eb407cd8620
+:ROAM_ALIASES: MVC
+:END:
+#+title: Model View Controller
+#+filetags: :architecture:engineering:pattern:
+
+* Description
+Heavily based on [[id:5e00613e-4604-4497-8d53-f95b334c8e16][Observer]] pattern.
+Separate the presentation and interaction with the data on a system.
+The system is divide in three parts:
++ M → Model:
+  Represent the /data/ on the system, when there is a change on the model it notify the views that are watching it.
++ V → View:
+  Represent the presentation of a /model/, it sends the updates action to the /controller/, when notified it update the presentation.
++ C → Controller:
+  Manage the relation between the /model/ and the /controller/, it forward the updates from the /view/ to the /model/.
+  It also manager which /view/ to show.
+* Scheme
+** MVC
+[[../assets/mvc-example.gif]]
+** MVC Web
+[[../assets/web-mvc-example.png]]
+* When to use it
+When there can be multiple (different) views of the same models.
+It is also used to decouple the GUI from the software, this let the GUI change while the backend stays the same.
+* Pros
++ Change the data (aka the /model/) independently from the /views/
++ Add multiples /views/
+* Cons
++ Make the codes less readable and understandable, here the documentation is very helpful
++ With a lot of views it inherit the same problems the [[id:5e00613e-4604-4497-8d53-f95b334c8e16][Observer]] pattern

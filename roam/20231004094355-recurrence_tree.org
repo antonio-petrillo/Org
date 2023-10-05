@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       b75dcae6-85d2-41e7-96b9-dc8761fc3aa2
+:END:
+#+title: Recurrence Tree
+#+filetags: :algorithm:dsa:programming:math:
+

@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       39780f63-f4ed-496e-bdc2-e77be0a893ff
+:END:
+#+title: Interpreter
+#+filetags: :behavioral:engineering:pattern:
+
+* Intent
+Given a language, define a representation for its grammar along with an interpreter that use the representation to interpret sentence in the language.
+* Use it when
++ You have a simple grammer to work with.
+* Class Diagram
+[[../assets/interpreter-cl.png]]
+* Participants
+** Abstract Expression
+Common interface to all nodes in the _Abstract Syntax Tree_, aka AST.
+** Terminal Expression
+Implements /Abstract Expression/, it is a terminal symbol in the grammar.
+Each grammar should have one.
+** Nonterminal Expression
+Implements /Abstract Expression/, each subclass implements one of the behaviors of the given grammar.
+** Context
+Contains global information that's global to the interpreter.
+* Consequences
++ Easy to change and to extend grammar.
++ Implement the grammar is easy (exploit the language compiler).
++ Adding new way to interpret expression, see [[id:b7ff3ed9-7cf7-4386-bf96-252a26207bee][Visitor]].
+* Drawbacks
++ Complex grammar are hard to mantain.

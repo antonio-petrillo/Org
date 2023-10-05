@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       7c2ddc78-238f-4a05-ae21-e51f06a831c3
+:END:
+#+title: Package Diagram
+#+filetags: :architecture:uml:engineering:
+
+* What is it used for
+Show how the code/functionality should be arranged in packages, modules, etc...
+* Characteristics
+Similar to the [[id:c54e41cd-3b14-4768-8b3c-ad6a350211a1][Class Diagram]] but it used the ~package~ symbol to identify the modules.
+* Example
+[[../assets/package-diagram.png]]

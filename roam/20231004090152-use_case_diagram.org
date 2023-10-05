@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       553e752d-b3bb-4d18-86ee-cfd5efcff1b0
+:END:
+#+title: Use Case Diagram
+#+filetags: :architecture:engineering:uml:
+
+* What is it used for
+To model the interaction between the system and external actor (stakeholders or external softwares).
+It is also used to describe how different actor would use the system.
+* Summary
+| Symbol          | Role     | Description                                  |
+|-----------------+----------+----------------------------------------------|
+| stickman        | actor    | actor (stakeholders or external entity)      |
+| ellipses + text | action   | operation performed by the system            |
+| arrow           | relation | specify which actor can perform which action |
+* Note
+Since this type of diagram is extremely simple it usually completed with a table that explains all the actors, actions and relations.
+* Example
+[[../assets/use-case-uml.png]]

@@ -1,0 +1,91 @@
+:PROPERTIES:
+:ID:       1feeb941-0166-41c3-b76b-991b77903824
+:ROAM_ALIASES: "Kadane Algorithm"
+:END:
+#+title: Max Subsequence
+#+filetags: :dynamic-programming:algorithm:math:programming:
+
+* Max subsequence problem
+Given a sequence of value (presumably numbers) find the longest subsequence that give the maximum value once summed.
+* Bad Implementations
+** Bad Algorithm 1
+Create all the subsequence and sum, at each new subseq pick the one with the max value.
+#+BEGIN_SRC java
+public int maxSubseq (seq []int){
+    int maxSum = 0;
+    for (int i = 1; i < seq.length; i++){
+        for (int j = i; j < seq.length; j++){
+            int sum = 0;
+            for (int k = i; k < j; k++){
+                sum += seq[k];
+            }
+            maxSum = sum > maxSum ? sum : maxSum;
+        }
+    }
+    return maxSum;
+}
+#+END_SRC
+*** Time complexity
+$$T(n) = O(n^3)$$
+** Bad Algorithm 2
+Algo 1 is pretty bad, now we can improve it.
+Note that a lot of subsequences are computed multiple time, we can exploit that to avoid the innermost for.
+#+BEGIN_SRC java
+public int maxSubseq (seq []int){
+    int maxSum = 0;
+    for (int i = 1; i < seq.length; i++){
+        int sum = 0;
+        for (int j = i; j < seq.length; j++){
+            sum += seq[j];
+            maxSum = sum > maxSum ? sum : maxSum;
+        }
+    }
+    return maxSum;
+}
+#+END_SRC
+*** Time complexity
+Better than algo 1 but still it can be improved.
+$$T(n) = O(n^2)$$
+* Algorithm
+Now we add another property to the algorithm.
+If at some point adding a value at index $k$ the current sum is negative we can avoid all subsequences up to the index $k$ and start at $k+1$, as result we visit all the sequence at most one time.
+#+begin_src java
+public int maxSubseq (seq []int){
+   int maxSum = 0, sum = 0;
+   for (int i = 0; i < seq.length; i++){
+       sum += seq[i];
+       if (sum >= 0){
+           maxSum = sum > maxSum ? sum : maxSum;
+       } else {
+           sum = 0;
+       }
+   }
+   return maxSum;
+}
+#+end_src
+** Time complexity
+$$T(n) = O(n)$$
+** Property
+Enunciate the property is not sufficient we need to prove it.
+*** Assumption
+Pick $i,j \in [0, seq.length)$, assume that all the sum from $i$ to $j-1$ are positive.
+If we add ~seq[j]~ the sum become negative $\sum_{k=i}^{j} seq[k] \lt 0$.
+Hence we can start computing the max subsequence from $j+1$.
+*** Proof
+$\forall i,j \in [0, seq.lenght)$ pick $p,q$ such that $\forall i \lt p \le j$ and $\forall p \le q \le j$ we have:
+$$\sum_{k=p}^{q} seq[k] \le \sum_{k'=i}^{q} seq[k']$$
+
+We can split the first sum into:
+$$\sum_{k=i}^{p-1} seq[k] + \sum_{k=p}^{q} seq[k]$$
+
+This give the following inequality:
+$$\sum_{k=i}^{p-1} seq[k] + \sum_{k=p}^{q} seq[k] \le \sum_{k=i}^{q} seq[k]$$
+
+Now we consider $\forall i \lt p \le j, \forall z \ge 0$ we have:
+$$\sum_{k=p}^{j} seq[k] \le \sum_{k=j+1}^{z} seq[k]$$
+Using the previous inequality:
+$$\sum_{k=p}^{j} seq[k] + \sum_{k=j+1}^{z} seq[k] \le \sum_{k=j+1}^{z} seq[k]$$
+
+In our assumption $\sum_{k=p}^{j} seq[k] \le 0$ this prove the result. $\blacksquare$
+* Note
+This is know as [[https://en.wikipedia.org/wiki/Maximum_subarray_problem][Kadane algorithm]].

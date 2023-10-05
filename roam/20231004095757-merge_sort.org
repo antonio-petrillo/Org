@@ -1,0 +1,75 @@
+:PROPERTIES:
+:ID:       08bb9acb-7bc1-4fb3-ad7d-9e593141dbb2
+:END:
+#+title: Merge Sort
+#+filetags: :comparison:algorithm:sorting:programming:recursive:
+
+* Note
+Claimed to be invented by [[https://en.wikipedia.org/wiki/John_von_Neumann][John Von Neumann]].
+As in [[id:f04cec69-b333-4c83-863d-99d7122527ed][Selection Sort]] $T_{best}$, $T_{worst}$ and $T_{best}$ are the same.
+* Algorithm
+In haskell just for laziness.
+#+BEGIN_SRC haskell
+merge :: Ord a => [a] -> [a] -> [a]
+merge [] ys         = ys
+merge xs []         = xs
+merge (x:xs) (y:ys) | x < y     = x:merge xs (y:ys)
+                    | otherwise = y:merge (x:xs) ys
+
+halve :: [a] -> ([a],[a])
+halve xs = (take midpoint xs, drop midpoint xs)
+           where midpoint = length xs `div` 2
+
+mergeSort :: Ord a => [a] -> [a]
+mergeSort []  = []
+mergeSort [x] = [x]
+mergeSort  xs = merge (mergeSort left) (mergeSort right)
+            where (left,right) = halve xs
+#+END_SRC
+* Time complexity
+The complexity of mergeSort can be calculated with a simple recurrence equation.
+See [[id:b75dcae6-85d2-41e7-96b9-dc8761fc3aa2][Recurrence Tree]].
+
+$$
+\begin{equation}
+  T_{mergeSort}(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    2T_{mergeSort}(\frac n 2) + T_{merge}(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+The $T_{merge}(n)$ is clearly $O(n)$ since it visit every time all the sequence given in input.
+So we can write:
+
+$$
+\begin{equation}
+  T_{mergeSort}(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    2T_{mergeSort}(\frac n 2) + O(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+The height of the recurrency tree is $\log(n)$ since every time the size is halved.
+In fact:
+$$ 1 = \frac n {2^h}$$
+$$ 2^h = n$$
+$$ h = \log(n)$$
+
+The cost at each level, since the local cost is linear $O(n)$ at each recursive call, is:
+$n$ at level 0
+$2 \cdot \frac n 2$ at level 1
+$4 \cdot \frac n 4$ at level 2
+...
+$i \cdot \frac n i$ at level i
+...
+etcetera.
+
+So at the generic level is
+$$i \cdot \frac n i = n$$
+
+So the cost of mergeSort is:
+
+$$\sum_{i=0}^{\log(n)} n = n\sum_{i=0}^{\log(n)}O(1)$$
+$$O(n \log(n))$$

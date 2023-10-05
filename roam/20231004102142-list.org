@@ -1,0 +1,83 @@
+:PROPERTIES:
+:ID:       e9a8cf7f-48e1-423f-8a74-776a0a1acf28
+:END:
+#+title: List
+#+filetags: :datastructure:programming:dsa:
+
+* List
+One of the simplest data structure.
+It's also at the core of some programming language, usually functional, like [[https://clojure.org/][clojure]] or [[https://www.haskell.org/][haskell]].
+** Definition
+It consist of a node that can contain a value of ~any type~ and a pointer to the next element.
+#+begin_src c
+typedef struct node {
+    struct node* next;
+    type value;
+}* node;
+
+typedef struct list {
+    struct node* head;
+    // others optional
+    // size
+    // etc...
+}* list;
+#+end_src
+** Operation supported
+*** Add element
+#+begin_src c
+void add(list l, type element){
+    node newnode = malloc(type);
+    newnode->value = element;
+    newnode->next = l->head;
+    l->head = newnode
+}
+#+end_src
+**** Time complexity
+This depends on how it is performed, in most of the case it is pushed to the head or to the tail in costant time.
+$$T_{add}(l, elem) = O(1)$$
+*** Remove element
+#+begin_src c
+void remove(list l, type element){
+    node iter = l->head;
+    node prev = NULL;
+    while(iter != NULL || iter->value != element){
+        prev = iter;
+        iter = iter->next;
+    }
+    if (iter != NULL){
+        if (prev == NULL){
+            l->head = l->head->next;
+        }else{
+            prev->next = iter->next;
+        }
+        free(iter);
+    }
+    return iter;
+}
+#+end_src
+**** Time complexity
+$$T_{remove}(l, elem) = O(n)$$
+*** Search
+**** Time complexity
+#+begin_src c
+type search(list l, type element){
+    node iter = l->head;
+    while(iter != NULL || iter->value != element){
+        iter = iter->next;
+    }
+    return iter;
+}
+#+end_src
+$$T_{search}(l, elem) = O(n)$$
+* Properties
+List doesn't require can have, theoretically, infinity size, they don't require to realloc memory.
+* Comparison with the array
+|               | add    | remove | search      | realloc |
+|---------------+--------+--------+-------------+---------|
+| list          | $O(1)$ | $O(n)$ | $O(n)$      | $\emptyset$     |
+| ordered list  | $O(1)$ | $O(n)$ | $O(n)$      | $\emptyset$     |
+| array         | $O(1)$ | $O(n)$ | $O(n)$      | $O(n)$  |
+| ordered array | $O(n)$ | $O(n)$ | $O(\log n)$ | $O(n)$  |
+* Extension of List data structure
++ Doubly linked list (there is pointer also to the previous value)
++ Circular list (a list with a specific size that work on ~arthmetic modulo size~)

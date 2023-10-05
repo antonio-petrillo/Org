@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       952c80d0-0a56-45d5-b3d0-7d5a25e1067f
+:END:
+#+title: Scrum
+#+filetags: :agile:incremental:engineering:
+
+* Can be considered an [[id:28c613f5-eb22-4793-bf9f-1acbe38606a2][Agile]] method
+It is defined as a /framework/ for projects organization.
+* Diagram
+[[../assets/sw-scrum.png]]
+* Jargons
+| Term            | Definition                                                                           |
+|-----------------+--------------------------------------------------------------------------------------|
+| Team            | team of developers (at most 7) that can operate autonomously                         |
+| Increment       | Increment made after a /sprint/ (see later), potentially it could be released        |
+| Product backlog | A series of requirements that the software should meet, since it's an agile method they can change |
+| Product owner   | The final clients for our software                                                   |
+| Scrum           | Daily meeting to analyze the progess made                                            |
+| Scrum Master    | It takes care that the Scrum process is respected                                    |
+| Sprint          | Cycle of develop that should produce an increment, usually last for 2 to 4 weeks     |
+| Speed           | ETA for a feature to be implemented, its main purpouse is understand if a feature can fit in a sprint |

@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       696102a0-b334-423a-932d-87c5d06c4ff8
+:ROAM_ALIASES: Set
+:END:
+#+title: HashSet
+#+filetags: :datastructure:programming:
+
+* Set
+A set is typically implemented with an [[id:89b346f9-7d75-4bbf-a0f9-8bd5345e10af][Hash Table]] in which the ~keys~ represent the element in the set and value is just ~NULL~.
+Some languages, like [[id:3a7040a9-c0e8-4c7a-a96d-4341c6f4dc73][golang]], doesn't have sets, they give you just maps, here an example of a /set of strings/:
+#+begin_src go
+mySet := make(map[string]struct{})
+
+// insertion
+mySet["a new element"] = struct{}{}
+
+// search
+_, ok := mySet["searched element"]
+
+// deletion
+delete(mySet, "element to remove")
+#+end_src
+* Operations
+** Insert
+Just add the key to the set.
+$$T_{insertion} = O(1)$$
+** Contains
+Check if the underlying map has the specified key.
+$$T_{contains} = O(1)$$
+** Delete
+Remove, if present, the given key (so the pair ~<Key, NULL>~) from the underlying map.
+$$T_{delete} = O(1)$$
+** Set operations
+In strongly typed language these operations are not trivial.
+You should choose a signature that let you be the more general possible, without losing information.
+*** Note 
+If you need to maintain an extremely efficient disjointed partition of elements you'd better use [[id:878f730a-7ba7-4a8b-b191-5328a650d8fd][Union Find Trees]].
+* Variations
+** TreeSet
+A Treeset, in the [[id:7c21eed1-16f5-4f0f-a7d6-11739926de8d][Java]] jargon, is a set upon which the given keys have an order hence they can be traversed in order.
+The implementation is similar to the *HashSet* but instead of an *HashMap* it use a balanced tree to store the data, typically a [[id:af07ecc4-755e-47dc-bd43-d9830a737b37][Red Black Tree]].
+*** Operations
+All the operations are proportioned to _height_ of the underlying tree, hence all the operations costs $T_{op}=O(\log_2(n))$, where $n$ is the numbers of node in the set.

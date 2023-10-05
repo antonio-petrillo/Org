@@ -1,0 +1,307 @@
+:PROPERTIES:
+:ID:       7a4907c2-d7c9-4af8-8998-9f5fd0aab14c
+:END:
+#+title: AVL Tree
+#+filetags: :programming:datastructure:
+
+* AVL
+The [[https://en.wikipedia.org/wiki/AVL_tree][AVL]] are a class of [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] that have
+$$height = \log n ~ where ~ n = numberOfNodes$$
+In other words they have logarithmic height.
+* Definition
+They inherit the definition on a bst.
+Each node have a field $height$ and its value is the height at that node.
+The $height$ must respect the following property:
+Given an AVL T
+$$|~T.left.height - T.right.height~| \le 1$$
+The height of each siblings differ at most by one.
+A ~nil~ node have $height = 0$
+
+#+begin_src c
+typedef struct node {
+    struct node* left;
+    struct node* right;
+    int key;
+    type value;
+    int height;
+}* node;
+#+end_src
+* How they achieve the logarithmic height
+They perform a normal BST insert but when the recursive call ends it perform some balancing operation to keep the height logarithmic.
+** Balancing operation
+*** Helpers function
+**** height
+#+begin_src c
+int height(node root){
+    int h = 0;
+    if(root != NULL){
+        h = root->height;
+    }
+    return h;
+}
+#+end_src
+**** max
+#+begin_src c
+int max(int a, int b){
+    return a > b ? a : b;
+}
+#+end_src
+*** Clockwise rotation
+#+begin_src c
+node clockwise_rotation(node root){
+    node pivot = root->left;
+    root->left = pivot->right;
+    pivot->right = root;
+    root->height = 1 + max(height(root->left), height(root->right));
+    pivot->height = 1 + max(height(pivot->left), height(pivot->right));
+    return pivot;
+}
+#+end_src
+*** CounterClockwise rotation
+#+begin_src c
+node counter_clockwise_rotation(node root){
+    node pivot = root->right;
+    root->right = pivot->left;
+    pivot->left = root;
+    root->height = 1 + max(height(root->left), height(root->right));
+    pivot->height = 1 + max(height(pivot->left), height(pivot->right));
+    return pivot;
+}
+#+end_src
+*** Double Clockwise rotation
+#+begin_src c
+node double_clockwise_rotation(node root){
+    node->left = counter_clockwise_rotation(node->left);
+    return clockwise_rotation(root);
+}
+#+end_src
+*** Double CounterClockwise rotation
+#+begin_src c
+node double_counter_clockwise_rotation(node root){
+    node->right = clockwise_rotation(node->left);
+    return counter_clockwise_rotation(root);
+}
+#+end_src
+*** When are they to be used?
+If a new insertion increment the height to much on one of the subtrees rebalance accordingly.
+This condition is easy to check.
+**** Unbalance on the left
+$$height(T.left) - height(T.right) > 1$$
+**** Unbalance on the right
+$$height(T.right) - height(T.left) > 1$$
+*** Which rotation use and in which case?
+Here I will explain only the left case for the insertion, but on the right is the same, just switch ~left~ with ~right~.
+Considering the insertion on the left $T' = T.left$ and the node $T$ detect the violation, there are two cases:
++ the insertion happens in $T'.left$
++ the insertion happens in $T'.right$
+Once there is a violation, to know which one do we just need to pick the heighest subtree.
+**** Insertion on $T'.right$
+Resolve with ~double_clockwise_rotation~ on ~T~.
+**** Insertion on $T'.left$
+Resolve with ~clockwise_rotation~ on ~T~.
+*** Balancing function
+**** Balance left
+#+begin_src c
+node balance_left(node root){
+    if(height(root->left) - height(root->right) > 1){
+        if (height(root->left->right) > height(root->left->left)){
+            root = double_clockwise_rotation(root);
+        } else {
+            root = clockwise_rotation(root);
+        }
+    }
+    return root;
+}
+#+end_src
+**** Balance right
+#+begin_src c
+node balance_right(node root){
+    if(height(root->right) - height(root->left) > 1){
+        if (height(root->right->left) > height(root->right->right)){
+            root = double_counter_clockwise_rotation(root);
+        } else {
+            root = counter_clockwise_rotation(root);
+        }
+    }
+    return root;
+}
+#+end_src
+* Operation
+** Insertion
+#+begin_src c
+node avl_insert(node root, int newkey, type value){
+    if(root == NULL){
+       root = malloc(node);
+       node->left = node->right = NULL;
+       node->height = 1;
+       node->key = newkey;
+       node->value = value;
+    } else {
+        if(root->key > newkey){
+            root->left = avl_insert(root->left, newkey, value);
+            root = balance_left(root);
+        } else if (root->key < newkey){
+            root->right = avl_insert(root->right, newkey, value);
+            root = balance_right(root);
+        } else {
+            // + replace
+            // + ignore
+        }
+        root->height = 1 +  max(height(root->left), height(root->right));
+    }
+    return root;
+}
+#+end_src
+** Deletion
+The inserting balancing operation can be also used for the deletion, in fact they are used when the height change to much, this also apply to the deletion.
+During an insertion the height increment in the subtree where the insertion is performed, during the deletion the height decrement in the subtree where it is performed, so on deletion on the right we need a ~balance_left~ and on a deletion on the left we need a ~balance_right~ function.
+#+begin_src c
+node avl_delete(node root, int key){
+    if(root != NULL){
+        if (root->key > key){
+           root->right = avl_delete(root->right, key);
+           root = balance_left(root);
+        } else if (root->key < key){
+           root->left = avl_delete(root->left, key);
+           root = balance_right(root);
+        } else {
+           root = delete_root(root);
+        }
+        root->height = 1 +  max(height(root->left), height(root->right));
+    }
+    return root;
+}
+#+end_src
+*** Helper functions
+**** Delete root
+#+begin_src c
+node delete_root(node root){
+    if (root->left == NULL || root->right == NULL){
+        node tmp = root;
+        if(root->left == NULL){
+            root = root->right;
+        } else {
+            root = root->left;
+        }
+        free(tmp);
+    }else {
+        node tmp = minimum_deconnection(node, node->right);
+        tmp->left = root->left;
+        tmp->right = root->right;
+        tmp->height = 1 + max(height(tmp->left), height(tmp->right));
+        free(root);
+        root = tmp;
+    }
+    return root;
+}
+#+end_src
+**** Minimum Deconnection
+#+begin_src c
+node minimum_deconnection(node parent, node child){
+    node result = NULL;
+   if(child->left == NULL){
+       result = child;
+       if(child == parent->right){
+           parent->right = child->right;
+           parent = balance_left(parent);
+       } else {
+           parent->left = child->right;
+           parent = balance_right(parent);
+       }
+       parent->height = 1 + max(height(parent->left), height(parent->right));
+   } else {
+       result = minimum_deconnection(child, child->left);
+       child->height = 1 + max(height(child->left), height(child->right));
+       child = balance_right(child);
+   }
+   return result;
+}
+#+end_src
+** The others
+The same version used in a normal [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] can be applied to an AVL without changes.
+* How we can be sure that height is logarithmic?
+To prove that we need a subclass of the AVLs with the following property:
+Imagine a partition of all the AVLs and the partition is done by the height.
+$AVL_{min}$ is the subclass, one from each class (so one of height 1, one of height 2, etc...), in which each AVL inside is the highest given the an amount of $nodes = n$.
+In other words this subclass contain the most unbalanced in height given that they contatin n nodes.
+** Example of $AVL_{min}$
+[[../assets/avl-min.jpg]]
+** Pattern on $AVL_{min}$
+[[../assets/avl-min-pattern.jpg]]
+Each $AVL_{min}$ of $height = h$ is composed by an $AVL_{min}$ of $height = h -1$ and one of $height = h - 2$
+** Height of AVL min
+The pattern above show a pattern similar to [[https://en.wikipedia.org/wiki/Fibonacci_number][fibonacci sequence]], with this we can try to find a closed formula for the height.
+Let's if a table can show a pattern on the numbers:
+| h              | 0 | 1 | 3 | 4 |  5 |  6 |  7 |  8 |  9 |  10 |
+|----------------+---+---+---+---+----+----+----+----+----+-----|
+| $fibonacci(h)$ | 0 | 1 | 1 | 2 |  3 |  5 |  8 | 13 | 21 |  34 |
+| $AVL_{min}(h)$ | 1 | 2 | 4 | 7 | 12 | 20 | 33 | 54 | 88 | 143 |
+*** Closed formula
+We need a function that given the height of an ~AVL min~ return the number of nodes of the tree, say $N(h)$.
+One pattern that can be seen on the table is:
+$$N(h) = fibonacci(h+3) - 1$$
+
+If we can prove that we have a closed formula:
+**** Proof
+Proof by induction
+***** Base case
+$$h = 1, fibonacci(1 + 3) - 1 = 2 - 1 = 1$$
+An $AVL_{min}$ of $height = 1$ is a singleton.
+The base case holds.
+$$\blacksquare$$
+***** Induction case
+Assume true for $\forall h' \lt h$.
+$$N(h) = N(h - 1) + N(h - 2) + 1$$
+$$N(h) = fibonacci(h - 1 + 3) - 1 + fibonacci(h - 2 + 3) - 1 + 1$$
+$$N(h) = fibonacci(h + 2) + fibonacci(h + 1) - 1$$
+$$N(h) = fibonacci(h + 3) - 1$$
+$$\blacksquare$$
+*** Calculate the height
+The fibonacci sequence asymptotic growth is known.
+$$fibonacci(n) \approx \frac 1 {\sqrt 5} \cdot (\frac {1 + \sqrt 5} 2)^n$$
+Hence the height of an ~AVL min~ is:
+$$N(h) \approx  \frac 1 {\sqrt 5} \cdot (\frac {1 + \sqrt 5} 2)^{h+3}-1$$
+$$n \approx  \frac 1 {\sqrt 5} \cdot (\frac {1 + \sqrt 5} 2)^{h+3}-1$$
+$$n + 1 \approx  \frac 1 {\sqrt 5} \cdot (\frac {1 + \sqrt 5} 2)^{h+3}$$
+$$\sqrt 5 \cdot (n + 1) \approx  (\frac {1 + \sqrt 5} 2)^{h+3}$$
+$$c_1 \cdot (n + 1) \approx  (c')^{h+3}$$
+$$\log_{c'} {c_1 \cdot (n + 1)} \approx h+3$$
+$$h+3 \approx \log_{c'} {c_1 \cdot (n + 1)} $$
+$$h \approx \log_{c'} {c_1 \cdot (n + 1)} - 2 $$
+$$h = O(\log_2 {n}) $$
+$$\blacksquare$$
+
+Now we know that the $AVL_{min}$ have logarithmic height, we need to prove that they can be used as a bound to all the others AVL with the same height.
+** Theorem
+Given the number of node n, $nodes = n$, the height of an $AVL_{min}$ with n nodes is the heighet in his class.
+*** Proof
+Proof by contradiction.
+Take ~T~ such that
+$$T \in AVL_{min}(h)$$
+By contradiction we assume that $\exist T' \in AVL$ that have the same number of nodes of $T$ and $height(T') \gt height(T)$.
+Here the formula (contradiction):
+$$\forall T_{\mu} \in AVL_{min}(h), ~ where ~ |T_{\mu}| = n \implies \exist T \in AVL, ~ where ~ |T| = n \land height(T) > h$$
+Since $T$ is higher than $T_{\mu}$ we can /cut/ $T$ at the same height of $T_{\mu}$ .
+Doing that we remove some node from $T$, but this create a contradiction, let's see why.
+$$|T| = n \land |T_{\mu}| = n$$
+$T'$ the /cutted version/ have less than n nodes, $|T'| \lt n$.
+$$height(T') = height(T_{\mu})$$
+But this is absurd since $T_{\mu} \in AVL_{min}(h)$, so such $T$ and $T'$ cannot exist, so our thesis is true.
+$$\forall T_{\mu} \in AVL_{min}(h), ~ where ~ |T_{\mu}| = n \implies \forall T \in AVL, ~ where ~ |T| = n \land height(T) \le h$$
+$$\blacksquare$$
+* Time complexity
+Consider $n = N(Tree)$.
+| operation        | time complexity |
+|------------------+-----------------|
+| insert           | $O(\log n)$     |
+| remove           | $O(\log n)$     |
+| search           | $O(\log n)$     |
+| min              | $O(\log n)$     |
+| max              | $O(\log n)$     |
+| successor        | $O(\log n)$     |
+| predecessor      | $O(\log n)$     |
+| is_bst           | $O(\log n)$     |
+| pre_order_visit  | $O(n)$          |
+| post_order_visit | $O(n)$          |
+| in_order_visit   | $O(n)$          |
+| in_order_visit   | $O(n)$          |

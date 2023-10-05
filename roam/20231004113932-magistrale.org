@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       552c7a65-5fc1-497e-955f-8c17813f5b25
+:ROAM_ALIASES: Master
+:END:
+#+title: Magistrale
+#+filetags: :master:
+* Primo semestre
+** Corsi obbligatori
++ [[https://www.docenti.unina.it/#!/professor/504f52464952494f5452414d4f4e54414e4154524d50465237364c33314638333951/materiale_didattico/34298879?codIns=U3518][Operating System for Mobile, Cloud and IoT]]
++ [[https://www.docenti.unina.it/#!/professor/524f424552544f5052455645544550525652525436384530344539333253/materiale_didattico/448853?codIns=U0861][Neural Network and Deep Learning]], other res. on teams
++ [[https://www.docenti.unina.it/#!/professor/4749554c49414e4f4c414343455454494c4343474c4e3534443233463833394c/materiale_didattico/auth/34218786?codIns=U3519][Parallel and Distributed Computing]]
++ [[https://www.docenti.unina.it/#!/professor/44414e49454c52494343494f524343444e4c37384831365a3131344d/materiale_didattico/34459553?codIns=U3276][DataBase Technologies]]
+** Corsi opzionali
++ ?
+** Corsi caratteristici
++ ?

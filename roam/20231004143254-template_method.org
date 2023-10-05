@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       b3651967-5730-4da3-b822-a3a6db0dbec9
+:END:
+#+title: Template Method
+#+filetags: :behavioral:engineering:pattern:
+
+* Intent
+You have a /customizable/ algorithm in which a series of steps are always the same and the client can customize the ones that can vary.
+* Use it when
++ You have a lot of duplicated code (they can differ by some instruction) between siblings class.
++ Implements the invariant part of an algorithm.
++ Extract common behavior.
+* Class Diagram
+[[../assets/template-method-cl.png]]
+* Participants
+** AbstractClass
+Define the primitive operations that concrete subclasses can define (the missing steps).
+It also define the order in which all the steps must be called.
+** ConcreteClass
+Implements the missings steps above.
+* Consequences
++ Increase code reuse.
+* Drawback
++ Inverted control structure, the parent class calls the methods in the child class and not viceversa.

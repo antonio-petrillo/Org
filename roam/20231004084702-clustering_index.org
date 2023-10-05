@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       068472c5-e01c-4e79-bba0-0f177958a022
+:END:
+#+title: Clustering Index
+#+filetags: :database:index:
+
+* Definition
+A clustering index is an index which is built upon a clustering field.
+The entries are sorted based on the given Key.
+** Note
+If a data file is ordered upon a field that is not a *Primary Key* that field is called *Clustering Field*.
+Conceptually Clustering Indexes are like [[id:bfd29816-b292-4819-be40-1782110c26a1][Primary Index]], but they are e based on differed fields
+* Characteristics
+See Primary indexes.

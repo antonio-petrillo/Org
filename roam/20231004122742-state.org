@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       e827fdeb-fbe5-4e10-aa76-42fb180e4e53
+:ROAM_ALIASES: "State Pattern"
+:END:
+#+title: State
+#+filetags: :behavioral:engineering:pattern:
+
+* Intent
+Allow an Object to change its behavior when its internal stage change, the object seems to change class.
+* Use it when
+You have to model a behavior/relation to model like a /DFA/, the example in the book is the /TCPConnection/, in which the connection can be: closed, established, listeining, etc.
+Each state can perform operation in a different way, some operation may be unusable in some states:
+I.E. if state is /TCPClosed/ you cannot use receive method.
+* Class Diagram
+[[../assets/state-cl.png]]
+* Participants
+** Context
+Delegates state specific request to the state interface.
+** State
+Interface that define all the common operations, even the ones that are not supported by some states, in that cases is a good practice to throw a meaningful exception.
+** Concrete State (subclasses)
+Implementation of the state interface.
+* Consequences
++ Localize state related operation to different concrete states.
++ If each /Concrete State/ is _stateless_ the /State/ can be shared.
++ Easy to extends, just define new /Concrete State/, there are some caveats, see below.
+* Drawback
++ If the implementation approach require the client to specify the next state the *extends* proccess is easy.
+  Instead if the next state is specified in the /Concrete State/ it occour to change these accordingly when a new state is added.
+* Implementation details
+You have to choose if the next state transition must be implemented by you or the client.

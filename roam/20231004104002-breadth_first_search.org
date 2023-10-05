@@ -1,0 +1,220 @@
+:PROPERTIES:
+:ID:       56e26ea1-9a81-440a-abb9-1ae3f8f964a5
+:ROAM_ALIASES: BFS
+:END:
+#+title: Breadth First Search
+#+filetags: :graph:programming:algorithm:
+
+* BFS (Breadht First Search)
+It is pretty similar to the breadth visit on a [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]].
+The Breadht First Search is a type of visit with some properties, like:
++ find the shortest path (by hop) from a source vertex to each reachable vertex in the graph.
+* Algorithm
+#+begin_src c
+int[] BFS(Graph g, vertex src){
+    vertex[] visited = calloc(g.size, vertex);
+    vertex[] predecessor = calloc(g.size, vertex);
+    int[] distance = calloc(g.size, int);
+    for(int i=0; i < g.size; i++){
+        distance[i] = ∞;
+    }
+
+    predecessor[src] = NONE;
+    distance[src] = 0;
+
+    queue q = new_queue();
+    enqueue(&q, src);
+
+    while(!is_empty(q)){
+        vertex v = dequeu(&q);
+        for(vertex u = g.vertex[v]; u != NULL; u = u->next){
+            if (visited[u] == WHITE){ //unseen
+                enqueue(&q, u);
+                predecessor[u] = v;
+                distance[u] = distance[v] + 1;
+                visited[u] = GRAY;
+            }
+        }
+        visited[v] = BLACK;
+    }
+    return distance;
+}
+#+end_src
+** Generate path
+#+begin_src c
+static void gen_path_helper(int[] bfs_visit, vertex src, vertex dest){
+    if(src == dest){
+       printf("path := %d\t", src);
+    } else {
+        gen_path_helper(bfs_visit, src, bfs_visit[dest]);
+        printf(",%d\t", dest);
+    }
+}
+
+void gen_path(int[] bfs_visit, vertex src, vertex dest){
+    if(bfs_visit[dest] == ∞){
+        printf("dest %d is unreachable from %d\n", dest, src);
+    } else {
+        gen_path_helper(bfs_visit, src, dest);
+        printf("\n");
+    }
+}
+#+end_src
+* Properties
++ If a vertices is reachable from the source it will be discovered.
++ The path find out by the BFS are the shortest (by number of HOP).
+* Theorem
+The path find out by the BFS are the shortest, ~by number of HOP~.
+** Proof
+To complete this proof we first need a couple of lemmas.
+During the theorem and the lemmas proof we indicate:
++ $\delta(v)$ is the distance from a source to v, $src \to v$, this is a property of the graph.
++ $dist[v]$ is the distance from a source to v, $src \to v$, this is calculated by the BFS.
+*** Lemma 1
+In each graph:
+$$G = (V, E), s ~is~the~source~of~the~BFS$$
+$$\forall (v, u) \in E \implies \delta(s, u) \le \delta(s, v) + 1$$
+**** Proof
+***** Case 1
+~v~ unreachable and ~u~ unreachable.
+In this case:
+$$\delta(s,u) = \infty \le \delta(s, v) = \infty + 1 = \infty$$
+$$\blacksquare$$
+***** Case 2
+~v~ reachable and ~u~ unreachable.
+This is impossible since in the graph there is the edge $(v,u)$, this make $u$ reachable.
+$$\blacksquare$$
+***** Case 3
+~v~ unreachable and ~u~ reachable.
+$$\delta(s,u) = k \in \mathbb{N} \le \delta(s, v) = \infty + 1 = \infty$$
+$$\blacksquare$$
+Remember that $\delta$ compute the shortest path.
+***** Case 4
+~v~ reachable and ~u~ reachable.
+Proof by contradiction:
+We assume $\delta(s,u) \gt \delta(s, v) + 1$.
+To achieve that, $v$ should be reached from another vertex in $G$, say $z$, such that $\mu(s, z) \gt \mu(s, u)$.
+But this is absurd since $\mu$ compute the shortest path, and $\mu(s, v)$ is shorten than the supposed $\mu(s, z)$, this mean that $\mu(s,u)$ will get $\mu(s, v) + 1$
+
+$$\delta(s,u) = \delta(s,v) + 1$$
+$$\blacksquare$$
+*** Lemma 2
+The BFS overestimate the real distance.
+$$During ~ BFS, ~dist[v] \ge \delta(v)$$
+**** Proof
+$dist[v]$ is assigned when $v$ enter the queue, so we can prove this with induction on the number of $enqueue$.
+***** Base case
+0 enqueue performed.
+$$\mu(s, u) = k \in \mathbb{N} \le \infty$$
+$$\blacksquare$$
+***** Induction case
+Assume true for all the vertices visited the BFS overestimate the distance, we want to prove that for the next vertex dequeued the BFS overestimate.
+In formula:
+$$k \in \mathbb{N} ~ number ~ of ~ enqueue$$
+$$distance_k[v] \ge \mu_k(s,v)$$
+Thesis:
+$$distance_{k+1}[v] \ge \mu_{k+1}(s,v)$$
+
+Suppose that $u$ is the next ~unseen~ vertex, discovered by $v$.
+Using the Lemma 1:
+$$\mu(s,u) \le \mu(s,v) + 1$$
+Hence, we can use the induction hypothesis on $v$.
+$$\mu(s,u) \le \mu(s,v) + 1 \le distance[v] + 1 = distance[u]$$
+So the BFS overestimate also $\mu(s, u) \le distance[u]$
+$$\blacksquare$$
+*** Lemma 3
+On all the node in the queue subsist the following property, consider $k = queue.size$:
+$\forall i \in [1, \cdots k] \implies distance[v_k] \le distance[v_1] + 1$, ~part 1~.
+And
+$\forall i \in [1, queue.size - 1] \implies distance[v_i] \le distance[v_{i+1}]$, ~part 2~.
+**** Proof
+Proof by induction on the number of enqueue and dequeue.
+***** Base case
+****** Enqueue
+0 enqueue.
+Trivially true.
+****** Dequeue
+0 dequeue.
+Trivially true.
+***** Induction case
+****** Enqueue
+~part 1~.
+$v_0$ is the vertex that is used as source in the for loop.
+When it was in queue, we know that:
+$$distance[v_0] \le distance[v_1]$$
+We also know that:
+$$distance[v_k] \le distance[v_1] + 1$$
+But
+$$distance[v_1] + 1 = distance[v_{k+1}]$$
+Hence
+$$distance[v_k] \le distance[v_{k+1}]$$
+
+~part 2~
+Given
+$$distance[v_0] \le distance[v_1]$$
+$$distance[v_0] + 1 \le distance[v_1] + 1$$
+And
+$$distance[v_k] == distance[v_0] + 1$$
+We get
+$$distance[v_k] \le distance[v_1] + 1$$
+$$\blacksquare$$
+****** Dequeue
+The ~part 2~ is trivial true, if it is true for all the vertices in the queue, it remain true also after the dequeue.
+For the ~part 1~ we continue as follow:
+$$distance[v_{k-1}] \le distance[v_k]$$
+But for the ~part 1~ we know that:
+$$distance[v_k] \le distance[v_1] + 1$$
+Hence
+$$distance[v_{k-1}] \le distance[v_k] \le distance[v_1] + 2$$
+$$distance[v_{k-1}] \le distance[v_1] + 2$$
+$$\blacksquare$$
+*** Lemma 4
+Given $x,y \in V$ and $x$ and $y$ enter the queue during the BFS visit.
+If $x$ enter the queue before $y$ then $distance[x] \le distance[y]$.
+**** Proof
+It is a consequences of Lemma 3 and from the fact that each node enter the queue at most one time.
+$$\blacksquare$$
+*** BFS proof
+The precedent lemmas build a sliding window on the queue used by the BFS.
+To complete this proof we could imagine a partition of the ~vertices~ based on the distance from the source ~src~, a partition with $\mu(s, v \in V)$.
+With this in mind we can start a proof by induction.
+**** Base case
+class at distance 0.
+In this class there is only ~src~, with $distance[src] = 0$.
+$$\blacksquare$$
+**** Induction case
+Assume true for the class at distance $k - 1$, prove for the class $k$.
+Pick one of the vertex on the class $k$, say $u$.
+There are two cases:
++ $u$ unreachable
++ $u$ reachable
+***** Case 1
+The first is trivially true, if $u$ is unreachable it belong to the $\infty$ class and the BFS assign $distance[u] = \infty$.
+$$\blacksquare$$
+***** Case 2
+Suppose $u$ belong to the class at distance $k$.
+We will proof this by contradiction:
+$$u \in class_{k} \land distance[u] \ne k$$
+
+The case $distance[u] \le k+1$ is impossible since the algorithm overestimate the distance, see Lemma 2.
+The only case possible is $distance[u] \gt k$.
+
+Suppose that:
+$$u \in V \land class_{k-1}$$
+And
+$$(u, v) \in E$$
+
+Consider the moment in which the BFS traverse the edge $(u, v)$ and found $v$
+****** Case BLACK/Visited
+Impossible as said above, the BFS overestimate.
+****** Case GRAY/Discovered
+This mean that the vertex have already entered the queue getting a value smaller than $k$ which is also impossible.
+****** Case WHITE/Unseen
+In this case the vertex $v$ get $distance[v] = k$ and get the right value.
+****** End
+$$\blacksquare$$
+* Time complexity
+Each node is visited at most once, and at most we traverse each edge at most once.
+$$T_{BFS}(G) = O(|V| + |E|)$$
+* Example of a BFS
+[[../assets/bfs-example.jpg]]

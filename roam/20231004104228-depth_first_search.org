@@ -1,0 +1,224 @@
+:PROPERTIES:
+:ID:       00159d89-69fa-42b2-8ab5-884c14db7389
+:ROAM_ALIASES: DFS
+:END:
+#+title: Depth First Search
+#+filetags: :algorithm:programming:graph:
+
+* DFS (Depth First Search)
+This visit can't be used to find the shortest path between edges.
+But it has other properties that come useful in some case, see properties.
+At the end we will have a sequence of tree, this is called *Forest Depth First*, aka *FDF*.
+The *FDF* is a partition of the vertices.
+The following structure will be used to store the dfs information.
+#+begin_src c
+typedef struct {
+    vertex[] parent;
+    vertex[] discovered;
+    int[] start;
+    int[] end;
+    int current_time;
+}* dfs_info;
+#+end_src
+* Algorithm
+** DFS visit
+#+begin_src c
+void dfs_visit(Graph g, vertex src, dfs_info info){
+    info->current_time += 1;
+    info->discovered[src] = GRAY;
+    info->start[src] = info->current_time;
+    for (vertex v = g->vertices[src]->head; v != NULL; v = v->next){
+        if(info->discovered[v] == WHITE){
+            info->parent[v] = src;
+            dfs_visit(g, v, info);
+        }
+    }
+    info->current_time += 1;
+    info->end[src] = info->current_time;
+    info->discovered[src] = BLACK;
+}
+#+end_src
+** DFS
+#+begin_src c
+dfs_info dfs(Graph g){
+   dfs_info info = malloc(dfs_info);
+   for(int i = 0; i < g->size; i++){
+       info->parent[i] = NULL;
+       info->discovered[i] = WHITE;
+       info->time = 0;
+       info->start[i] = info->end[i] = ∞;
+   }
+   for(vertex v = 0; v < g->size; v++){
+       if(info->discovered[v] == WHITE){
+           dfs_visit(g, v, info);
+       }
+   }
+   return info;
+}
+#+end_src
+* Properties
+Picking a vertex a source the DFS will create a coverage tree (not minimal) of the graph.
+* Theorems
+** Structure Theorems or Stack Theorem
+At the end of ~dfs~, we have the following properties:
+$$\forall ~ u, v \in G.vertices ~ one ~ of ~ the ~ following ~ can ~ be ~ true:$$
+$$start[u] \lt start[v] \lt end[v] \lt end[u]$$
+$$start[v] \lt start[u] \lt end[u] \lt end[v]$$
+$$start[v] \lt end[v] \lt start[u] \lt end[u]$$
+$$start[u] \lt end[u] \lt start[v] \lt end[v]$$
+
+This theorem create a structure, like the balanced parentheses in a expression, on the visit.
+~{[][][()]}~ admissable
+~{[][][()]} {[}]~ not admissable
+*** Proof
+**** Case 1, v enter two times (or more) the stack
+This is impossible since the dfs colors the already visited node.
+If a node is ~GRAY~ or ~WHITE~ it cannot reenter the stack.
+$$\blacksquare$$
+**** Case 2, v removed from the stack before u.
+Proof by contradiction.
+Consider only a couple of the properties of the theorem, the other couple have a dual proof.
+
+Contradiction hypothesis:
+$$start[v] \lt start[u] \lt end[v] \lt end[u]$$
+
+Let's build the callstack of the dfs to recreate the contradiction hypothesis:
+To have $start[v] \lt start[u]$ we need a stack as follow:
+$$stack = [\cdots, v, \cdots u, \cdots]$$
+The value of end discovery is assigned when the visit on the vertex end.
+To assign $end[v]$ before $end[u]$, $v$ should be removed from the stack before $u$, but using a [[denote:20230930T125307][Stack]] makes this impossible to happen.
+$$\blacksquare$$
+*** Lemma
+If we have:
+$$\forall ~ u, v \in G.vertices$$
+$$start[u] \lt start[v] \lt end[v] \lt end[u]$$
+Then in the visit info:
+$v$ is a discendent of $u$.
+More properly:
+$$\forall ~ u, v \in G.vertices$$
+$start[u] \lt start[v] \lt end[v] \lt end[u] \iff v ~ is ~ a ~ discendent ~ of ~ u$.
+**** Proof
+***** Case $\implies$
+The sequence of nodes in the stack build a path from u to v.
+$$\blacksquare$$
+***** Case  $\impliedby$
+Consider the path on the *FDF* from v to u, say:
+$$v \to k_1 \to k_2 \to \cdots \to k_n \to u$$
+To have this at some point the dfs performed:
+$$parent[u] = k_n$$
+$$parent[k_n] = k_{n-1}$$
+$$\cdots$$
+$$parent[k_3] = k_2$$
+$$parent[k_2] = k_1$$
+$$parent[k_1] = v$$
+
+Consider ~s[]~ as a shorthand of ~start[]~ and ~e[]~ a shorthand of ~end[]~:
+$$s[v] \lt s[k_1] \lt s[k_2] \lt \cdots s[u] \lt e[u] \lt \cdots \lt e[k_2] \lt e[k_1] \lt e[v]$$
+But this is just a recursive application of the Structure Theorem.
+$$\blacksquare$$
+** White path theorem
+Consider:
+$$t = time$$
+$$At ~ time ~ t ~ DFS_{visit}(g, v) \land discover[v] = WHITE$$
+If in the ~graph~ exist a path from $v$ to $u \in G.vertices$ with all $WHITE$ vertices, the $DFS_{visit}$ will find a path to $u$
+
+In other words:
+If at the time t, exist a white path, a path with all the nodes colored ~WHITE~ (hence the name), from v to u the dfs will find a path from v to u.
+If there are multiple path from v to u, we can't make an assumption on which one the dfs will follow.
+
+$$At ~ time ~ t ~ DFS_{visit}(g, v) \land discover[v] = WHITE \iff ~ u,v \in T, ~ where ~ T \in FDF$$
+*** Proof
+**** Case $\implies$
+This is trivial:
+If $u,v \in T$ and at $t$ exist a white path, this is just a consequence.
+$$\blacksquare$$
+**** Case $\impliedby$
+We know that exist a path in the *FDF* like the following, composed only by ~WHITE~ nodes:
+$$v \to v_1 \to v_2 -> \cdots \to v_k \to u$$
+And in this path $u$ become a discending of $v$.
+
+Proof by contradiction:
+Suppose that $u$ don't become a descendant of $v$.
+To have that we consider two nodes on the path $v_{j-1}, v_j$ and the edge $(v_{j-1}, v_j)$ that belong to the path and $u$ not reachable from $v$, furthermore $v_j$ in not reachable from $v$.
+$$v \to v_1 \to v_2 -> \cdots \to v_{j-1} \to v_j \to \cdots \to v_k \to u$$
+Where $v_{j-1}$ reachable and $v_j$ unreachable.
+
+To be in this situation we need:
+$$s[v] \lt s[v_{j-1}] \lt e[v_{j-1}] l\t e[v]$$
+
+We have to place $s[v_j] \lt e[v_j]$ in the above inequalty.
+On the left cannot be placed because they are in the $T \in FDF$ and at time $t$, $v_j$ is white.
+On the right cannot be place for the same reason.
+Furthermore the edge $(v_{j-1}, v_j)$ will be traversed, creating
+$$s[v] \lt s[v_{j-1}] \lt s[v_{j}] \lt e[v_{j}] \lt e[v_{j-1}] \lt e[v]$$
+
+This create a contradiction.
+$$\blacksquare$$
+*** Consequences
+With the dfs we can discover which vertices can be reached from a source $v$.
+* Time complexity
+In the ~dfs_visit~ each node is visited at most once, and at most, we traverse each edge at most once.
+$$T_{DFS_{visit}}(G,s) = O(|V|+|E|)$$
+The dfs on the other hand traverse all the edges and all the vertices:
+$$T_{DFS}(G,s) = \Theta(|V|+|E|)$$
+* Edge categorization
+The DFS can categorize the edge of a graph during the visit, there four type of edges:
++ Tree edges
++ Backward edges
++ Forward edges
++ Traversal edges
+** Tree edges
+This are the edges that end up in the tree that goes into the *FDF*.
+They are the edges that connect the vertices in the *DF* tree.
+** Backward edges
+This are the edges that goes from the current visited vertex to a vertex already discovered, but the visit on the arrival vertex has not yet ended.
+** Forward edges
+This are the edges that goes from the current visited vertex to a vertex already processed in the same *DF* tree.
+In other word this type of edge arise when there is and edge that end up in an already processed node and there is path to that node from the starting node.
+These can be used to detect if the acyclic or not.
+See [[id:4346e83e-52ac-412e-98de-96d1d13c9d99][Topological Sort]].
+** Traversal edges
+This are the edges that connect two vertices in 2 different trees in the *FDF* or two vertices in the same tree provided that they are not ancestor one of the other.
+The edge end up in an already processed edge and there is no path from the starting node to the arrival node.
+** How to detect them
+*** Tree edges
+These are the one assigned into ~dfs_info info->parent~, hence when the arrival node is ~WHITE~ the edge is a ~Tree edge~.
+*** Backward edges
+When the arrival node is ~discovered~ but not ~visited~, hence when the arrival node is ~GREY~ the edge is a ~Backward edge~.
+*** Forward & Traversal edges
+When the arrival node is ~BLACK~, the node is a ~Forward edge~ or ~Traversal edge~, how we can distinguish them?
+If there is a path from the start node to the arrival node then the visit in the arrival has ended before the visit in the current node ended.
+Considering $(v,u) \in E$:
+$$s[v] \lt s[u] \lt e[u] \lt e[v]$$
+This identify a forward edge.
+If we have:
+$$s[u] \lt e[u] \lt s[v] \lt e[v]$$
+We have a traversal edge.
+
+We can use this information to distinguish this edges.
++ $s[u] \lt s[v]$ traversal edge
++ $s[u] \gt s[v]$ forward edge
+* Cycle detection
+As said above the dfs can detect a cycle in a graph when it find a ~backward edge~.
+** Theorem
+Consider $G=(V, E)$, $v,u \in V$ and $(v,u) \in E$ and $(v,u)$ is a ~backward edge~ (when $(v,u)$ is traversed $u$ is ~GREY~).
+$$G \in DAG \iff DFS ~ don't ~ find ~ a ~ backward ~ edge$$
+** Proof
+*** Case $\implies$
+Consider the following logical transformation:
+$$A \implies B \iff \lnot B \implies \lnot A$$
+We will prove $\lnot B \implies \lnot A$
+In this case we suppose that the DFS find a backward edge, but in this case we have a cycle in the graph g, so $g \notin DAG$.
+$$\blacksquare$$
+*** Case $\impliedby$
+Proof by contradiction.
+$$ DFS ~ don't ~ find ~ a ~ backward ~ edge \land G \notin DAG$$
+If $G \notin DAG$ there is a cycle, say:
+$$v_1 \to v_2 \to \cdots \to v_k \to v_1$$
+We can suppose that the cycle is simple, since if it is not we can remove all the duplicate until it become simple.
+When the DFS start the visit in $v_1$ there all the other vertice will be ~WHITE~, so for the ~white path~ theorem we are sure that all this vertices will be traversed.
+When it reach $v_k$ it will traverse the edge $(v_k, v_1)$ and categorize it as a ~backward tree~ this mean that the DFS detect the cycle.
+We found a contradiction.
+$$\blacksquare$$
+* Example of DFS
+[[../assets/dfs-example.jpg]]

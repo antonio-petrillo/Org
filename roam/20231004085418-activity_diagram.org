@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       81503951-94d5-40e4-bb7c-28e8ef0d79db
+:END:
+#+title: Activity Diagram
+#+filetags: :engineering:architecture:uml:
+
+* What is it used for
+Show the activity and the control flow in a process, it is an updated version of [[https://en.wikipedia.org/wiki/Flowchart][Flowchart Diagram]].
+* Summary
+  | Symbol           | Description               |
+  |------------------+---------------------------|
+  | ●                | Start of the diagram      |
+  | ⦿                | End of the diagram        |
+  | rectangle + text | activity with description |
+  | black pipe       | fork/join                 |
+  | rhombus          | alternative (if/else)     |
+* Example
+[[../assets/activity-uml.png]]

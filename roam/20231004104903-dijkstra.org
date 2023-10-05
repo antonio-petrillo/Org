@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       2250123a-f138-4261-b667-5b07a5bf5956
+:END:
+#+title: Dijkstra
+#+filetags: :greedy:graph:algorithm:programming:
+
+* TODO add notes and proof
+* Pseudocode
+#+BEGIN_EXAMPLE
+Dijkstra(src)
+  Initialization:
+    N = {src}
+    for each v in network {
+      if v in src.adj() {
+        Dist[v] = Cost(src, v)
+      } else {
+        Dist[v] = ∞
+      }
+    }
+
+  Cycle:
+   w = newtork | pick_node | not in N && min(Dist[w])
+   // pick the node with min distance from the frontier
+   N := Dist[v] = min(Dist[v], Dist[w] + Cost)
+   // update the distance and update N
+   Until: Heap not empty
+#+END_EXAMPLE

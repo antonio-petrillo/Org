@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       4efabdec-490c-45e0-b3a3-6be6a0f852d5
+:END:
+#+title: Asymptotic Growth
+#+filetags: :programming:dsa:algorithm:math:
+
+* asymptotic growth
+An equivalence relation mostly used, in computer science, to see which algorithm is more performant than another.
+* Landau symbols
+These symbols are used to describe asymptotic growth:
++ [[id:2eb529b9-5d79-41a6-bd80-bd74f71a6fe3][Big Oh]]
++ [[id:e3b2c5a6-36b2-462d-818e-7a99d0c0f425][Little Oh]]
++ [[id:a9313455-6865-49a7-971f-aff2acb0d461][Omega]]
++ [[id:59747ecb-7cc5-42f2-982d-1e352dce9730][Little Omega]]
++ [[id:38537cab-24b8-4c76-a8d9-966a4d7d12a8][Theta]]
+* Properties of asymptotic growth symbols
+** Transitivity
+If $f(n) = O(g(n))$ and $g(n) = O(h(n))$ then $f(n) = O(h(n))$.
+*** Proof
+Pick $c = max(c_{g(n)}, c_{h(n)})$ and $n_0 = \max(n_{0_{g(n)}}, n_{0_{h(n)}})$
+$$\blacksquare$$
+*** Note
+This apply also to $\Omega$ and $\Theta$, the proof are similar.
+* [[id:b75dcae6-85d2-41e7-96b9-dc8761fc3aa2][Recurrence Tree]]
+This technique is really useful to obtain the time complexity (or space complexity) for an algorithm that has a recursive definiton.

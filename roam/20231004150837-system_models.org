@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       87d8780a-4144-427a-bde7-2781091e35b6
+:END:
+#+title: System Models
+#+filetags: :engineering:
+
+* System Models
+They are used for:
++ deduce [[id:33f6a8f8-444d-41e7-89a4-fda2a49ccc75][Software Engineering]]
++ describe the system to the programmers
++ document the architecture and the interactions
+* What they don't contain
++ detailed structure of the system
+* Type of systems models
++ external pov: model the context and the environment in which the software operate
++ iteraction pov: see how different part collaborate, context and env. can be also included
++ structural pov: high level overview of the system
++ behavioral pov: see how the system behave dynamically
+* What they are used for
++ focus the attention on an already existing system or a new one
++ document an existing system
++ create a detailed docs of the system (complete and correct) to start modeling the software
+* Objectives of this phase
++ Identify the boundaries of the system
++ Produce an high level scheme of the architecture
+* UML
+The most important one are:
++ [[id:81503951-94d5-40e4-bb7c-28e8ef0d79db][Activity Diagram]]
++ [[id:553e752d-b3bb-4d18-86ee-cfd5efcff1b0][Use Case Diagram]]
++ [[id:c1671961-ae1a-4b00-a528-3e79100e2a2b][Sequence Diagram]]
++ [[id:c54e41cd-3b14-4768-8b3c-ad6a350211a1][Class Diagram]]
++ [[id:43dd7ad7-7a96-43fc-85c4-c18c429c4ec8][State Diagram]]
+** Resources
++ UML distilled (M. Fowler)

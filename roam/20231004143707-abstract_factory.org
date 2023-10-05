@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       6f4ac2b0-8489-4e32-8ae0-61f3c164df66
+:END:
+#+title: Abstract Factory
+#+filetags: :creational:engineering:pattern:
+
+* Intent
+Provide an interface to group a set of Objects that are related to each other, this way by providing an implementation of that interface it is more easy to maintain the code and to extend it.
+This separation between the /use/ of the interface and the /initialization/ of it makes it easier to program to an interface.
+* Use it when:
++ A system should be indipendent of how its product are created, composed and represented.
++ A system should be configured with one out many configuration (mutually exclusive).
++ A family of related product is designed to be used together (here the same configuration is very important).
++ You want to provide different (or even one) family of product but you only want expose their interface.
+* Participants:
+** Abstract Factory
+The interface for the operations used to create the objects from a family of products.
+** Concrete Factory
+(One of) The concrete implementation of the Abstract Factory
+** Abstract Product
+The interface to which all the product from all the families must adhere.
+** Concrete Product
+(One of) The implementation of the Abstract Product
+** Client
+It uses only the interface from the Abstract Product to program, it only instantiate one of the Concrete Factory, this could be chanced at runtime.
+* Consequences
+** Isolates concrete classes
+In the client code there is no trace of your *concrete* code, only the interfaces.
+** Make exchanging product families easy
+You just need to change the line (or even the configuration) of the *Concrete Factory* that you want.
+If you don't use this pattern you need to change every occurrence of every product, from a family to another.
+** Promote consistency
+Self-explanatory
+* Drawbacks
+** Support new family of products is difficult
+If a new family of products emerge you have to implement a whole factory for them, even if some functionality are not used.
+** They are hard to make it future proof
+Design a factory such that you don't have to modify it later on to support new technologies is very difficult.
+* Example from the GoF book
+This makes really clear the concept.
+You have a set of interface that you want to use in your code, here *Window* & *Scrollbar*, an abstract factory *Widget Factory* who define all the parts that a factory should be able to procude.
+And at last the concrete classes:
++ *MotifWidgetFactory* that take care of create *MotifWindow* & *MotifScrollBar*
++ *PMWidgetFactory* that take care of create *PMWindow* & *PMScrollBar*
+[[../assets/abstract_factory_gui_lexi_example.png]]
+* My use cases
++ None until now, except the trivial ones from the INGSW project.

@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       83331d9d-0bf3-4957-9f50-1567daffadb8
+:END:
+#+title: Architecture Engineering
+#+filetags: :architecture:engineering:
+
+* Interactions
+The interaction can be designed with [[id:553e752d-b3bb-4d18-86ee-cfd5efcff1b0][Use Case Diagram]] and [[id:43dd7ad7-7a96-43fc-85c4-c18c429c4ec8][State Diagram]].
+* Architectural Design
+Here are a good fit the [[id:c54e41cd-3b14-4768-8b3c-ad6a350211a1][Class Diagram]] and the [[id:7c2ddc78-238f-4a05-ae21-e51f06a831c3][Package Diagram]], also [[id:c1671961-ae1a-4b00-a528-3e79100e2a2b][Sequence Diagram]] are used to describe how the Objects in the systems will cooperate.
+* [[id:32764fd5-36e5-462e-852d-212e92283cbb][Architcture Design]]
+The use of patterns increase the quality and reusability of the code.

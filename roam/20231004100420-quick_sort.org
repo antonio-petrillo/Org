@@ -1,0 +1,423 @@
+:PROPERTIES:
+:ID:       c74a0058-4305-4622-b9b5-5949f2195961
+:END:
+#+title: Quick Sort
+#+filetags: :comparison:algorithm:programming:sorting:recursive:
+
+* Note
+Created by [[https://en.wikipedia.org/wiki/Tony_Hoare][Tony Hoare]].
+It is an improved version of [[id:d2c8c8da-ab4e-4b0b-98b2-c248d4538edc][Insertion Sort]].
+Is the most used on the field despite the worst case being $O(n^2)$.
+* Algorithm
+#+BEGIN_SRC java
+public <K extends Comparable<K>> void quickSort(K[] seq){
+    quicksort(seq, 0, size-1);
+}
+
+public <K extends Comparable<K>> void quickSort(K[] seq, int low, int high){
+   if (low < high){
+       int pivot = partition(seq, low, high);
+       quickSort(seq, low, pivot);
+       quickSort(seq, pivot + 1, high);
+   }
+}
+
+public <K extends Comparable<K>> int partition(K[] seq, int low, int high){
+    int pivot = seq[low];
+    int i = low - 1;
+    int j = high + 1;
+    do{
+        do{
+            j--;
+        } while(seq[j] > pivot);
+        do{
+            i++;
+        } while(seq[i] < pivot);
+        if (i < j){
+            // swap
+            K tmp = seq[i];
+            seq[i] = seq[j];
+            seq[j] = tmp;
+        }
+    } while(i < j);
+    return j;
+}
+#+END_SRC
+* Correctness
+This algorithm has approach dual compared to mergesort.
+Basically it split the sequence using a pivot element and then call itself on the two new generated subsequence.
+The main point of quicksort is that it doesn't need to merge the two part resulting in a lower memory consumption and in a, usually smaller, multiplicative constant inside the theta notation, resulting in better performance overall.
+** Partition correctness
+As said above the partition function need a pivot with some properties to achieve the correctness.
+Let's which properties do we need:
+*** First property
+ $\forall i, p \le i \le q, \forall j, q+1 \le j \le r \implies seq[i] \le seq[j]$
+ In other words all the values in the left of the pivot are $\le$ than the ones on the right of the pivot.
+**** It's enough?
+*Nope*.
+This properties can be simply achieved by choosing a pivot that divide in a empty sequence and a /full/ sequence.
+This leads to an infinite recursion which is not desirable.
+*** Second  property
+This is simple, the partition algorithm can't create empty partitions.
+$\exist p,q,r \in \mathbb{N} \implies p \le q \lt r$
+**** See if this requirement is correct
+Consider:
+$n = r - p + 1$ the number of element of the sequence (This work also for the recursive calls).
+$n_1 = q - p + 1$
+$n_2 = r - (q + 1) - 1 = r - q$
+
+Final test:
+$n_1 + n_2 = q - p + 1 + r - q = r - p + 1$
+$\blacksquare$
+*** Proof
+**** Note
+In the algorithm the value returned as a pivot is ~j~.
+**** Second properties
+***** $q \lt r$
+It's possible that $q \ge r$?
+The algorithm start with $j=r+1$ and then immediately call, at least one time $j = j - 1$, so at least $q = r$.
+This is not enough.
+If the loop is repeated more than one the property holds.
+
+Let's see if it is possible an edge case in which the loop is repeated only once.
+
+To be in this hypothetical case, as said before the /j-loop/ must run once, and when know that it run at least once.
+After it stops, the /i-loop/ starts, run once and then immediately stops, this because on the first loop we have:
+$$pivot = seq[p]$$
+$$i = p - 1$$
+$$i = i + 1$$
+$$seq[i] = pivot$$
+Hence, the condition $pivot > seq[i]$ is false and the loop end.
+
+Now the outermost loop condition is still true, because the sequence can't be of $size \le 1$ so it restart.
+This repeat until $j > i$ (this stop condition will be proved later).
+
+Now the /j-loop/ repeat at least two times, and the /i-loop/ repeat at least once this prove that:
+$$p \le j \lt r$$
+***** $q \ge p$
+Now I consider only the edge case, to speedup the process.
+
+It's possible for j to become $j \lt p$?
+The loop stop when $i \ge j$, so it stop at $i = j$ or $i = j + 1$.
+So to prove this we need to prove that the outermost loop stops detecting the crosses of the indices.
+
+If the /j-loop/ proceeds until the /j-index/ reaches the /i-index/ in $seq[i_{index}]$ there is a value such that $value \le pivot$ and it stop.
+Then the /i-loop/ proceeds, when it reaches the /j-index/ or /j-index+1/ and then stop, the partition algorithm do the swap and return $j \ge i$.
+
+The loop stop because if at $seq[j_{index}]$ there is a value less than the pivot it proceeds (while j stops on him), and on $seq[j_{index} + 1]$ there is value greater that the pivot and it stop, this cover $i_{index} = j_{index}+1$.
+If when /j-loop/ stops we have $seq[j_{index}] = pivot$ (in a sequence there could be multiple copy of a value) and the /i-loop/ proceeds until reaches /j-index/ then also the /i-loop/ stops, this cover $i_{index} = j_{index}$.
+
+This complete the proof.
+$\blacksquare$
+**** First properties
+Once the second properties is proven we know that the partition visit all the sequence.
+If there are values greater than the pivot on the left, and smaller value on the right the algorithm swaps their position maintaining the first properties.
+$\blacksquare$
+** Quicksort correctness
+Since the quicksort can't call the ~partition function~ on sequence of $size \le 1$ the partition can't fail and then the newly generated partition are recursively splitted by the recursive call of quicksort, we have:
+
+1. Each partition is recursively splitted until each one become a partition of $size = 1$
+2. The partition can't be called on partition of $size = 1$
+3. The partition have the above properties
+4. The quicksort shown to be correct.
+* Time complexity
+** Partition complexity
+As said during the correctness proof the algorithm scan the whole sequence once, and each step perform $O(1)$ operation.
+So the complexity of partition is $\Theta(n)$.
+** Quicksort complexity
+*** Worst case
+At each call the partition algorithm split in a sequence of $size = 1$ and another of $size = n-1$, this give a recurrence equation of:
+$$
+\begin{equation}
+  T_{worst}(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    (n-1)T_{worst}(n - 1) + T_{partition}(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+That resolve in
+$$\sum_{i=1}^{n}\Theta(n)$$
+$$T_{worst}(n) = O(n^2)$$
+*** Best case
+$$
+\begin{equation}
+  T_{best}(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    2T_{best}(\frac n 2) + T_{partition}(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+That resolve in
+$$\sum_{i=1}^{\log(n)}\Theta(n)$$
+$$T_{best}(n) = \Omega(n\log(n))$$
+*** Average case
+$$\Omega(n\log n) \le T_{average}(n) \lt O(n^2)$$
+
+To continue the analysis of this case we parameterize the recurrence equation with a parameter ~rank~, which indicates:
+~rank(x) :=~ Number of elements in the sequence that are $\ge$ the pivot.
+
+Let's see what happens when we calculate the rank on the pivot.
+
+| rank(pivot) | left partition | right partition |
+|-------------+----------------+-----------------|
+|           1 | n-1            |               1 |
+|           2 | n-2            |               2 |
+|           3 | n-3            |               3 |
+|           4 | n-4            |               4 |
+|         ... | ...            |             ... |
+|         n-1 | 1              |             n-1 |
+|           n | 1              |             n-1 |
+
+There are 2 equal partition for n and n-1, this because the partition don't admit empty partition.
+
+Now we can define a recurrence equation using the value of the left partition and the right partition, indicates with $q_{r_k}$ and $n - q_{r_k}$.
+
+$$
+\begin{equation}
+  T(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    T(q_{r_K}) + T(n - q_{r_K}) + T_{parition}(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+Note:
+At each recursive call there is no guarantee that the rank will remain unchanged.
+We know that quicksort do the same number of call because all the inner node of the recursion call tree have 2 child and the have always /n-leaf/, for this see theorem 1 in [[denote:20230930T125050][Tree]].
+In other word, independently of the ranks used in each recursive call, at the end it will do the same number of calls.
+*** Some example
+Before continuing with the proof let's see a couple of example
+**** Example 1
+Suppose $q_r = \frac n {10}$ at ~each~ step.
+This define a recurrence equation of:
+$$
+\begin{equation}
+  T(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    T(\frac n {10}) + T(\frac 9 {10} n) + T_{parition}(n), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+***** Best route
+$h = \log_{10}(n) = \frac{\log(n)}{\log(10)}$
+The cost at each level is $\Theta(n)$
+So the total cost is $O(n \log n)$
+***** Worst route
+$h = \log_{\frac 9 {10}}(n) = \frac{\log(n)}{\log(\frac {10} 9)}$
+The cost at each level is $\Theta(n)$
+So the total cost is $O(n \log n)$
+***** Note
+With fractional balancing the cost remain $O(n \log n)$
+We always get:
++ $h_1 = \log_{\frac 1 \alpha} n \implies O(n \log n)$
++ $h_1 = \log_{\frac 1 {1- \alpha}} n \implies O(n \log n)$
+**** Example 2
+Interleaving with worst case and best case:
+
+In this case we only get a recursion call tree with height twice as long as the best case tree.
+$$O(n \log n)$$
+**** Note
+It is difficult to find a type of balancing that lead to the worst case, except the one build ad hoc to find the worst case.
+*** Continue with the average case
+**** Simply the recurrence equation
+With the notion of rank we can partition *ALL* the possible input for the quicksort based on the rank of the call.
+
+[[../assets/quicksort-partition.jpg]]
+
+With this in mind we can define the average case as:
+
+$$T_{average}(n) = \frac {\sum_{i=1}^{n} average_i} n$$
+
+This is still to hard to calculate, let's use recursion to partition each average with recursive ranks.
+
+*Now we define a function*:
+
+$T_m^r(n)$ := average of rank ~r~, with this we can rewrite the precedent formula with:
+
+$$T_{average}(n) = \frac {\sum_{i=1}^{n} T_m^i(n)} n$$
+
+With this function we have eliminated the $T(q_{r_K}) + T(n - q_{r_K})$ part.
+
+Now we can reapply the same method on the recursive call.
+$$
+\begin{equation}
+  T_m(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    \frac {\sum_{i=1}^{n} (T_m(q_i) + T_m(n-{q_i}) + \Theta(n))} n, & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+Now we have the following situation:
+[[../assets/quicksort_partition_recursion.jpg]]
+
+We continue to simplify the recurrence equation:
++ take out one of the equal term of quicksort (see above rank(n) and rank(n-1))
+
+$$
+\begin{equation}
+  T_m(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    \frac {T_m(1) + T_m(n-1) + \Theta(n) + \sum_{i=1}^{n-1} (T_m(q_i) + T_m(n-q_i) + \Theta(n)))} n, & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
++ remember that $T_m(n-1)$ is an $O(n^2)$
++ remember that $T_m(1)$ is an $O(1)$
++ $O(n^2)$ absorb $O(1)$ and $\theta(n)$
+
+$$
+\begin{equation}
+  T_m(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    \frac {O(n^2) + \sum_{i=1}^{n-1} (T_m(q_i) + T_m(n-q_i) + \Theta(n)))} n, & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
++ take out $\Theta(n)$ of the summation
++ $\Theta(n^2)$ absorb the $O(n^2)$
+
+$$
+\begin{equation}
+  T_m(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    \frac {\Theta(n^2) + \sum_{i=1}^{n-1} (T_m(q_i) + T_m(n_{q_i}))} n, & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
++ the term of $T_m(q_i)$ and $T_m(n - q_i)$ are the same only in different order
++ the sum is commutative, so we can reorder
+
+  $$\sum_{i=1}^{n-1}T_m(q_i) + T_m(n - q_i) = \sum_{i=1}^{n-1}2T_m(q_i)$$
+
+This result in:
+
+$$
+\begin{equation}
+  T_m(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    \frac {\Theta(n^2) + 2\sum_{i=1}^{n-1} T_m(q_i)} n, & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+We will try to prove the  notation [[denote:20230930T122137][Big Oh]] on this equation.
+**** Prove the $O(.)$
+We will prove the Big Oh on this equation.
+$$
+\begin{equation}
+  T_m(n)=\begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    \frac {\Theta(n^2) + 2\sum_{i=1}^{n-1} T_m(q_i)} n, & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
+We need to find a $c$ and $n_0$ that respect the definition of Big Oh.
+
+Assuming that the average case of quicksort is $O(n \log n)$, in this case become:
+$$\exist c \in \mathbb{R}, \forall n_o \gt n \implies T_m(n) \le c n \log n$$
+***** Proof
+Proof by induction:
+****** Base case
+Considering $n=2$:
+$$n=2$$
+$$\log_2 2 = 1$$
+
+Using this in the BigOh equation above we get.
+$$
+\begin{equation}
+  \begin{cases}
+    O(1), & \text{if $n \le 1$}.\\
+    O(2) +  \frac 2 2 \sum_{i=1}^{1} T_m(1), & \text{otherwise}.
+  \end{cases}
+\end{equation}
+$$
+
++ given $k_1 = O(1)$ and $O(2) = 2 k_2$ (basically $2 O(1) = 2 k_2$) we obtain
+
+$$T_m(2) = k_1 + 2k_2 \le 2 c$$
+$$c \ge \frac {k_1 + 2k_2} 2$$
+
++ The base case holds for $c \ge \frac {k_1 + 2k_2} 2$.
+****** Induction case
+Our induction hypothesis is:
+$$\forall n' \lt n \implies T_m(n') \le c n' \log {n'}$$
+
++ appling to the induction case we get:
+
+  $$T_m(n) = \Theta(n) + \frac 2 n \sum_{i=1}^{n-1}T_m(i)$$
+  $$T_m(n) = \Theta(n) + \frac 2 n \sum_{i=1}^{n-1}c q_i \log q_i$$
+  $$T_m(n) = \Theta(n) + \frac {2c} n \sum_{i=1}^{n-1} q_i \log q_i$$
+
++ If we can bound $\sum_{i=1}^{n-1} q_i \log q_i$ to $O(n^2\log n)$ we are done
+******* Let's formulate a hypothesis
+$$\sum_{i=1}^{n-1} q_i \log q_i \lt \frac {n^2} 2 \log n - \frac {n^2} 8$$
+******** Proof
+There isn't a closed formula for this, so let's find a bound for the equation:
+
++ Split the sum in 2 sums:
+
+$$\sum_{i=1}^{n-1} q_i \log q_i = \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i \log {q_i} + \sum_{i={\lceil\frac n 2\rceil}}^{n -1} q_i \log {q_i}$$
+
++ we overcount using $\frac n 2$ and $n$ respectively, as the input of the $\log$ in the summation:
+
+Considering the following unequalty
+$$\sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i \log {q_i} \le \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i \log {\frac n 2}$$
+$$\sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i \log {q_i} \le \sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i \log {n} $$
+
+$$\sum_{i=1}^{n-1} q_i \log q_i = \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i \log {\frac n 2} + \sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i \log n$$
+
++ a few more step
+
+$$\log ({\frac n 2}) \cdot \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i  + \log (n) \dot \sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i $$
+
+Consider the following unequalty:
+$$\log {\frac n 2} \le \log ({n}) - 1$$
+$$(\log (n) - 1) \cdot \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i  + \log (n) \dot \sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i $$
+
+$$(\log (n) - 1) \cdot \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i  + \log (n) \dot \sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i $$
+$$\log n \cdot \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i - \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i  + \log n \dot \sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i$$
+$$(\log n) (\sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i +  \sum_{i={\lceil\frac n 2\rceil}}^{n - 1} q_i)  - \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i$$
+$$(\log n) (\sum_{i=1}^{n - 1} q_i)  - \sum_{i=1}^{\lfloor\frac n 2\rfloor} q_i$$
+$$(\log n) (\frac {(n - 1) n} 2)  - \frac {(\frac n 2 - 1) \frac n 2} 2$$
+$$\frac {n^2} 2 \cdot (\log n) - \frac n 2 \cdot \log n - \frac 1 2 \cdot \frac n 2 \cdot (\frac n 2 - 1)$$
+
++ this become:
+
+$$\frac {n^2} 2 \log n - \frac {n^2} 8 - n \log n + \frac n 4$$
+
++ this is surely smaller than:
+
+$$\frac {n^2} 2 \log n - \frac {n^2} 8$$
+
++ This prove that our assumption is valid $\blacksquare$
+******* Conclusion of the induction case
+$$T_m(n) \lt \Theta(n) + \frac {2c} n \cdot (\frac {n^2} 2 \log n - \frac {n^2} 8)$$
+$$ \Theta(n) + \frac {2c} n \cdot (\frac {n^2} 2 \log n - \frac {n^2} 8)$$
+$$ \Theta(1) \cdot n + c n \log n - \frac n 4$$
+$$ k_1 \cdot n + c n \log n - \frac n 4$$
+
++ we need to prove
+
+$$ k_1 \cdot n + c n \log n - \frac n 4 \le c n \log n$$
+$$ k_1 \cdot n - c \frac n 4 \le 0$$
+$$ k_1 \cdot n \le c \frac n 4$$
+$$ \frac {k_1 \cdot n} n \le \frac c 4$$
+$$ k_1 \le \frac c 4$$
+$$ c \ge 4 k_1$$
+
++ Picking a $c$ that respect the base case and the induction case we can conclude the proof:
+
+  $$T_{average}(n) = O(n \log n)$$
+  $$\blacksquare$$
+
++ Since we have also the $\Omega$, see the *best case* or even [[denote:20230930T122917][Sorting]] lower bound.
+We can say that:
+
+  $$T_{average}(n) = \Theta(n\log n)$$

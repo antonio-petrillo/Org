@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       ae104c12-deb9-43df-ada7-6912619194bb
+:END:
+#+title: Design Pattern
+#+filetags: :engineering:pattern:
+
+* Creational
++ [[id:6328d79e-66e6-4278-9002-20788c2a4caf][Singleton]]
++ [[id:07396ae1-8dcc-48a2-a7b7-f9db5ccbd324][Builder]]
++ [[id:6f4ac2b0-8489-4e32-8ae0-61f3c164df66][Abstract Factory]]
++ [[id:88d08128-952c-4061-84ca-7133ed4c5b52][Factory Method]]
++ [[id:968dbe5d-b938-489c-b131-9aa6ae7e8641][Prototype]]
+* Structural
++ [[id:5ccc8409-e753-4a23-8b65-70b943f726d2][Composite]]
++ [[id:2870ff56-5056-4ed7-bca7-0b93683b4638][Flyweight]]
++ [[id:a4f4638c-4e2d-4df6-aa8e-9abd016807cb][Facade]]
++ [[id:b76d4f3d-8c2a-4d96-bcef-035a931f7b8f][Bridge]]
++ [[id:dbce9a1b-f500-4c3e-a185-082f2adbc770][Adapter]]
++ [[id:91dcf9ff-1fbf-4e5d-bc7b-ab4d847442e1][Proxy]]
++ [[id:9dadab52-baca-4a95-8176-71f14db66b56][Decorator]]
+* Behavioral
++ [[id:5f659197-e60f-4daf-8f0e-e7fd601ef556][Chain of Responsibility]] 
++ [[id:2d3bec9f-767a-49f1-a2c2-73461ff91f1b][Command]]
++ [[id:e827fdeb-fbe5-4e10-aa76-42fb180e4e53][State]]
++ [[id:1ae64cae-938e-4060-943e-0c9be083082b][Itertor]]
++ [[id:5e00613e-4604-4497-8d53-f95b334c8e16][Observer]]
++ [[id:2dbbf71e-4a72-4fc6-9b4e-4f4178d876d1][Mediator]]
++ [[id:a8f64639-0ca6-4c29-a07c-b4b717a66605][Memento]]
++ [[id:d1704cb5-4bb3-495f-a39d-3a8b83232262][Strategy]]
++ [[id:b3651967-5730-4da3-b822-a3a6db0dbec9][Template Method]]
++ [[id:b7ff3ed9-7cf7-4386-bf96-252a26207bee][Visitor]]
++ [[id:39780f63-f4ed-496e-bdc2-e77be0a893ff][Interpreter]]
+* Architectural
++ [[id:1fdede00-97e0-404d-b605-3eb407cd8620][Model View Controller]]
++ [[id:bb15c95e-f558-4939-bd88-1fd328e92f6b][Client Server]]
++ [[id:db905660-a0c8-49f9-8b7f-4c03ec5aedb9][Pipe and Filter]] 
++ [[id:5a4d0c74-a133-4915-96fe-e97a36dc1561][Layer]]
++ [[id:213bf04b-fc62-4420-89db-ddd6491922d4][Repository]]
+ 

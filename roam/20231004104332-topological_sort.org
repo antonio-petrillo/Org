@@ -1,0 +1,163 @@
+:PROPERTIES:
+:ID:       4346e83e-52ac-412e-98de-96d1d13c9d99
+:ROAM_ALIASES: "Topological Order" TO
+:END:
+#+title: Topological Sort
+#+filetags: :graph:algorithm:programming:sorting:
+
+*Topological Order or Topological Sort
+This problem consist on take $G \in DAG$ and linearize the $v \in G .vertices$ such that each node come before of each other node that it can reach through a path.
+$$G = (V,E), |V| = n$$
+$$ i \ne j \implies v_i \ne v_j$$
+$$\forall i \in [1, \cdots, n] \land \forall (u,v) \in E, u ~ come ~ before ~ v ~ in ~ the ~ TO$$
+** Example
+$$G = (\{1, 2, 3\}, \{(1, 2), (1, 3)\})$$
+
+The possible sequence are:
+| $v_1$ | $v_2$ | $v_3$ | is an OT |
+|-------+-------+-------+----------|
+|     1 |     2 |     3 | $True$   |
+|     1 |     3 |     2 | $True$   |
+|     2 |     1 |     3 | $False$  |
+|     2 |     3 |     1 | $False$  |
+|     3 |     1 |     2 | $False$  |
+|     3 |     2 |     1 | $False$  |
+
+A brute force approach consist in generate all the $|V|!$ sequence and check which one is a ~TO~.
+This cost to much $TO_{brute ~ force}(G) = O(|E| \cdot |V|!)$.
+* Theorem
+$$G \notin DAG \implies TO(G) = \emptyset$$
+** Proof
+Proof by contradiction.
+$$G \notin DAG \implies TO(G) \ne \emptyset$$
+
+If $G \notin DAG$ there is a cycle in the graph
+Imagine that the path is composed by the following path
+$$v_1 \to v_2 \to \cdots \to v_k \to v_1$$
+
+Now we can try to build a TO of this cycle, starting from $v_1$.
+We build:
+$$v_1 \to v_2 \to \cdots \to v_k$$
+But now we cannot continue because the edge $(v_k, v_1)$ create a cycle and violate the definition of TO.
+$$\blacksquare$$
+* Algorithm 1
+** Theorem
+This theorem is based on {{embed ((63ef9a5b-fc89-4957-b410-db77dbda0339))}}.
+$$G \in DAG \implies TO(G) \ne \emptyset$$
+** Proof
+Proof by construction.
+
+Using the theorem above now we can pick $v_0 \in G.vertices, degree_{in}(v) = 0$.
+Put $v_0$ at the start of the TO.
+Then we remove the edge starting from $v_0$ and decrease the entry degree of the others node.
+If a node reach degree_{in}(v) = 0$ it will be added to a queue.
+Pick the next node from the queue and repeat from the start.
+Repeat until all the nodes are processed.
+
+At the we have a TO.
+$$\blacksquare$$
+** Implementation
+#+begin_src c
+int[] compute_entry_degree(Graph g){
+    int[] degree = malloc(g.size);
+    for (vertex v = 0; v < g.size; v++){
+        degree[v] = 0;
+    }
+    for (vertex v = 0; v < g.size; v++){
+        for (vertex u = G.vertices[v]; u != NULL; u = u->next){
+            degree[u]++;
+        }
+    }
+    return degree;
+}
+
+vertex[] generate_topological_sort(Graph dag){
+    int[] degree_in = compute_entry_degree(dag);
+    vertex[] path = malloc(g.size);
+    queue q = new_queue();
+
+    for(vertex v = 0; v < g.size; v++){
+        if(degree[v] == 0){
+            enqueu(&q, v);
+        }
+    }
+
+    int path_index = 0;
+    while (! is_empty(q)){
+        vertex v = dequeue(&q);
+        path[path_index] = v;
+        path_index++;
+
+        for (vertex u = G.vertices[v]; u != NULL; u = u->next){
+            degree_in[u]--;
+            if(degree_in[u] == 0){
+                enqueue(&q, u);
+            }
+        }
+    }
+
+    return path;
+}
+#+end_src
+** Time complexity
+This algorithm visit all the graph twice.
+$$T_{TO}(G) = \Theta(|V| + |E|)$$
+* Algorithm 2
+Another way to compute the TO is to reuse the [[id:00159d89-69fa-42b2-8ab5-884c14db7389][DFS]].
+** Implementation
+#+begin_src c
+vertex* to_dfs(Graph dag){
+    dfs_info info = init_dfs_info();
+    vertex* path = new_vertex_list();
+    for(vertex v = 0; v < dag.size; v++){
+        if(info->visited[v] == WHITE){
+            to_dfs_visit(dag, v, info, path);
+        }
+    }
+    return path;
+}
+
+void to_dfs_visit(Graph dag, vertex src, dfs_info info, vertex* path){
+    info->discovered[src] = GREY;
+    info->time += 1;
+    info->start[src] = info->time;
+
+    for(vertex v = 0; v < dag.size; v++){
+        if (info->discovered[v] == WHITE){
+            to_dfs_visit(dag, v, info, path);
+        } else if (info->discovered[v] == GRAY){
+            exit(EXIT_FAILURE); //cycle detected.
+        }
+    }
+
+    path = append_vertex_list(path, src);
+
+    info->time += 1;
+    info->end[src] = info->time;
+    info->discovered[src] = BLACK;
+}
+#+end_src
+** Correctness
+We have to check that the ~path~ returned by the dfs respect the property of TO.
+We want to prove that:
+$$\forall (u,v) \in E, position(u, path) \lt position(v, path)$$
+*** Proof
+The insertion in the list is performed when the vertex is painted in black.
+Now:
+$$\forall (v, u) \in E, position(u, path) \lt position(v, path) \iff end[v] \lt end[u]$$
+When the DFS travers $(v,u)$ there are three cases:
+**** WHITE
+$$s[v] \lt s[u] \lt e[u] \lt e[v]$$
+**** GREY
+$$s[u] \lt s[v] \lt e[v] \lt e[u]$$
+But in this case there is a cycle and this means no TO.
+**** BLACK
+The visit on $u$ has already ended and on $v$ is still running.
+$$e[u] \lt e[v]$$
+**** End
+$$\blacksquare$$
+** Time complexity
+Inherit from the [[id:00159d89-69fa-42b2-8ab5-884c14db7389][DFS]].
+$$T_{TO_{DFS}}(G) = \Theta(|V| + |E|)$$
+* Example
+[[../assets/TO-example.jpg]]

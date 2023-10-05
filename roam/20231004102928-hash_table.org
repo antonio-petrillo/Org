@@ -1,0 +1,261 @@
+:PROPERTIES:
+:ID:       89b346f9-7d75-4bbf-a0f9-8bd5345e10af
+:ROAM_ALIASES: Map HashMap
+:END:
+#+title: Hash Table
+#+filetags: :datastructure:hashing:programming:
+
+* Introduction
+An Hash Table is an array in which the index are produced through an ~hash function~ rather than use normal index.
+With an ~hash function~ we can map a ~key~ to one of the ~indices~ of the table, and place at that index the ~value~.
+* Direct Addressing Tables
+Consider $U = \{0, 1, 2, \cdots, m - 1\}, |U| = m$ the set of the possible $key$.
+The table $T, |T| = m$
+The set $K \subseteq U$ is the dynamic set of the actually used key.
+This type of table is the simplest type of hash table, but it has some design flaws:
++ We have to allocate an array of size |U|, a lot of space wasted,
+  especially if the backbone is a [[id:45c9aef8-82f1-4c47-abfa-7033a03eaaa7][Dynamic Array]], in this case the space growth exponentially.
++ We have to store the used key to retrieve the data.
+* Hash Table
+In a hash table usually $U = \mathbb{N}$, but they use a subset $K \subset U$.
+So to implement that we just need $O(K)$ space, and a ~hash function~, namely $h$ its value $h(k)$ is called the ~hash value~, to map the ~given key~ to a key in $K$.
+$$|K| = m, h : K \to \{0, 1, \cdots, m - 1\}$$
+
+Since $|K| \le U = \mathbb{N}$, for the pigeon principle, we will have some collision that we need to resolve, there are 2 well known method:
++ Chaining
++ Open Addressing
+* Key Aspect of a ~hash function~
+They have to be deterministic.
+They should map the given keys equally to the values in $K$.
+* Chaining
+** Insert
+Compute the hash value $h(k) = k_1$, insert at index $k_1$, if the slot is not empty, chain the value in a [[id:e9a8cf7f-48e1-423f-8a74-776a0a1acf28][List]] (double linked).
+Save at the index $k_1$ the head of the list.
+$$T_{insert} = O(list ~ length)$$
+** Deletion
+If we have a pointer to the value to delete it could be done in $O(1)$ since it is a doubly linked list, otherwise we compute the hash and search in the bucket and then search for the node in the list and delete it.
+$$T_{delete} = O(list ~ length)$$
+** Search
+Compute the hash and visit the list.
+$$T_{search} = O(list ~ length)$$
+** Time complexity
+As seen above this depend on the ~buckets length~.
+Consider a table with $|buckets| = m$, $|T| = n$ the number of elements inserted, we are gonna use $\alpha = \frac n m$ the ~load factor~ to compute the complexity.
+The load factor is the mean number of value per bucket.
+*** Worst
+**** Bad hash function
+If all the values ends in the same bucket the list size become $|L| = n$ resulting in a simple [[id:e9a8cf7f-48e1-423f-8a74-776a0a1acf28][List]] which is pretty bad.
+$$T_{insert} = T_{delete} = T_{search} = O(n)$$
+*** Average
+**** Simple Uniform Hashing
+This is an assumption on the ~hash function~, see below.
+In this case to understand the time complexity we need to study the expected value under the simple uniform hashing assumption.
+***** Theorem 1
+In a Hash Table that use chaining to resolve collision a no success operation (in this case we visit all the bucket),
+the average time is:
+$$T_{no ~ success} = \Theta(1 + \alpha)$$
+****** Proof
+Imagine to insert a key $k$ not present in the table.
+We compute the hash, in $O(1)$ and then we visit all the associated ~list~, under the ~simple uniform hashing~, the average length is $\mathbb{E}[n_j] = \alpha = \frac n m$, this cost $O(\alpha)$.
+$$T_{average} = \Theta(1 + \alpha)$$
+$$\blacksquare$$
+***** Theorem 2
+In a Hash Table that use chaining to resolve collision a successful search cost:
+$$T_{success} = \Theta(1 + \alpha)$$
+****** Proof
+If the success happen at length $x$, before we had $x-1$ unsuccessful search.
+To find the expected value of number that come before $x$ we will use an indicator variable $I$.
+Suppose that $x_i$ is the ~i-th~ element inserted in the list.
+Consider two key $k_i, k_j$ the variable $X_{ij} = I{h(k_i) = h(k_j)}$.
+Under the ~simple uniform hashing~ we have:
+$$\mathbb{E}[X_{ij}] = \frac 1 m$$
+Since, $\mathbb{P}(h(k_i) = h(k_j)) = \frac 1 m$
+
+$$\mathbb{E}[\frac 1 n \cdot \sum_{i=1}^n (1 + \sum_{j=i+1}^n X_{ij})]$$
+$$ = \frac 1 n \cdot \sum_{i=1}^n (1 + \sum_{j=i+1}^n \mathbb{E}[X_{ij}])$$
+$$ = \frac 1 n \cdot \sum_{i=1}^n (1 + \sum_{j=i+1}^n \frac 1 m)$$
+$$ = \frac 1 n \cdot \sum_{i=1}^n (1 + \frac 1 m \sum_{j=i+1}^n 1)$$
+$$ = \frac 1 n \cdot \sum_{i=1}^n (1 + \frac 1 m \cdot (n - i))$$
+$$ = 1 + \frac 1 n \cdot \sum_{i=1}^n (\frac 1 m \cdot (n - i))$$
+$$ = 1 + \frac 1 {n \cdot m} \cdot \sum_{i=1}^n (n - i)$$
+$$ = 1 + \frac 1 {n \cdot m} \cdot(\sum_{i=1}^n n - \sum_{i=1}^n i)$$
+$$ = 1 + \frac 1 {n \cdot m} \cdot(n^2 - \frac {n (n+1)} 2)$$
+$$ = 1 + \frac 1 {n \cdot m} \cdot \frac {2n^2 - n^2 - n} 2$$
+$$ = 1 + \frac 1 {n \cdot m} \cdot \frac {n (n - 1)} 2$$
+$$ = 1 + \frac 1 {m} \cdot \frac {(n - 1)} 2$$
+$$ = 1 + \frac {n - 1} {2m}$$
+$$ = 1 + \frac {\alpha} {2} - \frac \alpha {2n}$$
+$$ = \Theta(1 + \alpha)$$
+$$\blacksquare$$
+***** Time complexity
+If the number of buckets is proportional to the number of value in the table the average time is $\Theta(1)$.
+* Open Addressing
+With ~open addressing~ there is no list to chain, all the keys are placed in the table.
+When we search for a value, we scan the table until we found the desired key.
+In this case we can have a full table on which no insertion can be performed, on the other hand the ~load factor~ is always:
+$$\alpha \le 1$$
+** How it work?
+Instead of compute the hash and the compute the pointer in the list, we compute a series of address to search.
+To execute an insertion we first need to perform an ~inspection~ of the table.
+The ~sequence of keys~ to ~inspect~ depend on the given ~key~.
+We extend the ~hash function~ as follow:
+$$h : K \times {0, 1, \cdots, m - 1} \to {0, 1, \cdots, m - 1}$$
+For open addressing we require that :
+$$\forall k \in U \implies (h(k, 0), h(k, 1), \cdots, h(k, m-1))$$
+Is a permutation of:
+$$(0, 1, \cdots, m-1)$$
+** Insert
+#+begin_src c
+int hash_insert(HashTable* t, int key){
+    int i = 0;
+    do{
+        int j = h(key, i);
+        if(t->entry[j] == NULL || t->entry[j] == DELETED){ // see deletion later
+            t->entry[j] = key;
+            return j;
+        }
+        i++;
+    }while(i != t.size); // t.size == m
+    //raise error, table full
+}
+#+end_src
+** Search
+#+begin_src c
+int hash_search(HashTable* t, int key){
+    int i = 0;
+    do{
+        int j = h(key, i);
+        if(t->entry[j] == key){ // see deletion later
+            return j;
+        }
+        i++;
+    }while(t->entry[j] != NULL || i != t.size); // t.size == m
+    return -1; // key not found
+}
+#+end_src
+** Delete
+We cannot simple delete and put ~NULL~ because in this case we cannot retrieve all the values that passed on that pointer before they have found an empty spot cannot be retrieved.
+To resolve that problem we remove the key and simply put the value ~DELETED~ which is different from ~NULL~ so we can distinguish the cases.
+#+begin_src c
+int hash_delete(HashTable* t, int key){
+    int i = 0;
+    do{
+        int j = h(key, i);
+        if(t->entry[j] == key){ // see deletion later
+            free(t->entry[j]);
+            t->entry[j] = DELETED;
+            return j;
+        }
+        i++;
+    }while(t->entry[j] != NULL || i != t.size); // t.size == m
+    return -1; // key not found
+}
+#+end_src
+This problem affects the properties of $\alpha \le 1$!
+This one of the reason that make the ~chaining resolution~ more used in practice, but it still have some use cases.
+** Time complexity
+To analyze the open addressing, we consider the hypothesis of ~uniform hashing~, see below.
+$$T_{insert} = O(\frac 1 {1-\alpha})$$
+$$T_{searhc, delete} = O(\frac 1 \alpha \frac 1 {1-\alpha})$$
+** Inspections
+*** Linear Inspection
+Given an ~auxiliary hash function~:
+$$h' : K \to \{0, 1, 2, \cdots, m - 1\}$$
+The ~linear inspection~ is performed as follow:
+$$h(k, i) = (h'(k) + i) \mod m$$
+
+This type of inspection tends to generate a burst of full cells in the table, this result in a worst time complexity.
+This is called ~primary thickening~.
+**** Time complexity
+To proceed with this analysis, we put ourselves under the condition of ~uniform hashing~.
+We consider the ~load factor~ $\alpha = \frac n m$, since the element are put all in the table without chaining, $\alpha \le 1$.
+***** Theorem 1
+Under the ~uniform hashing~ hypothesis, with a load factor $\alpha$.
+The expected value of inspection is at most $\frac 1 {1-\alpha}$.
+****** Proof
+To have an unsuccessful search all the indices generated by the ~hash function~ will be explored and they will be occupied, except for the last one.
+Consider $X$ the random variable that model the number of failed inspections.
+Furthermore we consider:
+$$A_i := cell[i] ~ is ~ occupied$$
+Now we consider the event ${X \ge i}$:
+$$\mathbb{P}\{X \ge i\} = \mathbb{P}\{A_1 \cap A_2 \cap \cdots \cap A_{i - 1}\}$$
+$$\mathbb{P}\{A_1 \cap A_2 \cap \cdots \cap A_{i - 1}\} = \mathbb{P}\{A_1\} \cdot \mathbb{P}\{A_2 | A_1\} \cdot \cdots \cdot \mathbb{P}\{A_{i-1} | A_1 \cap A_2 \cap \cdots \cap A_{i-1}\}$$
+$$\mathbb{P}\{A_1\} \cdot \mathbb{P}\{A_2 | A_1\} \cdot \cdots \cdot \mathbb{P}\{A_{i-1} | A_1 \cap A_2 \cap \cdots \cap A_{i-1}\} = \frac n m \cdot \frac {n-1} {m-1} \cdot \cdots \cdot \frac{n-i+1} {m-i+2}$$
+$$\frac n m \cdot \frac {n-1} {m-1} \cdot \cdots \cdot \frac{n-i+1} {m-i+2} \le (\frac n m)^{i-1}$$
+$$(\frac n m)^{i-1} = \alpha^{i-1}$$
+
+Now we can continue:
+$$\mathbb{E}[X] = \sum_{i=1}^{\infty} \mathbb{P}{X \ge i}$$
+$$\mathbb{E}[X] \le \sum_{i=1}^{\infty} \alpha^{i-1}$$
+$$\mathbb{E}[X] \le \sum_{i=0}^{\infty} \alpha^{i}$$
+$$\mathbb{E}[X] \le \frac 1 {1 - \alpha}$$
+$$\blacksquare$$
+***** Corollary
+The insertion in a hash table with open addressing that use linear inspections have:
+$$T(n) = \Theta(1 + \alpha)$$
+***** Theorem 2
+The search, and consequently the delete, in a hash table with open addressing and linear inspection is $\frac 1 \alpha \cdot \ln {\frac 1 {1 - \alpha}}$
+****** Proof
+The search for a key $k$ follow the same sequence used during the insertion.
+If $k$ was inserted at the index $i+1$ then for the theorem 1 the number of search is at most
+$$\frac 1 {1 - \frac i m} = \frac m {m - i}$$
+Now we can compute the average on all the $n$ keys.
+$$\mathbb{E}[X] = \frac 1 n \cdot \sum_{i=0}^{n-1} \frac m {m-i}$$
+$$\frac m n \cdot \sum_{i=0}^{n-1} \frac 1 {m-i}$$
+$$\frac 1 \alpha \cdot \sum_{k=m-n + 1}^{m} \frac 1 {k}$$
+$$\frac 1 \alpha \cdot \int_{m -n}^m \frac 1 {k}$$
+$$\frac 1 \alpha \cdot (\ln m - \ln {m - n} +c)$$
+$$\frac 1 \alpha \cdot (\ln \frac m {m - n} +c)$$
+$$n = \alpha m \land m = \frac n \alpha$$
+$$\frac 1 \alpha \cdot (\ln \frac {\frac \alpha n} {\frac \alpha n - \alpha m})$$
+$$\frac 1 \alpha \cdot (\ln \frac {\frac \alpha n} {\frac \alpha n - \alpha \frac \alpha n})$$
+$$\frac 1 \alpha \cdot (\ln \frac 1 {1 - \alpha})$$
+$$\blacksquare$$
+*** Quadratic Inspection
+Given an ~auxiliary hash function~:
+$$h' : K \to \{0, 1, 2, \cdots, m - 1\}$$
+The ~linear inspection~ is performed as follow:
+$$h(k, i) = (h'(k) + i\cdot c_1 + i^2 \cdot c_2) \mod m$$
+Here $c_1, c_2 \ne 0$ are auxiliary constant.
+
+If two keys have the same initial ~hash value~ the sequence of indices that it will visit is the same, this will also create thickening.
+This is called ~secondary thickening~.
+*** Double hashing
+Given two ~auxiliary hash function~, $h_1, h_2$:
+$$h : K \to \{0, 1, 2, \cdots, m - 1\}$$
+$$h(k, i) = (h_1(k) + i\cdot h_2(k)) \mod m$$
+To use this $h_2(k)$ should be co-prime with $m$ to inspect all the table, here some guideline:
++ $m$ prime and $h_2$ produce always a key $k \lt m$
++ $m = 2^p, p \in \mathbb{N}$ and $h_2(k)$ produce always an odd number, $h_2(k) = k_1 -2*q = 1, q \in \mathbb{N}$
+* Hashing
+Usually they are computed in $O(1)$.
+** Simple Uniform Hashing
+The ~hash function~ have no bias, each given value can be mapped equally in one of the $m$ buckets.
+*** Mean Value
+$$\forall j \in [0, 1, 2, \cdots, m - 1], n_j = ~ size ~ of ~ j ~ bucket $$
+$$n = \sum_{j=0}^{m-1} n_j = n$$
+$$\mathbb{E}[n_j] = \alpha = \frac n m$$
+** Uniform Hashing
+It extends the definition of ~simple uniform hashing~ to a sequence of values instead of just one.
+Each key input can generate equally one of the possible permutation of the keys.
+* Hash functions
+Good characteristic of an ~hash function~ (not always available):
++ Computed in $O(1)$
++ $\forall i, j \in K, i = j \implies h(i) = h(j)$
++ Respect the simple uniform hashing
++ Computed independently from the data
+** Division method
+This is type of function is defined as follow:
+$$h(k)= k \mod m$$
+Caveats:
++ $m \ne 2^p$, in this case $h(k)$ compute the least significant bit of $k$.
+** Multiplying method
+This is type of function is defined as follow:
+$$h(k)= \lfloor m \cdot (kA \mod 1) \rfloor, ~ where ~ (kA \mod 1) = kA - \lfloor kA \rfloor$$
+Here $m$ doesn't play a central role.
+A good value, suggested by [[https://it.wikipedia.org/wiki/Donald_Knuth][Donal Knuth]], for $A$ is:
+$$A \approx \frac {\sqrt 5 -1} 2 = 0,618033987\cdots$$
+** TODO Universal Hashing
+If we implement a table with an hard-coded ~hash function~ it is possible to build a sequence of keys that will result always in the worst case performance for our data structure.
+To avoid that we can create a set of ~hash functions~ and at runtime we will choose one of them at random.
+This practice is called ~Universal Hashing~.

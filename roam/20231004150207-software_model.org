@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       032ab01f-06ad-4d92-a55e-b3b177474822
+:END:
+#+title: Software Model
+#+filetags: :engineering:
+
+* [[id:d62d5523-5721-405e-9375-599d3fdb0d00][Cascade]]
+* Incremental
+Basically the steps are the same of the /Cascade/ model but in the /Incremental/ approach there are a few key difference.
+Instead of develop the entire system in one shot it identifies the most important features to implement first, after that the software is already delivered to the clients.
+If the clients accepts/like the implementation the model continue to implement the remaining feature producing various release, each one with more functionality, hence incremental release.
+One of the most famous incremtal process is [[id:952c80d0-0a56-45d5-b3d0-7d5a25e1067f][Scrum]].

@@ -1,8 +1,0 @@
-#+title:      NNDL
-#+date:       [2023-09-30 Sat 13:50]
-#+filetags:   :course:master:math:nndl:
-#+identifier: 20230930T135028
-
-* Neural Network and Deep Learning
-* Lessons
-+ [[denote:20230930T135120][NNDL lesson 4]]

@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       d1704cb5-4bb3-495f-a39d-3a8b83232262
+:END:
+#+title: Strategy
+#+filetags: :behavioral:engineering:pattern:
+
+* Intent
+Decouple the algorithm from the data.
+In GoF words define an interface for algorithms and a way to pass the the data.
+* Use it when
++ You have different algorithms to solve a problem, with different qualities, and you want to support them interchangeable.
+* Class Diagram
+[[../assets/strategy-cl.png]]
+* Participants
+** Strategy
+Interface that define the signature of the algorithms.
+** Concrete Strategy
+Implementation of the interface above.
+** Context
+Has a /Strategy/ that could use to solve a problem, basically use its algorithms.
+* Consequences
++ Families of related algorithms.
++ Eliminates conditional statements.
++ Choose different implementations, even at runtime.
+* Drawbacks
++ Can increase subclassing.
++ Communication overhead.
++ Increased number of Object.

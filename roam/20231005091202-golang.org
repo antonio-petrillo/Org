@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       3a7040a9-c0e8-4c7a-a96d-4341c6f4dc73
+:END:
+#+title: golang
+#+filetags: :oop:programming:language:imperative:csp:
+
+* Set
+Golang doesn't provide [[id:696102a0-b334-423a-932d-87c5d06c4ff8][Set]] datastructure, it provide only [[id:89b346f9-7d75-4bbf-a0f9-8bd5345e10af][Map]].
+Here how you should use sets in golang:
++ Creation
+#+begin_src go
+mySet := make(map[string]struct{})
+#+end_src
++ insertion
+#+begin_src go
+mySet["a new element"] = struct{}{}
+#+end_src
++ search
+#+begin_src go
+_, ok := mySet["searched element"]
+#+end_src
++ deletion
+#+begin_src go
+delete(mySet, "element to remove")
+#+end_src

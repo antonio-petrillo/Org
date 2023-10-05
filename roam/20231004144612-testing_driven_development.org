@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       b56896f3-641f-4e5b-9326-4eb0f43e4840
+:ROAM_ALIASES: TDD
+:END:
+#+title: Testing Driven Development
+#+filetags: :engineering:testing:
+
+* TODO  Test Driven Development
+* Useful resources
++ [[https://exercism.com][exercism]]

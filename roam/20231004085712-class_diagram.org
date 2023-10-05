@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       c54e41cd-3b14-4768-8b3c-ad6a350211a1
+:END:
+#+title: Class Diagram
+#+filetags: :architecture:uml:engineering:
+
+* What is it used for
+Show the class and the relation in the architecture of a software.
+* Summary
+| Symbol                               | Role                     | Description                                                                           |
+|--------------------------------------+--------------------------+---------------------------------------------------------------------------------------|
+| rectangle + description              | class                    | represent a class, with attributes and methods                                        |
+| lines + text                         | associations             | represent how the class are connected, text can be used to give a name to the associations |
+| *,[1-9]                              | multiplicity             | how the various class interact with each other ~1:n~, ~n:m~, ~n:1~                    |
+| ≪ stereotype ≫                       | add info about the class | can be used to give furthermore details to a class, i.e. ≪interface≫                  |
+| arrow (empty head)                   | create a hierachy        | subclass/superclass, more formally generalization and specialization                  |
+| line with rhombus (empty) at the end | aggregation              | specify that the class, on the rhombus side, is an aggregate of the other connected class |
+| line with rhombus (full) at the end  | composition              | same as the aggregation, but with the difference that the aggregate cannot live without its components |
+* Example
+[[../assets/class-diagram-uml.png]]

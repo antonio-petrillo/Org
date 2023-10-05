@@ -1,7 +1,0 @@
-#+title:      Parallel and Distributed Computing
-#+date:       [2023-09-30 Sat 18:01]
-#+filetags:   :course:math:programming:study:
-#+identifier: 20230930T180101
-
-* Generalitá
-Recupera credenziali per il cluster Scope.

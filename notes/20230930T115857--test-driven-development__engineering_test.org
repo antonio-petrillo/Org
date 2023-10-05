@@ -1,8 +1,0 @@
-#+title:      Test Driven Development
-#+date:       [2023-09-30 Sat 11:58]
-#+filetags:   :engineering:test:
-#+identifier: 20230930T115857
-
-* TODO  Test Driven Development
-* Useful resources
-+ [[https://exercism.com][exercism]]

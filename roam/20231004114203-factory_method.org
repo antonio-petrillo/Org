@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       88d08128-952c-4061-84ca-7133ed4c5b52
+:END:
+#+title: Factory Method
+#+filetags: :creational:engineering:pattern:
+
+* Intent
+Define an interface for creating an object, but let subclasses decide which class to instantiate.
+Factroy Method lets a class defer instantiation to subclasses.
+* Class Diagram
+[[../assets/factory-method-class.png]]
+* Use it when:
+With an example:
+A framework take care to manage relations between classes, but the problem is that framework must choice the class to manage.
+The factory method pattern solve this problem defining common interfaces between the class to manage and then create methods to instantiate them.
+An eventual client must extend the Creator class and override the ~factory method~.
+** Common use cases:
++ a class can't anticipate the class of objects it must create.
++ a class want it's subclasses to specify the objects it creates.
++ classes delegates responsibility to subclasses and you want to know which subclass is the delegate.
+* Participants:
+** Product
+The, common, interface for the class you want to manage.
+** ConcreteProduct
+An actual implementation of the Product interface.
+** Creator
+Declare the factory method for each product.
+** ConcreteCreator
+Override the factory method (it must extend the Creator class).
+* Consequences:
+** Provides hooks for subclassing
+** Connect parallel class hierachies
+* Drawbacks
++ A client must implement a ConcreteCreator just to have a default Product.
++ Force the client to follow a particular scheme, this is the reasons because a framework seems restrictive usually.

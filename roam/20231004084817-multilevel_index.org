@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       42d1d853-ffdb-48b6-b5ed-774e5334b965
+:END:
+#+title: Multilevel Index
+#+filetags: :database:index:
+
+* Multilevel Indexes
+This type of indexes is clearly based upon the other types.
+The idea behind a *multilevel index* is to reduce the *part of the indexes* that we continue to search by the /i-th/ blocking factor.
+The $bfr_i$ is called *fan-out* of the multilevel, $fo$ is the shorthand for *fan-out*.
+* Key Idea
+We divide the search space in, hopefully, more than two halves so the search take $\log_{fo}(b_i)$.
+* Practically
+At a first level we consider the sorted data file, we can create a [[denote:20231001T171836][primary index]], we can use a *block anchor* so that the second level has one entry for *each block* of the first level.
+The blocking factor $bfr_i$ for the second level, and all the subsequent levels, is the same as the first-level index because all the indexes entries are the same size.
+If the *first level* has $r_1$ entries, and the blocking factory (the *fan-out*) for the index is $bfr_i = fo$ then the first level needs $\lceil \frac {r_i} {fo} \rceil$ blocks, which therefore is *the number of entries* $r_2$ needed at the second level of the index.
+In a *third level* has entries for each *second level* block, so the number of entries in $r_3 = \lceil \frac {r_2} {fo} \rceil$.
+This process can recursively applied *until all the entries fit in a single block*, this will happen after $t$ steps reaching $t_{level}$, such block is called *TOP index level*.
+Each level reduce by a factor of $fo$ so we can calculate $t$.
+Since:
+1. $r_2 = \lceil \fract {r_1} {fo} \rceil$
+2. $r_3 = \lceil \fract {r_2} {fo} \rceil$
+3. The $i_{th}$ will be: $\lceil \log_{fo}(r_1) \rceil$
+4. $t = \lceil \log_{fo}(r_1) \rceil$

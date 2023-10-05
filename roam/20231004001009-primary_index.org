@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       bfd29816-b292-4819-be40-1782110c26a1
+:END:
+#+title: Primary Index
+#+filetags: :database:index:
+
+* Definition
+A primary index is an ordered files whose records are of fixed length with two fields, and it act like an access structure to efficiently search for and access the data records in a data file.
+* Structure
+Each entry in the file is a ~<Key, Value>~ pair.
+There is one entry *for each* block in the data file.
+Each index entry has the value of the *Primary Key* as *Key* for the first record in a block (*ANCHOR BLOCK*) and a pointer to that block.
+* Characteristics
+Usually primary indexes are *SPARSE*.

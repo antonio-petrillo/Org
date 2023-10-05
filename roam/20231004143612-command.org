@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       2d3bec9f-767a-49f1-a2c2-73461ff91f1b
+:END:
+#+title: Command
+#+filetags: :behavioral:engineering:pattern:
+
+* Intent
+Encapsulate an action as a separate object, or support undoable operation.
+* When use it
++ Separate an action, so an object that use an action can be more general.
++ Change the action at run time.
+* Class Diagram
+[[../assets/command-cl.png]]
+* Participants
+** Command
+Interface that define the desired operation.
+** Concrete Command
+An implementation of such operations.
+** Client
+Create a /Concrete Command/ and pass it to the /Invoker/
+** Invoker
+Define its operation in terms of /Command/, when instantiated a /Concrete Command/ must be passed to the constructor (or factory method).
+** Receiver
+Carry out the operation associated to a command.
+* Consquences
++ Create more reusable class, you just need a new ConcreteCommand.
++ In combo with [[id:5ccc8409-e753-4a23-8b65-70b943f726d2][Composite]] or even as list of commands you can create a sequence of commands (a Macro).
++ Easy to add new commands.
+* Implementation details
++ Choose if the command has to be undoable.
++ Select how much a command should do:
+  1. GoF suggest to choose based on your needs. (but)
+  2. The time showed that a command must be simple, see ~Functional Interface~ in java and ~C#~.

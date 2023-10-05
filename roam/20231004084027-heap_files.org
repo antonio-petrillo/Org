@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       df0f92d7-7e9b-4b61-9cf8-7b79808e20dd
+:ROAM_ALIASES: "Unordered Files"
+:END:
+#+title: Heap Files
+#+filetags: :database:files:
+
+* How they work
+This is the simples approach:
+#+begin_center
+Each new record is put at the end of the file.
+With this approach we fill every block progressively.
+All the blocks, except the last one, are full.
+#+end_center
+* Performance
+** Insertion
+$$T_{insertion} = O(1)$$
+** Search
+We must do a linear scan over the blocks until we visit the right one and then scan the block for the data.
+$$T_{search} = O(n)$$
+*** More formally
+$N =$ number of records.
+$R =$ number of records that can be stored in a block.
+$n = \frac N R$ number of blocks needed.
+The complexity is the average of all cases:
+$$\frac {R \cdot 1 + R \cdot 2 + \cdots + R \cdot n} N$$
+Which is equal to:
+$$\frac {R \cdot \sum_{i=1}ˆn i} N$$
+$$\frac R N \cdot \frac {n (n+1)} 2$$
+But we know that:
+$n = \frac N R$ so $R = \frac N n$
+So we can conclude:
+$$\frac {n (n + 1)} {2n} \sim \frac n 2$$
+** Update/Modify
+First we have to search for the data, hence an $O(n)$, and then write the data back.
+$$T_{modify} = O(n)$$
+** Delete
+This is tricky since when we delete a block we leave an empty spot.
+Fill that spot require a shifting on all data and that is expensive.
+A different solution is mark the spot as deleted and when we compact the data we can remove the hole, like in *open addressing* [[denote:20230930T124136][Hash Table]].
+$$T_{delete} = O(n)$$
+** Set operation
+The operation that return a set of record all require an $O(nˆ2)$, except for insertion.
+* What if we order the heap?
+We will have a slowdown on *insertion* and some spedup on *search* but the order is to expensive to maintain, furthermore when we search for a field that is not included in *comparison method* used to sort we have the same performance of an unorderd one.

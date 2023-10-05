@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       9932bdaf-f636-476a-b6da-78f27d75e236
+:ROAM_ALIASES: HashSet
+:END:
+#+title: Set
+#+filetags: :programming:datastructure:algorithm:hashing:
+
+* Set
+A *SET* can be implemented as an [[id:89b346f9-7d75-4bbf-a0f9-8bd5345e10af][Hash Table]], you just need the key part of the table and use ~NIL~ as value.
+If the map contains the key then the key *is in the set*.

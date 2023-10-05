@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       bb15c95e-f558-4939-bd88-1fd328e92f6b
+:END:
+#+title: Client Server
+#+filetags: :architecture:engineering:pattern:
+
+* Description
+The system is represented as a group of services, each can be provided by a different server.
+* Pros
++ Acceess data from multiple end point, even in differents points.
+* Cons
++ A failure of a service makes that functionality unusable.
++ Soffer Denial of Services attacks. (aka DOS)

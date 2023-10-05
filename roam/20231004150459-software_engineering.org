@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       33f6a8f8-444d-41e7-89a4-fda2a49ccc75
+:END:
+#+title: Software Engineering
+#+filetags: :engineering:
+
+The code that you wrote for yourself, with no docs or engineering is called /program/, is intended for private use.
+The /software/ on the other hand is well documented, before any line of code is written there is a process of engineering and so on.
+* Ethics in Software Engineering
++ confidentiality
++ expertise
++ intellectual property
++ don't abuse your skill
++ More [[https://www.acm.org/about-acm][here]]
+* What define a good Software
++ Easy of maintainance and evolution
++ Meets the clients requirements
++ Good docs
++ Good engineering (this is redundant)
++ Respect the ethics
+* One model of SW for all projects
+Each software projects have some qualities and peculiarity and such perks require differents models of SW to produce a good software.
+* [[id:032ab01f-06ad-4d92-a55e-b3b177474822][Software Model]]
++ [[id:952c80d0-0a56-45d5-b3d0-7d5a25e1067f][Scrum]]
++ [[id:28c613f5-eb22-4793-bf9f-1acbe38606a2][Agile]]
++ [[id:d62d5523-5721-405e-9375-599d3fdb0d00][Cascade]]
+* Process activity
+Here is a listing of useful technique in each stage.
+** Software requirement
++ User stories
++ Use case diagram
++ Prototyping
+** Software design
++ Design patterns
++ Experience
+** Software implemetation
++ IDE
+** Software validation
++ [[id:b56896f3-641f-4e5b-9326-4eb0f43e4840][Testing Driven Development]]
+** Software evolution
+This depends on the previouse ones.
+** Steps
+1. [[id:0dd76350-0ae0-40bd-a746-780c909001c3][Requirement Engineering]]
+2. [[id:87d8780a-4144-427a-bde7-2781091e35b6][System Models]]
+3. [[id:dec0d1f1-5ca7-421f-9178-96e5669e6bdf][Architecture Design]]
+4. [[id:83331d9d-0bf3-4957-9f50-1567daffadb8][Architecture Engineering]] 
+5. [[id:51e21632-1b1d-429d-b7f0-ff9963048f5f][Testing Phase]]
+* Resources
++ [[https://software-engineering-book.com][Ian Sommerville]]

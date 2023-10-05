@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       07396ae1-8dcc-48a2-a7b7-f9db5ccbd324
+:END:
+#+title: Builder
+#+filetags: :creational:engineering:pattern:
+
+* Intent
+Separate the construction process of a complex object into smaller steps that can be chained, this make the building processes easy and modular.
+* Use it when:
++ The costruction process must allow different representation of the constructed object.
++ The algorithm for creating complex object should be independent of the parts that make up the object and how they are assembled.
++ A complex object can be istantiated in too many different ways, i.e. when a complex Object have too many _Constructor_.
+* Participants:
+** Builder
+Specify an abstract interface for creating parts of a Product Object.
+** Concrete Builder
+Concrete class that specify how the singles parts (from the builder interface) should be created
+** Director
+The client who use the *Builder interface* to construct the Product.
+** Product
+The complex Object that will be constructed, it must contain all the various parts defined in the builder interface, this doesn't mean that all of that must have a value.
+It also contain a method to assemble (istantiate) the final product.
+* Class diagram:
+[[../assets/builder-diagram.png]]
+* Sequence
+[[../assets/builder-sequence.png]]
+* Consequences:
+** Vary the internal representation
+The builder interface hide the internal representation of the builded object, in this way the director don't know it.
+Furthermore the director can't change the object internal representation, at most it can build a new one with a different builder.
+** Separate code for construction and representation
+Builder encapsulate how a complex object is builded, the final client don't need to know the internal representation.
+*** Note
+On the example with the SGML there is an interesting use case, suppose we have the ~RTFBuilder~ and we want an ~SGMLBuilder~, instead of create all the ~ASCIIBuilder~, ~TeXBuilder~, etc... we can create only a ~RTFBuilder~ (to pass from SGML to RTF and the use all the previous builder).
+This use case is not good because we need a builder (SGML->RTF) the after the complex object is built we need to write a new RTF file to use the other builders.
+Obviously this example is not that good in practice, both for efficiency and for the code structure, but I find it interesting.
+** More control over the construction process
+Self explanatory.
+* Drawbacks
+The code is a harder to read and more verbose.
+* Common use case
+Built immutable objects.

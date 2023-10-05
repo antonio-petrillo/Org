@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       8fb44983-0ec8-4e07-9f65-453b393f874f
+:END:
+#+title: Algorithms
+#+filetags: :algorithm:programming:
+
+* Sorting
+** Comparison based 
++ [[id:d2c8c8da-ab4e-4b0b-98b2-c248d4538edc][Insertion Sort]]
++ [[id:f04cec69-b333-4c83-863d-99d7122527ed][Selection Sort]]
++ [[id:43f7daaf-1871-4afc-a574-f87aa1992efc][Heap Sort]]
++ [[id:08bb9acb-7bc1-4fb3-ad7d-9e593141dbb2][Merge Sort]]
++ [[id:c74a0058-4305-4622-b9b5-5949f2195961][Quick Sort]]
+** Complementary
+* Graph
+** Unweighted
++ [[id:56e26ea1-9a81-440a-abb9-1ae3f8f964a5][Breadth First Search]]
++ [[id:00159d89-69fa-42b2-8ab5-884c14db7389][Depth First Search]]
++ [[id:4346e83e-52ac-412e-98de-96d1d13c9d99][Topological Sort]]
++ [[id:c2e3336f-2b02-4730-8d1f-269a3bf6c439][Strongly Connected Components]]
+** Weighted
++ [[id:2250123a-f138-4261-b667-5b07a5bf5956][Dijkstra]]
++ [[id:4387d90a-fd42-4d1e-b443-99498e5e571f][Floyd Warshal]]
++ [[id:66f74f59-7834-48d7-a278-8396e7b85a40][Prim]]
++ [[id:eb686e07-d620-4efc-a252-ccf0761f4677][Bellman Ford]]
+** Approximated
+* Bit Algorithm
++ [[id:332543dd-dead-4b12-911e-57f61a570ba6][Population Count]]
+* Dynamic 
++ [[id:1feeb941-0166-41c3-b76b-991b77903824][Max Subsequence]]
+* Greedy
+* Math

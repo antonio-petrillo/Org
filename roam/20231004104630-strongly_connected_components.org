@@ -1,0 +1,109 @@
+:PROPERTIES:
+:ID:       c2e3336f-2b02-4730-8d1f-269a3bf6c439
+:ROAM_ALIASES: SCC
+:END:
+#+title: Strongly Connected Components
+#+filetags: :graph:algorithm:programming:
+
+* Strongly Connected Component
+The SCC is a partition of the vertices of a graph, the equivalence relation used to make the partition is the $M_{reach}$, aka ~mutual reach~.
+Two vertices $u,v \in V$ are in relation, according to $M_{reach}$, if exist a path from $u$ to $v$ and a path $v$ to $u$.
+* Algorithm
+#+begin_src c
+vertex[] strongly_connected_component(Graph g){
+    Graph transposed = transpose(g);
+    vertex_list* order = new_vertex_list();
+    dfs_1(g, order);
+    return dfs_2(transposed, order);
+}
+
+void dfs_1(Graph g, vertex_list* list){
+    dfs_info info = new_dfs_info();
+    // init info
+    for(vertex v=0; v < g.size; v++){
+        if(info->visited[v] == WHITE){
+            dfs_1_visit(g, v, info, p, list);
+        }
+    }
+}
+
+void dfs_1_visit(Graph g, vertex src, dfs_info info, vertex_list* list) {
+    info->time++;
+    info->start[src] = info->time;
+    info->visited[src] = GRAY;
+
+    for(vertex v=g->vertices[src]; v != NULL; v = v->next){
+        if(info->visited[v] == WHITE){
+            dfs_1_visit(g, v, info, list);
+        }
+    }
+
+    info->time++;
+    info->end[src] = info->time;
+    info->visited[src] = BLACK;
+    list = add(list, src); // add on the head.
+}
+
+void dfs_2(Graph g, vertex_list* list){
+    dfs_info info = new_dfs_info();
+    // init info
+    vertex[] scc = calloc(g.size, vertex);
+    int scc_index = 0;
+    for(vertex v=list->head; v != NULL; v = v->next){
+        if(info->visited[v] == WHITE){
+            dfs_2_visit(g, v, info, p, list, scc_index);
+        }
+        scc_index++;
+    }
+    return scc;
+}
+
+void dfs_2_visit(Graph g, vertex src, dfs_info info, vertex[] scc, int scc_index){
+    info->time++;
+    info->start[src] = info->time;
+    info->visited[src] = GRAY;
+
+    scc[src] = scc_index;
+
+    for(vertex v=list->head; v != NULL; v = v->next){
+        if(info->visited[v] == WHITE){
+            dfs_2_visit(g, v, info, scc, scc_index);
+        }
+    }
+
+    info->time++;
+    info->end[src] = info->time;
+    info->visited[src] = BLACK;
+}
+#+end_src
+** Correctness
+If we consider an unordered graph, a single dfs is enough to compute the ~SCC~, but how it work on a digraph?
+After a single dfs we have a *FDF* but it could happen that in one of the tree there are multiple ~SCC~.
+*** Theorem 1
+An ~SCC~ is all contained in the same tree of the *FDF*.
+**** Proof
+Proof by contradiction.
+Consider $v,u,z \in V$ that belong to the same $SCC$.
+Furthermore suppose that $v,u \in T_1$ and $z \in T_2$.
+
+When the dfs reach one of $v,u,z$ there is a ~white path~ to both the others.
+For the ~white path theorem~ the other two will be visited ending up in the same *FDF* tree, this create a contradiction.
+$$\blacksquare$$
+*** Continue the correctness proof
+We know that an ~SCC~ is all contained in a tree of the *FDF*, the problem here is that a first dfs explore also the edges that connect different ~SCC~.
+
+How we can avoid such edges?
+In the transposed graph such edges will be reversed, but we need an order to visit the nodes.
+If in the transposed graph we start the visit from a vertex after such edge we traverse the transposed edge and we cannot separate the ~SCC~.
+How we can find such an order?
+
+With a sort of [[denote:20230930T125937][Topological Sort]]!
+
+If we start the second dfs following the order of ~end visit~ we are sure that such edge will not be trasversed.
+$$\blacksquare$$
+* Time complexity
+The algorithm perform two complete [[id:00159d89-69fa-42b2-8ab5-884c14db7389][DFS]], one of which used to build a [[id:4346e83e-52ac-412e-98de-96d1d13c9d99][TO]],and one graph trasposal.
+$$T_{SCC}(G) = \Theta(|V| + |E|) + \Theta(|V| + |E|) + \Theta(|V| + |E|)$$
+$$T_{SCC}(G) = \Theta(|V| + |E|)$$
+* SCC example
+[[../assets/SCC-example.jpg]]

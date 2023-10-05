@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       d62d5523-5721-405e-9375-599d3fdb0d00
+:END:
+#+title: Cascade
+#+filetags: :engineering:
+
+* Cascade
+The Cascade model follow these steps:
+1. Requirement gathering/collection
+2. Design the software project
+3. Implementation and Testing
+4. Integration testing
+5. Operational and Maintaining
+You can't go from one step to the following until it is finished.
+** Pros
++ Is a really good model for critical system, like:
+  + an hardware product
+  + a software that involves the security of a living being (peacemaker, the abs of the car, etc...)
+** Cons
++ This process really slow down the development time
+** Diagram
+[[../assets/sw-cascade.jpeg]]

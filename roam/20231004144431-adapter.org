@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       dbce9a1b-f500-4c3e-a185-082f2adbc770
+:END:
+#+title: Adapter
+#+filetags: :engineering:pattern:structural:
+
+* Intent
+Convert an interface existing interface (tipycally an our existing class) to another existing interface (tipically a class defined in a library or framework).
+* Use it when
+As said in the intent suppose we a class ~Shape~ in our codebase, we want to use a 3rd party framework to build a GUI, the framework doesn't provide an interface for our ~Shape~ but it has a ~TextView~ that can do the job.
+Using an *Adapter* we can convert out ~Shape~ (*Adaptee*) to the ~TextView~ (*Adapted*).
+* Implementation
+** Inheritance
+This could be done only when the language support multiple inheritance, like ~C/C++~.
+** Composition
+The dual approach, pass to the *Adapter* an istance of the *Adaptee* so it could use it internally.
+This is used in language that doesn't support multiple inheritance, like ~Java~.
+Another reason to use this method is to reduce Object subclassing, this favors _Object composition_ over subclassing.
+* Class Diagram
+** Inheritance
+[[../assets/adapter-cl-inheritance.png]]
+** Composition
+[[../assets/adapter-cl-composition.png]]
+** General
+[[../assets/adapter-cl-general.png]]
+* Participants
+** Target
+Defines the domain-specific interface that Client uses.
+** Client
+Collobarates with Objects conforming to the Target interface.
+** Adaptee
+Defines an existing interface that needs adapting.
+** Adapter
+Adapts the interface of Adatpee to the Target interface.
+* Consequences
+** Adapts Adaptee to Target by committing to concrete Adapter class
+** Overrided Adatees behavior
+** Introduce only one object
+* Drawbacks
+** Make it harder to override
+Override the *Adaptee* behavior, before the adapting step, with a subclass make it harder to reuse a previous adapter, this require to write a new adapter for the subclass or redefine the adapter to the subclass.
+*** Note
+An *Adapter* could still use the original interface of the *Adaptee* and could be used to all the subclass of the *Adaptee*, the drawbacks refer to the case in which this behavior is not sufficient.
+* Similar to
+** [[id:b76d4f3d-8c2a-4d96-bcef-035a931f7b8f][Bridge]]
+They are similar but the key difference is that a bridge try to separate an interface from its implementations, where the adapter try to conform an existing interface to another existing interface.
+** [[id:91dcf9ff-1fbf-4e5d-bc7b-ab4d847442e1][Proxy]]
+This define a surrogate for another Object and does not change its interface.
+** [[id:9dadab52-baca-4a95-8176-71f14db66b56][Decorator]]
+Enhance another Object interface, this patter is more transparent than the Adapter, furthermore it allow recursive composition.
