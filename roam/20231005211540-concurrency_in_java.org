@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       3e595700-e041-449e-8d33-21ecb43188f1
+:END:
+#+title: Java Concurrency in Practice
+#+filetags: :programming:concurrency:book:
+
+* [[id:60d0b734-3c15-4abe-9ba3-fb55b58bacf6][Thread Safe]]
+* [[id:926e7e91-b247-4749-b447-666a1af9d820][Atomicity]]
+* Thread visibility in java
+Based on the [[id:1a703cce-9b0e-4311-bc8e-8d6fd49be0a1][Java Memory Model]] you have no guarantees that an update made by a thread upon a shared variable will be seen by all the other thread that can access such variables.
+To ensure visibility you muse use *SYNCHRONIZATION*.
+When you release a lock *ALL* the operations and modification on variables and refs will be visible to *ALL* the others threads.
+For this reason, to ensure visibility, you have to *SYNCHRONIZE UPON THE SAME LOCK*.
+** Volatile variables
+With the keyword ~volatile~ you can make any /read/, /write/ operation upon such variable atomic without the use of locks.
+Volatile makes read and write atomic also on ~long~ and ~double~ [fn:1].
+The use of volatile, although, is uncommon and also misleading; yes the read and write are atomic but considering the following code:
+#+begin_src java
+volatile long i = 0;
+i++;
+#+end_src
+This code is not thread safe since it will  become:
+#+begin_src java
+volatile long i = 0;
+int tmp = i;
+i = tmp + 1;
+#+end_src
+Between the read and the write operation you have no guarantees that the thread will not be preempted.
+* Don't allow reference escape
+If you publish [fn:2] your object before it is full initialized can cause unknown behavior.
+** Example
+In java the initialization, any call to ~new~, is atomic, but the following code contains nested initialization that are not synchronized.
+#+begin_src java
+public class UnsafeStates {
+    private String[] states = new String[] {
+        "STR 1", "STR 2", .....
+    };
+
+    public String[] getStates() {
+        return states;
+    }
+}
+#+end_src
+The array initialization is atomic, the strings initialization are atomics, the assignment to array's cells are not thread safe.
+* Footnotes
+[fn:2] Make the code visible to the outside
+[fn:1] The JMM ensure that all the read and write upon, at most, 32-bit variable are atomic without the use of volatile

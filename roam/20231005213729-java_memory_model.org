@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       1a703cce-9b0e-4311-bc8e-8d6fd49be0a1
+:ROAM_ALIASES: JMM
+:END:
+#+title: Java Memory Model
+#+filetags: :programming:concurrency:
+
+* TODO Java Memory Model

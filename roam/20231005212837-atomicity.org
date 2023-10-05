@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       926e7e91-b247-4749-b447-666a1af9d820
+:END:
+#+title: Atomicity
+#+filetags: :programming:concurrency:
+
+* Atomicity
+An operation is considered *ATOMIC* if and only if it will be executed entirely or not.
+* Example
+See [[id:7c21eed1-16f5-4f0f-a7d6-11739926de8d][Java]]'s *Atomic* classes like *AtomicInteger*.
+Any thread that shares this variable can treat is as [[id:60d0b734-3c15-4abe-9ba3-fb55b58bacf6][Thread Safe]].
+At any time when we look at the value it will be consistent, when we increment the value it will be seen by all the threads.
+#+begin_src java
+AtomicIntegr i = new AtomicInteger();
+i.incrementAndGet();
+#+end_src
