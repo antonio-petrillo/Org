@@ -1,0 +1,22 @@
+#+TITLE: pdc lesson 1
+
+* Ridurre i tempi di risposta (turnaround time)
+$$\tau = T(n) \cdot \mu$$
++ $T(n)$ dipende dall'algoritmo
++ $\mu$ dipende dal calcolatore (tempo di esecuzione di 1 operazione)
+* Soluzione alternativa, calcolo parallelo
+$$\tau = k \cdot T(n) \cdot \mu$$
++ $k$ eseguire il problema su $k$ cpu o calcolatori
+  decomporre un problema di dimensione $N$ in $P$ sottoproblemi di dimensione $\frac N P$ e risolverlo su piú calcolatori contemporaneamente.
+* Scale up
+La quantitá che esprime l'importanza della decomposizione del problema é lo *SCALE UP*
+$$\frac {T(n)} {P \cdot T(\frac n P)}$$
+* [[https://en.wikipedia.org/wiki/Flynn%27s_taxonomy][Tassonomia di Flynn]]
++ SISD := Single Instruction Single Data stream
++ MISD := Multi Instruction Single Data stream
++ MIMD := Multi Instruction Multi Data stream
++ SIMD := Single Instruction Multi Data stream
+I supercalcolatori si concentrano su MIMD.
+I supercalcolatori sono una sottocategoria di MIMD, in particolare MPP (Massive Parallel Processor).
+MPP sono a loro volta una sottocategoria di DM (Distributed Memory).
+Un'altra sottocategoria di DM é DSM (Distributed Shared Memory), che indica un sistema a memoria condivisa virtuale.

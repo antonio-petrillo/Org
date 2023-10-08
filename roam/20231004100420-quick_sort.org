@@ -307,7 +307,7 @@ $$
 $$
 
 We will try to prove the  notation [[denote:20230930T122137][Big Oh]] on this equation.
-**** Prove the $O(.)$
+**** Prove the [[id:2eb529b9-5d79-41a6-bd80-bd74f71a6fe3][Big Oh]]
 We will prove the Big Oh on this equation.
 $$
 \begin{equation}

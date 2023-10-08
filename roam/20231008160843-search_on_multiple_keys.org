@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       2b50da05-bdd1-4ab7-b845-027adba5c075
+:ROAM_ALIASES: "Multifield Index"
+:END:
+#+title: Search on Multiple Keys
+#+filetags: :database:index:
+
+* Multiple keys index
+Is an auxiliary search structure that in which the search field is composed by multiple field.
+
+It is useful to make queries on multiple fields at once.
+* How it is structured
+The multiple keys are arranged in /lexicographical order/ and then used in the table.
+** Example
++ Departments number *N_D*: $4, 2, 1, 1, 1, 6, 5$
++ Age of Employee *AGE*: $25, 42, 37, 28, 58, 44$
+
+Lexicographical Order on ~<N_D,AGE>~
++ ~<1,28>~
++ ~<1,37>~
++ ~<2,42>~
++ ~<4,25>~
++ ~<5,44>~
++ ~<6,58>~

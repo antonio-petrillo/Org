@@ -1,5 +1,6 @@
 :PROPERTIES:
 :ID:       068472c5-e01c-4e79-bba0-0f177958a022
+:ROAM_ALIASES: "Clustering Files"
 :END:
 #+title: Clustering Index
 #+filetags: :database:index:
@@ -7,8 +8,27 @@
 * Definition
 A clustering index is an index which is built upon a clustering field.
 The entries are sorted based on the given Key.
+A files build with clustering index is called *CLUSTERING FILES*.
 ** Note
 If a data file is ordered upon a field that is not a *Primary Key* that field is called *Clustering Field*.
 Conceptually Clustering Indexes are like [[id:bfd29816-b292-4819-be40-1782110c26a1][Primary Index]], but they are e based on differed fields
 * Characteristics
 See Primary indexes.
+* [[id:83306108-1751-447e-9b45-918b23054863][Cost Models]]
+Empirical studies showed that pages are generally occupied at $67\%$ so the number of physical pages is about $1.5 B$
+** Scan
+We have to scan all the pages.
+$$1.5B(D + RC)$$
+** Search
+We can search for the correct page with a logarithmic based on the /fan out/ and then perform a binary search on the desired page.
+$$D\log_F(1.5B) + C\log_2(R)$$
+** Search with range
+We have to search for the first page and the read the remaining in the range, in the worst case this means the whole file.
+$$D\log_F(1.5B) + RC$$
+** Insertion
+We have to first perform a search and then add the new record in time $D$.
+This assuming there is free space in the page.
+$$D\log_F(1.5B) + C\log_2(R) + D$$
+** Deletion
+Same thing as the insertion
+$$D\log_F(1.5B) + C\log_2(R) + D$$

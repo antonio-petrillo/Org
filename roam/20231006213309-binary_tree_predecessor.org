@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       d2fac7bb-d39a-4fb0-b924-35a9e84aed80
+:END:
+#+title: Binary Search Tree Predecessor
+#+filetags: :tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Predecessor
+#+begin_src c
+int predecessor_helper(node root, int key){
+    node candidate = NULL;
+    node iter = root;
+    while (iter != NULL && iter->key != key){
+        if (iter->key > key){
+            iter = iter->left;
+        }else{
+            candidate = iter;
+            iter = iter->right;
+        }
+    }
+    return candidate;
+}
+
+int predecessor(bst* t, int key){
+    return predecessor_helper((*t)->root, key);
+};
+#+end_src

@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       79b6f126-8f2d-4fb9-8c76-429395e270c0
+:END:
+#+title: Bitmapped Indexes
+#+filetags: database:files:
+
+* Representation
+It creates an index upon multiple field (like [[id:2b50da05-bdd1-4ab7-b845-027adba5c075][Multifield Index]]).
+A /bitmap index/ is built upon a specific value of a specific field and consist of a vector of bits.
+It is built upon one single field, so to use on multiple field you need an index for each one.
+To build such index on a column $C$ with value $V$, for a relation with $n$ rows it contains $n$ bits.
+The /i-th/ bit is set if the row $i$ has the value $V$ for column $C$.
+If the column $C$ can assume $m$ distinct values you need $m$ bits, one for each one.
+It is just a lookup table.
+* Properties
++ Facilitates queries on multiple keys
++ Can use low level binary operator
++ If the range of values is to large bitmap indexes are to expensive in term of memory
+* When to use it
++ When you have a small amount a unique value for the selected field

@@ -2,7 +2,7 @@
 :ID:       521327ac-f3c5-42a9-a004-6edfccf6b29a
 :END:
 #+title: Tree
-#+filetags: :math:programming:datastructure:
+#+filetags: :tree:math:programming:datastructure:
 
 * Theorems
 ** /n-leaf/ and each node have /degree = 2/

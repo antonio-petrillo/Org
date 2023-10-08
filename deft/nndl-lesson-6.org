@@ -1,0 +1,63 @@
+#+TITLE: NNDL lesson 6
+
+* Goal
+In a generative approach is to find:
+$$p(x|C_i)P(C_i) , i=1,\cdots ,k$$
+With which we can use the rule:
+IF $p(x|C_k)P(C_k) \gt p(x|C_i)P(C_i)$ THEN
+    $x \in R_k$ implies we choose $C_k$
+
+In a discriminative approach is to find:
+$$p(C_i|x) , i=1,\cdots ,k$$
+With which we can use the rule:
+
+IF $p(C_1|x)P(C_1) \gt p(C_2|x)P(C_2)$ THEN
+    $x \in R_1$ AND $x$ IS $C_1$
+ELSE
+    $x \in R_2$ AND $x$ IS $C_1$
+* See the pattern
+1. Computing the distribuiton of probabilities
+2. Using a decision rule
+* Focus on Step 1
+** Key element 1: the DATASET
+A set of $N$ pairs $(x^n, t^n)$ with the following properties:
++ $x^n \in R^d$
++ $t^n$ represent the class to which $x^n$ belongs to
+To produce a dataset we need a team of expert, known as *SUPERVISOR*, that tell us where each $x^n$ belongs.
+For this reason it is called *SUPERVISED LEARNING*.
+** Key element 2: a parametric function model
+As usual consider $k=2$ and the /discriminative approach/.
+Considering $p(C_1|x)$, $p(C_2|x)$, $x \in R^2$.
+We can use:
+$$f(x) = p(C_1|x) - p(C_2|x)$$
+
+IF $f(x) > 0$ THEN
+    $x \in R_1$, $x$ IS $C_1$
+ELSE
+    $x \in R_2$, $x$ IS $C_2$
+
+Here $f(x)$ is our unknown functional mapping
+*** Note
+I don't know why here the prof used this form instead of:
+$$f(x) = p(C_1|x)P(C_1) - p(C_2|x)P(C_2)$$
+** Approximate $f(x)$
+We can use $F(x, \theta )$ as a model to estimate $f(x)$.
+If $F(x, \theta )$ is well defined, at the variation of $\theta$, it should approximate well $f(x)$.
+*** Example
+Considering $k = 2$, $x \in R^2$, $x = (x_1, x_2)$ two feature.
+Also $f(x_1, x_2)$ is unknown.
+
+If we choose
+$$F(x_1, x_2, \theta ) = c_1x_1 + c_2x_2 + c_3x_1^2$$
+
+Then $\theta = (c_1, c_2, c_3)$.
+Now we have a model upon which we can find the $\theta$
+
+Then $\theta = (c_1, c_2, c_3)$.
+Now we have a model upon which we can find the $\theta$.
+We need to find $\theta^* = (c_1^*, c_2^*, c_3^*)$ such that:
+$$F(x_1, x_2, \theta^*) \approxeq f(x)$$
+
+**** Note
++ Here the function $F(x_1, x_2, \theta )$ is arbitrary.
++ $\theta^*$ is found based on the dataset.

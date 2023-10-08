@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       04c39ad3-312e-4fe0-b76d-2ce73d487925
+:END:
+#+title: 08-10-2023
+
+* TODO Uni
++ [X] controlla risposta prog per credenziali server scope
+  (no response)
++ [X] appunti db
++ [ ] appunti pdc
++ [ ] appunti osmiot (more on the part of iot)
+* TODO Health
++ [ ] basic exercises
+* TODO Tirocinio
++ [ ] studia react router tutorial
+* TODO Other
++ [X] clean room

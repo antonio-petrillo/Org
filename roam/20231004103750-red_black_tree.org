@@ -2,7 +2,7 @@
 :ID:       af07ecc4-755e-47dc-bd43-d9830a737b37
 :END:
 #+title: Red Black Tree
-#+filetags: :programming:datastructure:
+#+filetags: :tree:programming:datastructure:
 
 * [[https://en.wikipedia.org/wiki/Red%E2%80%93black_tree][Red Black Tree]]
 Is a class of [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] with logarithmic height.

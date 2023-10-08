@@ -3,7 +3,7 @@
 :ROAM_ALIASES: BFS
 :END:
 #+title: Breadth First Search
-#+filetags: :graph:programming:algorithm:
+#+filetags: :visit:graph:programming:algorithm:
 
 * BFS (Breadht First Search)
 It is pretty similar to the breadth visit on a [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]].

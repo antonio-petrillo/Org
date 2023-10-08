@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       cd9fa85b-1688-4cdf-92ce-bf718b1a8ac9
+:END:
+#+title: Linear Algebra
+#+filetags: :algebra:math:
+
+* Linear Algebra
+* [[id:b0b2e967-9716-4f73-a92d-ab8bf3554ff1][Linear Algebra Cookbook]]

@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       e1731065-ef04-4574-94e2-9ba26e2c8c19
+:END:
+#+title: Binary Search Tree Insertion
+#+filetags: :tree:algorithm:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Insert
+#+begin_src c
+static node insert_helper(node root, int newkey, type value){
+    if(root == NULL){
+       root = malloc(node);
+       root->left = NULL;
+       root->right = NULL;
+       root->key = newkey;
+       root->type = value;
+    }else{
+       if (root->key > newkey){
+           root->left = insert_helper(root->left, newkey, value);
+       }else if(root->key < newkey){
+           root->right = insert_helper(root->right, newkey, value);
+       }else{
+           // up to you:
+           // + update
+           // + ignore
+       }
+    }
+    return root;
+}
+
+void insert(bst* t, int newkey, type value){
+   (*t)->root = insert_helper((*t)->root, newkey);
+}
+#+end_src

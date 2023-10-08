@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       5a28b722-5120-4a95-b9e4-d4f92bda7276
+:END:
+#+title: Binary Search Tree Successor
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Successor
+#+begin_src c
+int successor_helper(node root, int key){
+    node candidate = NULL;
+    node iter = root;
+    while (iter != NULL && iter->key != key){
+        if (iter->key < key){
+            iter = iter->right;
+        }else{
+            candidate = iter;
+            iter = iter->left;
+        }
+    }
+    return candidate;
+}
+
+int successor(bst t, int key){
+    return successor_helper(t->root, key);
+};
+#+end_src

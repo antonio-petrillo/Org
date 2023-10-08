@@ -2,7 +2,7 @@
 :ID:       878f730a-7ba7-4a8b-b191-5328a650d8fd
 :END:
 #+title: Union Find Trees
-#+filetags: :algorithm:datastructure:math:programming:dsa:
+#+filetags: :tree:algorithm:datastructure:math:programming:dsa:
 
 * Union Find Trees
 This data structure is particularry efficient to represent disjointed set.

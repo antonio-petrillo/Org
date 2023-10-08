@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       3dfe1c98-49b5-4ebb-b7da-18fc774f6630
+:END:
+#+title: Binary Tree Post Order Visit
+#+filetags: :visit:tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Post order visit
+#+begin_src c
+static void helper_post_order_visit(node root){
+    if(root != NULL){
+        visit_operation(root);
+        helper_post_order_visit(root->left);
+        helper_post_order_visit(root->right);
+    }
+}
+
+void post_order_visit(bst t){
+    helper_post_order_visit(t->root);
+}
+#+end_src
+** Iterative version
+#+begin_src c
+void iterative_post_order_visit(bst t){
+    node current = t->root;
+    node previous = NULL;
+    stack stack_nodes = new_stack();
+    while (current != NULL || !is_empty(stack_nodes)){
+        if (current != NULL){
+           push(&stack_nodes, current);
+           current = current->left;
+        } else {
+           current = top(stack_nodes);
+           visit_operation(current);
+           if (current->right != NULL && previous != current->right){
+               current = current->right;
+           } else {
+              pop(&stack_nodes);
+              previous = current;
+              current = NULL;
+           }
+        }
+    }
+}
+#+end_src

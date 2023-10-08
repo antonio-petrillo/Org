@@ -1,0 +1,66 @@
+:PROPERTIES:
+:ID:       2fab468f-bae4-4a85-bcc7-4db5a8989af5
+:END:
+#+title: Probability and Information Theory
+#+filetags: :math:probability:information:cookbook:
+
+* Probability and Information Theory
+In [[id:cfe46240-9fe2-4bd9-9e2b-f2f2df088fe2][NNDL]] we use probability to understand how the AI should reason.
+Then we use probability and statistics to analyze the behaviour of the AI.
+* Random variables
+Is a variable that can take on different values randomly, indicate with $p$.
+* Probability distribution
+Is a description of how likely a random variable or set of random variables is to take on each of its possible states.
+The are two types:
++ continuos
++ discrete
+* Discrete Variables and Probability Mass Function
+A probability distribution over discrete variables may be described with Probability Mass Function (*PMF*), indicated with $P$.
+The PMF map from a state of a random variable to the probability of that random variable taking on that state.
+** Joint probability distribution
+$P(\textbf{x}=x, \textbf{y}=y)$ denotes that $\textbf{x}=x, \textbf{y}=y$ happen simultaneously.
+We can also write $P(x,y)$ for brevity.
+** Properties to be a PMF
++ All the set of the possible outcome of $x$
++ $\forall x \in X, 0 \le P(x) \le 1$
++ $\sum_{x \in X} P(x) = 1$
+** Equal distribution
+$$P(x = x_i) = \frac 1 k, i=1,\cdots , k$$
+* Continuous variables
+When working with continuous variables with don't use PMF but *PDF*, probability density function.
+For $p$ to be a PDF a function must satisfy:
++ The domain of $p$ is set of all possibilities states of $x$.
++ $\forall x \in X, p(x) \ge 0$
++ $\int p(x) \,dx = 1$
+* Marginal probability
+Used when we want the probability distribution of a subset of states.
+Suppose we have $x,y$ discrete variables and we know $P(x,y)$ then $P(x)$ is:
+$$\forall x \in X, P(\textbf{x} = x) = \sum_y P(\textbf{x}=x, \textbf{y}=y)$$
+For continuos variable we need to use the integral over $y$.
+* Conditional probability
+$P(y|x) = \frac {P(y,x)} {P(x)}$
+* Rule of chain for conditional probability
+$P(x_1, x_2, \cdots ,x_n) = P(x_1) \prod_{i=2}^n P(x_i | x_1, \cdots , x_{i-1}$
+* Indipendence and conditional probability
+$x,y$ are independent if:
+$$\forall x \in X, y \in Y, p(x,y) = p(x)p(y)$$
+* Expected value $\mathbb{E}$
+$$\mathbb{E}_{x \approx P}[f(x)] = \sum_x P(x)f(x)$$
+$$\mathbb{E}_{x \approx P}[f(x)] = \int_x P(x)f(x)$$
+** Expectation are linear
+$$\mathbb{E}_x [\alpha f(x) + \beta g(x)] = \alpha \mathbb{E}_x[f(x)] + \beta \mathbb{E}_x[g(x)] $$
+* Variance $Var$
+$$Var(f(x)) = \mathbb{E}[(f(x) - \mathbb{E}[f(x)])^2]$$
+* Covariance $Cov$
+$$Cov(f(x), g(y)) = \mathbb{E}[(f(x) - \mathbb{E}[f(x)]) \cdot (g(y) - \mathbb{E}[g(y)])]$$
+* Common probability distribution
+** Bernoulli
++ $P(x = 1) = \phi$
++ $P(x = 0) = 1 - \phi$
++ $P(x = x) = \phi^x (1 - \phi)^{1 - x}$
++ $\mathbb{E}_x[x] = \phi$
++ $Var_x(x) = \phi(1 - \phi)$
+** Gaussian
+$$N(x, \mu ,\sigma ^ 2) = \sqrt{\frac 1 {2 \pi \sigma ^ 2}} e ^ {- \frac {(x - \mu) ^ 2} {2 \sigma ^ 2}}$$
++ $\mu = \mathbb{E}[x]$
++ $\sigma = Var[x]$

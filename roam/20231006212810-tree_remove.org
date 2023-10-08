@@ -1,0 +1,65 @@
+:PROPERTIES:
+:ID:       9e86ea1b-7a04-475d-b6e7-24815f68a350
+:END:
+#+title: Binary Search Tree Remove
+#+filetags: :tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+
+* Remove
+#+begin_src c
+static node remove_helper(node root, int key){
+    if (root){
+       if(root->value > key){
+           node->left = remove_helper(node->left, key);
+       } else if(root->value < key){
+           node->right = remove_helper(node->right, key);
+       } else {
+           node = delete_root(node);
+       }
+    }
+    return root;
+}
+
+void remove(bst* t, int key){
+    (*t)->root = remove_helper((*t)->root, key);
+}
+#+end_src
+*** Helper function
+*** Delete root
+#+begin_src c
+node delete_root(node root){
+   if (root->left == NULL || root->right == NULL){
+       node tmp = node;
+       if(root->left == NULL){
+           root = root->right;
+       } else {
+           root = root->left;
+       }
+       free(tmp);
+   }else {
+       node min_on_right = minimum_deconnection(root, root->right);
+       root->key = min_on_right->key;
+       root->value = min_on_right->value;
+       free(min_on_right);
+   }
+   return node;
+}
+#+end_src
+*** Minimum Deconnection
+#+begin_src c
+node minimum_deconnection(node parent, node child){
+    if(child->left == NULL){
+        if(parent->left == child){
+            parent->left = child->right;
+        }else{
+            parent->right = child->right;
+        }
+        return child;
+    } else {
+        node tmp = minimum_deconnection(child, child->left);
+        return tmp;
+    }
+}
+#+end_src

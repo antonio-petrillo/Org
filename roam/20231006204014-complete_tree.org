@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       391457e8-49f4-4561-bc55-e98454254989
+:END:
+#+title: Complete Tree
+#+filetags: :tree:datastructure:math:
+
+* Definition
+This structure is a relaxation of the [[id:134bc7ce-4cbd-441d-ad3d-92862666e58f][Full Tree]].
+The relaxation is the following, all the leaves are at level $h$ or $h-1$ and at most ~one~ internal node has ~one~ child.
+* Properties
+Since that all the nodes are at height $h - 1$ or $h$ we know that the number of nodes are included between the /full tree/ of height $h - 1$ and $h$.
+Hence $\log_2(n(h-1)) \le h \lt \log_2(n(h))$, which means:
+$$\log_2(n) \le h \lt \log_2(n + 1) \implies h = \log_2(n)$$
+The height of a complete tree is logarithmic.

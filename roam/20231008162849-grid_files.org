@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       a685a3c7-09e0-48dd-9615-af0f5d2dab30
+:END:
+#+title: Grid Files
+#+filetags: database:files:
+
+* Representation
+A grid file is represented by an $n$ dimensional matrix, where $n$ is number of fields constituting the compound search key.
+It uses a scale, usually based upon a normal distribution, to distribute the data.
+* Example
+In this case an example can be more simple to understand.
+[[../assets/grid-files.png]]

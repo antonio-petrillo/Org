@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       134bc7ce-4cbd-441d-ad3d-92862666e58f
+:END:
+#+title: Full Tree
+#+filetags: :tree:datastructure:math:
+
+* Definition
+A *Full Tree* is a [[id:47dca4c7-a673-4341-90bb-e0d5636c7bae][Binary Search Tree Definition]] such that all the internal nodes have exactly $2$ childs.
+* Properties
+** Calculate the number of nodes given the height
+Since at each level each node has exactly two nodes, given the height we can compute the number of nodes in the tree.
+** Recursive Definition
++ Empty Tree $h=0$ number of nodes is $0$ = $2^0 - 1$
++ Tree with height $h=1$ has $2^1 - 1 = 1$ node
++ Inductive case:
+  + Hypothesis: given $h=k$ we have $\sum_{i=0}^{k} 2^i = \frac {2 ^ {k + 1} - 1} {2 - 1}$
+  + Proof:
+          For each leaf, which are $2^k$, at level $h=k$ we have 2 new leaves, hence $2^{k+1}$.
+          $2^{k + 1} - 1 + 2^{k + 1} = 2 \cdot 2 ^ {k + 1} - 1 = 2 ^ {k + 2} - 1$
+          Which prove the hyphotesis.
+          $\blacksquare$
+*** Formula
+    $$n(h) = 2^{h + 1} - 1$$
+*** Calculate the height given the number of nodes
+We can use the inverse and calculate the height given the number of nodes with logarithm in base 2.
+*** Formula
+$$h(n) = \log_2(n)$$
+        

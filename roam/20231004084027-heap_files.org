@@ -43,3 +43,48 @@ $$T_{delete} = O(n)$$
 The operation that return a set of record all require an $O(nˆ2)$, except for insertion.
 * What if we order the heap?
 We will have a slowdown on *insertion* and some spedup on *search* but the order is to expensive to maintain, furthermore when we search for a field that is not included in *comparison method* used to sort we have the same performance of an unorderd one.
+* [[id:83306108-1751-447e-9b45-918b23054863][Cost Models]]
+** Unordered heap file
+*** Scanning
+If the search field is not unique
+$$B(D+RC)$$
+That because we have to retrieve each of the $B$ pages taking a time $D$ for each page.
+For each block we have to process $R$ records taking time $C$ for each.
+
+If the search field is known to be uninque, on average, it takes
+$$\frac {B(D+RC)} 2$$
+
+If the search field is not present, we have to scan the whole file
+$$B(D+RC)$$
+*** Search
+Since there is no order we have to scan the whole file each time
+$$B(D+RC)$$
+*** Insertion
+Insertion is cheap because we just have to append to the end of the file.
+$2D + C$
+One $D$ for read the file, $C$ to process the new record and append to the file, at last the second $D$ to write the files back onto the file.
+*** Deletion
+For simplicity that no action is take to compact the file.
+First we need to search for the record, since it is unique this require
+$\frac {B(D+RC)} 2$.
+Then we have to remove the record with cost $C$ and write everything back with $D$.
+The total is:
+$$\frac {B(D+RC)} + C + D2$$
+** Ordered Heap files
+*** Scanning
+Like in the unordered one we have to visit the whole file.
+$$B(D + RC)$$
+*** Search
+Here I'm assuming the search on the sort field.
+We can locate the desired page with $\log_2(B)$, each load cost $D$, search, then we can do another binary search to find the desired block among the ones loaded, each inspected block cost $C$.
+$$D\log_2(B) + C\log_2(R)$$
+*** Search with range
+In the worst case, once we have found the first element we may to scan the whole page.
+$$D\log_2(B) + RC$$
+*** Insertion
+This one is expensive because we first have to perform a search to understand in which spot we must put the file, then we have to rewrite the whole page to maintain the order
+$$D\log_2(B) + C\log_2(R) + B(D+RC)$$
+On average we move half of the elements but since we have to do a read and a write our operation to maintain the order are doubled, this factors out the $\frac 1 2$.
+*** Deletion
+Same thing as the insertion.
+$$D\log_2(B) + C\log_2(R) + B(D+RC)$$

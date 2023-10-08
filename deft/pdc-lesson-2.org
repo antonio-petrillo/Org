@@ -1,0 +1,66 @@
+#+TITLE: pdc lesson 2
+
+* somma di n numeri
+** Pseudocodice sequenziale
+#+begin_src c
+int sum = a[0];
+for (int i = 1; i < n; i++) {
+    sum += a[i];
+}
+return sum;
+#+end_src
+** Pseudocodice parallelo
+Ci sono diversi approcci per dividere il problema.
+*** Strategia I
+Ogni processore calcola la somma parziale e la invia ad un processore predefinito.
++ consider $p$ the number of processors
+#+begin_src c
+int sumtot = 0
+for(int i = 0; i < p; i++){
+    int sum_i = 0;
+    int h = i * (n / p);
+    for (int j = h; j < h + (n / p); j++) {
+        sum_i += a[j]
+    }
+    if (p_0) { // if it is the processor 0 (master)
+        for (int k = 1; k < p; k++){
+            recv(sum_k, p_k);
+            sumtot += sum_k;
+        }
+    } else { // p_i processor (slave)
+        send(sum_i, p_0)
+    }
+}
+return sumtot;
+#+end_src
+*** Strategia II
+Coppie distinte di processori comunicano contemporaneamente.
+In ogni coppia un processore invia all'altro la propria somma parziale che provvede all'aggiornamento della somma.
+*** Strategia III
+Coppie distinte di processori comunicano contemporaneamente.
+In ogni coppia i processori si scambiano le proprie somme parziali.
+Il risultato é in tutti i processori.
+* Calcolo dell'efficienza
+Se un algoritmo richiede un temp $T$ su un processore, indicato con $T(1)$, se eseguito su un $p$ processori, ovvero $T(p)$, ci aspettiamo che:
+$$\frac {T(1)} {T(p)} = p$$
+Questa quantitá é detta *SPEED UP*, $S(p)$:
+$$S(p) = \frac {T(1)} {T(p)}$$
+Lo speed up misura la riduzione del tempo di esecuzione rispetto all'algoritmo su $1$ processore.
+** Speed up ideale
+$$Sˆ{ideale}(p) = p$$
+*  (Overhead)
+$$S(p) \lt p$$
+Questo perché vi é sempre un *OVERHEAD* $O_h$.
+Misura quanto lo speedup differisce da quello ideale.
+$$O_h = pT(p) - T(1)$$
+$$T(p) = \frac {O_h + T(1)} p$$
+$$S(p) = \frac {T(1)} {T(p)}$$
+$$S(p) = \frac {T(1)} {\frac {O_h + T(1)} {p}}$$
+$$S(p) = \frac {pT(1)} {O_h + T(1)}$$
+$$S(p) = \frac {pT(1)} {\frac {O_h} {T(1)} + 1}$$
+* Efficienza
+Quanto bene utilizziamo le nostre risorse?
+L'efficienza $E(p)$ risponde a questa domanda.
+$$E(p) = \frac {S(p)} p$$
+** Efficienza ideale
+$$E^{ideale}(p) = \frac {S^{ideale}(p)} p$$

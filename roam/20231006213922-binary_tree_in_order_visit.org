@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       8b00a8f2-4d7d-4aca-abcb-81df5c9db876
+:END:
+#+title: Binary Tree In Order Visit
+#+filetags: :visit:tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* In order visit
+#+begin_src c
+static void helper_in_order_visit(node root){
+    if(root != NULL){
+        helper_in_order_visit(root->left);
+        visit_operation(root);
+        helper_in_order_visit(root->right);
+    }
+}
+
+void in_order_visit(bst t){
+    helper_in_order_visit(t->root);
+}
+#+end_src
+** Iterative version
+#+begin_src c
+void iterative_in_order_visit(bst t){
+    node current = t->root;
+    node previous = NULL;
+    stack stack_nodes = new_stack();
+    while (current != NULL || !is_empty(stack_nodes)){
+        if (current != NULL){
+           push(&stack_nodes, current);
+           current = current->left;
+        } else {
+           current = top(stack_nodes);
+           if (current->right != NULL && previous != current->right){
+               visit_operation(current);
+               current = current->right;
+           } else {
+               if (current->right == NULL){
+                   visit_operation(current);
+               }
+               pop(&stack_nodes);
+               previous = current;
+               current = NULL;
+           }
+        }
+    }
+}
+#+end_src

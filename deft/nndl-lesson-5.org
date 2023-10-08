@@ -1,0 +1,101 @@
+#+TITLE: NNDL lesson 5
+
+* CP [fn:1]
++ $K$ classes $C_1, C_2, \cdots C_k$
++ FS [fn:2] (vector space) $X$
+
+In the previous lesson we found a general solution:
+$\psi_1, \psi_2, \cdots , \psi_k$ DF [fn:3]
+
+IF $\forall i \ne j$ SUCH THAT $\psi_i(x) \gt \psi_j(x)$ THEN
+    $x \in R_i$ AND $x$ IS $C_i$
+* The new problem
+How we can find these $\psi_i$?
+We start from the idea to want to /minimize/ the *MISCLASSIFICATION ERROR*.
+We should build the $\psi$ such that they minimize the MC [fn:4].
+* Misclassification error
+Given in input $x$ our classification functions says it belongs to $R_1$, which means $C_1$, but it belong to another class say $C_2$.
+This error is defined in *PROBABILISTIC TERMS*.
+** MC [fn:4] with probability terms
+For simplicity sake we consider $k=2$.
+$$P(error_{MC}) = P(x \in R_1, C_2) + P(x \in R_2, C_1)$$ [fn:6]
+This means that the $P(error_{MC})$ is the sum of the MC [fn:4] of $x \in R_1$ given that it belongs to $C_2$ plus the dual case.
+
+Using conditional probability we can rewrite $P(A,B)$ as follows:
+$$P(A|B) = \frac {P(A,B)} {P(B)}$$
+Where $P(A|B)$ is the probability of $A$ given $B$.
+
+Now we can write $P(A,B)$ as:
+$$P(A,B) = P(A|B) P(B)$$
+
+With this in mind we can rewrite:
+$$P(error_{MC}) =  P(x \in R_1, C_2) + P(x \in R_2, C_1)$$
+$$P(error_{MC}) =  P(x \in R_1| C_2)P(C_2) + P(x \in R_2| C_1)P(C_1)$$
+
+Since we are working with continuos variable:
+$$P(error_{MC}) =  \int_{R_1}p(x | C_2)P(C_2) \,dx + \int_{R_2}p(x | C_1)P(C_1) \,dx$$
+*** Note
++ Usually in machine learning we are in the context of dependent events.
++ $P(x \in R_1 |C_1) = \int_{R_1} p(x|C_2) \,dx$
++ $p(x|C)$ is a probability distribution on the region $R_1$ (note the lower case p)
+** Minimize $P(error_{MC})$
+Given a value $x$:
+
+IF $p(x|C_2)P(C_2) \gt p(x|C_1)P(C_1)$ THEN
+    $x \in R_2$ implies we choose $C_2$
+ELSE
+    $x \in R_1$ implies we choose $C_1$
+*** Note
+1. We are still in the case where $k = 2$ for simplicity.
+2. We don't know $p(x|C_1)$ and $P(C_1)$
+3. We often start condidering $P(C_1) = P(C_2) = \frac 1 2$ (not always)
+** The goal of Machine Learning
+Find the posterior probability, (e.g. $p(x|C_1)$, $p(x|C_2)$).
+** Generative approach
+If we know $p(x|C_1)$ and $p(x|C_2)$ we can *produce data*.
+That because we know probability distribution.
+
+This approach is called *GENERATIVE APPROACH*, but it is hard since it require a large amount of data.
+** Discriminative approach
+It is less expensive and it is based on *BAYES THEOREM*.
+
+$$P(A|B) = \frac {P(B|A)P(A)} {P(B)}$$
+
+Now, given $p(x|C_1)P(C_1)$ and $p(x|C_2)P(C_2)$, we can consider:
+
+$$p(C_1|X) = \frac {p(x|C_1)P(C_1)} {p(x)}$$
+$$p(C_2|X) = \frac {p(x|C_2)P(C_2)} {p(x)}$$
+
+If we consider:
+$$p(C_1|x) \gt p(C_2|x)$$
+Implies:
+$$\frac {p(C_1|x)P(C_1)} {p(x)} \gt \frac {p(C_2|x)P(C_2)} {p(x)}$$
+
+Here we can factor out $p(x)$ and we are left with:
+
+$$p(C_1|x)P(C_1) \gt p(C_2|x)P(C_2)$$
+
+IF $p(C_1|x)P(C_1) \gt p(C_2|x)P(C_2)$ THEN
+    $x \in R_1$ AND $x$ IS $C_1$
+ELSE
+    $x \in R_2$ AND $x$ IS $C_1$
+
+
+*** Consequences
+We can minimize $P(error_{MC})$ with $p(C_1|x)$ and $p(C_2|x)$.
+The $P(C_1)$ and $P(C_2)$ are known a priori.
+We just compute $p(C_i|x)$ and just them accordingly.
+*** Deduce the bayes theorem
+$$P(A,B) = P(A|B)P(B)$$
+But since:
+$$P(A,B) = P(B|A)P(A)$$
+We can combine the two:
+$$P(A|B)P(B) = P(B|A)P(A)$$
+$$P(A|B) = \frac {P(B|A)P(A)} {P(B)}$$
+* Fun facts [fn:5]
+[fn:1] Classification Problem
+[fn:2] Feature Space
+[fn:3] Discriminant Function
+[fn:4] Misclassification Error
+[fn:5] Most of these footnotes [1..4] are an application of the [[https://refactoring.guru/design-patterns/flyweight][Flyweight]] pattern
+[fn:6] $P(A,B)$ means the probability that $P(A)$ and $P(B)$ happens simultaneously, usually is indicated as $P(A \cap B)$

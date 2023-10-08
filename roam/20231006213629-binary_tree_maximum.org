@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       6b85e97c-6b1e-4a26-9102-d0ea7f3c7613
+:END:
+#+title: Binary Search Tree Maximum
+#+filetags: :tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Maximum
+#+begin_src c
+type max(bst t){
+    type value = NULL;
+    node iter = t->root;
+    while (iter != NULL && iter->right != NULL){
+       iter = iter->right;
+    }
+    if(iter != NULL){
+        value = iter->value;
+    }
+    return value;
+}
+#+end_src

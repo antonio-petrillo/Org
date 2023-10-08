@@ -1,0 +1,5 @@
+#+title: Nndl Lesson 3
+
+* Classification Problem
+Map the data to a specific class.
+We need a method to assign these datas to classes

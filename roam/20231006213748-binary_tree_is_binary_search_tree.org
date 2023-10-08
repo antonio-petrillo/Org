@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       e5e9a12f-385c-4a32-ad5f-78a243ca55b4
+:ROAM_ALIASES: "Binary IsBST"
+:END:
+#+title: Binary Search Tree Is Binary Search Tree
+#+filetags: :tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Is BST
+#+begin_src c
+static bool is_bst_helper(node root, int lower_bound, int upper_bound){
+    bool result = true;
+    if(root != NULL){
+        if (root->value > lower_bound && root->value < upper_bound){
+            result = is_bst_helper(root->left, lower_bound, root->value);
+            if (result){
+                result = is_bst_helper(root->right, root->value, upper_bound);
+            }
+        } else {
+            result = false;
+        }
+    }
+    return result;
+}
+
+bool is_bst(bst t){
+    return is_bst_helper(t->root, -∞, ∞);
+}
+#+end_src

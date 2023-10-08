@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       b1c24303-d84a-462e-971f-3971916be216
+:END:
+#+title: Binary Search Tree Minimum
+#+filetags: :tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Minimum
+#+begin_src c
+type min(bst t){
+    type value = NULL;
+    node iter = t->root;
+    while (iter != NULL && iter->left != NULL){
+       iter = iter->left;
+    }
+    if(iter != NULL){
+        value = iter->value;
+    }
+    return value;
+}
+#+end_src

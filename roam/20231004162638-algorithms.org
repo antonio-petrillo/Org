@@ -12,6 +12,18 @@
 + [[id:08bb9acb-7bc1-4fb3-ad7d-9e593141dbb2][Merge Sort]]
 + [[id:c74a0058-4305-4622-b9b5-5949f2195961][Quick Sort]]
 ** Complementary
+* Trees
++ [[id:e1731065-ef04-4574-94e2-9ba26e2c8c19][Binary Search Tree Insertion]]
++ [[id:4d12b81d-a3d0-4808-91a2-797f94a2641b][Binary Search Tree Search Iterative]]
++ [[id:9e86ea1b-7a04-475d-b6e7-24815f68a350][Binary Search Tree Remove]]
++ [[id:5a28b722-5120-4a95-b9e4-d4f92bda7276][Binary Search Tree Successor]]
++ [[id:d2fac7bb-d39a-4fb0-b924-35a9e84aed80][Binary Search Tree Predecessor]]
++ [[id:b1c24303-d84a-462e-971f-3971916be216][Binary Search Tree Minimum]]
++ [[id:e5e9a12f-385c-4a32-ad5f-78a243ca55b4][Binary Search Tree Is Binary Search Tree]]
++ [[id:8b00a8f2-4d7d-4aca-abcb-81df5c9db876][Binary Tree In Order Visit]]
++ [[id:484770cb-910a-4a2d-98ab-7548fe51ae83][Binary Tree Pre Order Visit]]
++ [[id:3dfe1c98-49b5-4ebb-b7da-18fc774f6630][Binary Tree Post Order Visit]]
++ [[id:e8ed54d1-b2bd-44aa-8fa6-856fd4f6cd01][Binary Tree Breadth Visit]]
 * Graph
 ** Unweighted
 + [[id:56e26ea1-9a81-440a-abb9-1ae3f8f964a5][Breadth First Search]]

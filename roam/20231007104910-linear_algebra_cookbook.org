@@ -1,0 +1,116 @@
+:PROPERTIES:
+:ID:       b0b2e967-9716-4f73-a92d-ab8bf3554ff1
+:END:
+#+title: Linear Algebra Cookbook
+#+filetags: :math:algebra:cookbook:
+
+* Summary
+Brief recap of linear algebra taken from [[https://www.deeplearningbook.org/contents/linear_algebra.html][deep learning book]].
+* Scalar
+Just a single number that belong to the underlying *SPACE*.
+* Vectors
+An array of numbers.
+If all the $n$ elements of the vector belong to the same *SPACE*, say $\mathbb{R}$, we say that the underlying space is the cartesian product $\mathbb{R}^n$.
+** Scalar product
+Multiply each element in the vector by the same input scalar.
+** Dot product
+Given $x = [x_1, x_2, \cdots, x_n], y = [y_1, y_2, \cdots, y_n]$
+$$x \cdot y = \sum_{i = 1}^n x_iy_i$$
+*** Properties
++ commutative
++ distributive
++ bilinear $\textbf{a} \cdot (r\textbf{b} + \textbf{c}) = r(\textbf{a} \cdot \textbf{b}) + (\textbf{a} \cdot \textbf{c})$
++ non associative
+*** Alternative form
+Dot product can be expressed in terms of norms.
+$$x\cdot y = ||x||_2||y||_2cos(\theta)$$
+Where $\theta$ is the angle between $x$ and $y$.
+* Matrices
+A 2-D vectors.
+** Transposing
+Say we have a matrix $A_{n \times m}$, the transpose $A^T$ is $A_{m \times n}$ such that for each index $i,j$ we have $A_{i,j} = A_{j,i}^T$
+*** Properties
++ $(AB)^T = B^TA^T$
+** Product (hadamard product)
+Let $A,B$ matrices, their product $C$ is defined as follows:
+$$C_{i,j} = \sum_kA_{i,k}B_{k,j}$$
+Two matrices can be multiplied together only when they are compatible.
+$$A_{n \times m} \cdot B_{m \times t} = C_{n \times t}$$
+*** Properties
++ Associative
++ Not commutative
++ Distributive
+** Product by a vector
+Given a matrix $A_{n \times m}$ and a vector $x{1 \times m}$ we write:
+$$Ax = b$$
+Where $b_i = A_{i:}x$ for each row.
+** Identity and Inverse Matrices
+Only square matrix are invertible.
+The Identity matrix $I$ is the $neutral element$ for the matrix product.
+An identity matrix of size $n$ is the one with all $1$ on the main diagonale an $0$ everywhere else.
+The inverse of a matrix $A$ is $A^{-1}$ such that:
+$$A^{-1}A = I_n$$
+Not all matrices are  invertable.
+In computing often we don't solve properly this calculation but we approximate them.
+** Solve equations
+Given: $Ax = b$
+We can solve with the inverse as follow:
+$$A^{-1}Ax = A^{-1}b$$
+$$I_nx = A^{-1}b$$
+** Linear dependence and span
+Some system may have $0$, $1$ or $\infty$ solution.
+It is not possible to have more than $1$ and less than $\infty$.
+To determine how many solution there are we can see if $b$ is a linear combination.
+Think at the column of $A$ as the differents directions from a corespondent axes, we have to determine how many ways there are to express $b$, here each element of $x$ specify how far we should travel in each of these directions.
+$$Ax = \sum_ix_iA_{:i}$$
+This operation is a *LINEAR COMBINATION*.
+The *SPAN* of a set of vectors is the set of *ALL POINTS OBTAINABLE*
+If none of the vectors in set cannot be expressed as a linear combination of the others the they are *LINEARLY INDEPENDENT*.
+For a system to have $1$ solution means that the matrix $A$ is square and *SINGULAR* (the vectors are independent).
+** Eigendecomposition
+*** EigenVector and EigenValues
+An eigenvector of $A$ is a non zero vector $v$ such that multiplying $A$ for $v$ modify only the magnitude of $v$.
+$$Av = \lambda v$$
+Here $\lambda$ is known as *EIGENVALUE*.
+Suppose a matrix $A{n}$ has $n$ /linearly independent/ eigenvector with coresponding eigenvalues, we can arrange all this eigenvector in a matrix, one for each column, $V$.
+The *EIGENDECOMPOSITION* of $A$ is given by:
+$$A = Vdiag(\lambda)V^{-1}$$
+*** Properties
+EigenValues and EigenVector permits us to stretch space in the desired directions.
+* Special matrices and vectors
+** Diagonal matrix
+A diagonal matrix have *non zero* values only on the diagonal.
+Diagonal matrix are easily invertable.
+The inverse matrix $A^{-1}$ exist only if every element on the diagonal is non zero.
+** Symmetric matrix
+A matrix $A$ is symmetric if $A = A^T$.
+** Unit vector
+Is a vector of $||x||_2 = 1$
+** Orthogonal vector
+$x,y$ are orthogonal if $x \cdot y = 0$
+** Orthonormal
+If vectors are *orthogonal* and *unit* they are *ORHTONORMAL*.
+** Orthonormal matrix
+A matrix is orthonormal is all the rows and columns are orthonormal.
+$$A^TA = AA^T=I$$
+This implies:
+$$A^{-1} = A^T$$
+* Norms
+Then norm $L^p$ is a function used to mapping vectors to *NON NEGATIVE* values, geometrically it measure the distance of a vector from the origin.
+$$||x||_p = (\sum_i|x_i|^p)^{\frac 1 p}$$
+** Definition
+A norm is a function that satisfy:
++ $f(x) = 0 \implies x = 0$
++ $f(x + y) \le f(x) + f(y)$ triang. inequality
++ $\forall\alpha \in \mathbb{R}, f(\alpha \cdot x) = |\alpha|  f(x)$
+** Euclidean norm $L^2$
+Is the $L^2$ norm, since it is frequent the shorthands is $||x||$
+** $L^1$ norm
+$$||x||_1 = \sum_i|x_i|$$
+** $L^{\infty}$ norm (*Max norm*)
+$$||x||_{\infty} = max_i|x_i|$$
+This simplify to the value with max absolute norm in the vector $x$.
+** Measure the size of a matrix (Frobenius norm)
+$$||A||_F = $\sqrt{\sum_{i,j}A_{i,j}^2}$
+* Tensors
+In some cases we will need an array with more than two axes.

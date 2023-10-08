@@ -2,12 +2,25 @@
 :ID:       d9a43605-d8af-4879-943a-e8816e7dda05
 :END:
 #+title: Database
+#+filetags: :database:
 
 * Database Files
 + [[id:df0f92d7-7e9b-4b61-9cf8-7b79808e20dd][Heap Files]]
++ [[id:068472c5-e01c-4e79-bba0-0f177958a022][Clustering Files]]
 + [[id:044cbe89-4577-45b8-abfd-b3797e23208f][Hash Files]]
++ [[id:a685a3c7-09e0-48dd-9615-af0f5d2dab30][Grid Files]]
 * Database Indexes
 + [[id:bfd29816-b292-4819-be40-1782110c26a1][Primary Index]]
 + [[id:df06bbdb-7d41-4b0a-afcc-aa174c1283d0][Secondary Index]]
 + [[id:068472c5-e01c-4e79-bba0-0f177958a022][Clustering Index]]
-+ [[id:42d1d853-ffdb-48b6-b5ed-774e5334b965][Multilevel Index]] 
++ [[id:42d1d853-ffdb-48b6-b5ed-774e5334b965][Multilevel Index]]
++ [[id:2b50da05-bdd1-4ab7-b845-027adba5c075][Multifield Index]]
++ [[id:79b6f126-8f2d-4fb9-8c76-429395e270c0][Bitmapped Indexes]]
+** Syntax
+#+begin_src sql
+CREATE [UNIQUE] INDEX <index name>
+ON <table name> (<column name> [<order>] {, <column name> [<order>])
+[CLUSTER]
+#+end_src
+* Cost Models
++ [[id:83306108-1751-447e-9b45-918b23054863][File Organization Cost Models]]

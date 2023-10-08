@@ -60,5 +60,6 @@ public class ThreadLocalExample implements Runnable{
 
 }
 #+end_src
+If you execute this program even if the state of formatter is changed none of the thread will see a coherent value.
 ** Disadvantage
 It introduce coupling and /hidden/ dependencies into the code decreasing Reusability.

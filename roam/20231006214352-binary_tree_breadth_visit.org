@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       e8ed54d1-b2bd-44aa-8fa6-856fd4f6cd01
+:END:
+#+title: Binary Tree Breadth Visit
+#+filetags: :visit:tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Breadth visit
+#+begin_src c
+void breadth_visit(bst t){
+    queue q = new_queue();
+    enqueue(&q, t->root);
+    while(!is_empty(q)){
+       node root = dequeue(&q);
+       visit_operation(root);
+       if(root->left != NULL){
+          enqueue(&q, root->left);
+       }
+       if(root->right != NULL){
+          enqueue(&q, root->right);
+       }
+    }
+}
+#+end_src

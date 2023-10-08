@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       cfe46240-9fe2-4bd9-9e2b-f2f2df088fe2
+:ROAM_ALIASES: nndl NNDL
+:END:
+#+title: Neural Networks and Deep Learning
+#+filetags: :course:math:ai:ml:programming:
+
+* NNDL Course
+* Prereq
+** [[id:b0b2e967-9716-4f73-a92d-ab8bf3554ff1][Linear Algebra Cookbook]]
+** [[id:2fab468f-bae4-4a85-bcc7-4db5a8989af5][Probability and Information Theory]]
+* Resource
++ [[https://www.deeplearningbook.org/][deep learning book]]

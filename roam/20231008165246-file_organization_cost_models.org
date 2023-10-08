@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       83306108-1751-447e-9b45-918b23054863
+:END:
+#+title: File Organization Cost Models
+#+filetags: :database:files:cost:model:
+
+* Cost models
+This models is used to benchmark the various type of data files in a database.
+* Symbols
++ $B$ = number of blocks into which records are packed
++ $R$ = the number of records per page
++ $D$ = the time to read/write a page to disk
++ $C$ = the time to process a record
++ $H$ = the time to apply a hash function
++ $F$ = the /fan-out/ ($fo$) of a [[id:42d1d853-ffdb-48b6-b5ed-774e5334b965][Multilevel Index]]

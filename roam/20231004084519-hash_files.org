@@ -30,3 +30,25 @@ Since the space to which we map the data is fixed, hash files will full that spa
 + extensible hash
 + dynamic hash
 + linear hash
+* [[id:83306108-1751-447e-9b45-918b23054863][Cost Models]]
+From empirical studies it is shown that, usually, the key value pair takes $\frac 1 10$ of record's size.
+For simplicity we are assuming that we are working with static hashing, where pages are kept $80\%$ full, thus the number of pages required is $1.25$ more than normal, hence $1.25(0.1B) = 0.125B$
+The number of data entries in a page is $10(0.8R)= 8R$
+** Scan
+We have to scan the whole file, unfortunately this can be done only using the /hash function/.
+$$0.125B(D + 8RC)$$
+The cost in this case is prohibitive.
+** Search
+The search is cheap, we use the hash function with cost $H$ then we read the page and find the record, remember that also the /hash page/ must be read in time $D$.
+$$H + 2D + 8RC$$
+On average we permorm only half of the read on the file hence
+$$H + 2D + 4RC$$
+** Search with range
+Since there is no order we must scan the whole file.
+$$0.125B(D + 8RC)$$
+** Insertion
+We need to find the page and the add the record in time $C$, we don't need to process other data.
+$$H + 2D + C$$
+** Deletion
+First we have to search for the record and then remove it, this basically reduce it to the cost of a search.
+$$H + 2D + 4RC$$

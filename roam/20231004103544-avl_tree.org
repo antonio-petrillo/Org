@@ -2,7 +2,7 @@
 :ID:       7a4907c2-d7c9-4af8-8998-9f5fd0aab14c
 :END:
 #+title: AVL Tree
-#+filetags: :programming:datastructure:
+#+filetags: :tree:programming:datastructure:
 
 * AVL
 The [[https://en.wikipedia.org/wiki/AVL_tree][AVL]] are a class of [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] that have

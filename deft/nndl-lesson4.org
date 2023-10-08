@@ -1,0 +1,44 @@
+#+title: Nndl Lesson 4
+
+* Classification problem
+* Feature Space
+The set of data we are trying to classify is called *FEATURE SPACE* $X$.
+This usually is a *VECTOR SPACE*.
+* Finise set of classes
+We have a finite set of classes $C_1, C_2, \cdots , C_k$, where $k \ge 2$
+* Our problem
+Map the input to one of these classes based on some features.
+This means find a partition of $X$ into $k$ buckets, one for each class.
+We have to find a /good/ partition to solve the classification problem.
+* Characterization of CP [fn:1]
+A CP can characterized by the *DECISION REGIONS* (or *BOUNDARIES*) obtained by the *TRACE CLASSES*.
+* Decision boundary ↔ Linearly Separable
+Find a separation between classes geometrically:
++ 1D := a point
++ 2D := a direct line (better if he said a polygon)
++ 3D := a plane
++ 4D := a hyperplane
+* Discriminant Function
+The approach to define such /decision boundary/ is the following:
+Given a CP [fn:1] with $K$ classes $C_1, C_2, \cdots C_k$ we can define $k$ functions $\psi_1, \psi_2 ,\cdots \psi_k$ such that:
+$$\psi_i : x \in R \implies \psi_i(x) \in \{0, 1\}$$
+$$\psi_i(x) = 1 \implies x \in R_i \implies x \in C_i$$
+These $\psi_i$ functions are said *DISCRIMINANT FUNCTION*.
+** Note
++ Here $R$ is the partition's classes that we find.
++ $\forall i,j$ such that $i \ne j$ we have $\psi_i(x) = 1 \implies \psi_j(x) = 0$
++ $forall x \in X, \exists i$ such that $\psi_i(x) = 1$
+* How the CP [fn:1] is solved
+Once we have found out these discrimination functions, we can use the following rule:
+
+IF $\forall i \ne j$ SUCH THAT $\psi_i(x) \gt \psi_j(x)$ THEN
+    $x \in R_i$ AND $x$ IS $C_i$
+** Simplest case
+If $k = 2$ we only have two classes, hence we can simplify as follow:
+Given $\psi_1(x) , \psi_2(x)$ we define $\psi(x) = \psi_1(x) - \psi_2(x)$.
+IF $\psi(x) \gt 0$ THEN
+    $x \in R_1$ AND $x$ IS $C_1$
+ELSE
+    $x \in R_2$ AND $x$ IS $C_2$
+* Footnotes
+[fn:1] Classification problem

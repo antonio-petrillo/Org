@@ -3,7 +3,7 @@
 :ROAM_ALIASES: DFS
 :END:
 #+title: Depth First Search
-#+filetags: :algorithm:programming:graph:
+#+filetags: :visit:algorithm:programming:graph:
 
 * DFS (Depth First Search)
 This visit can't be used to find the shortest path between edges.

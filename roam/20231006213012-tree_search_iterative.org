@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       4d12b81d-a3d0-4808-91a2-797f94a2641b
+:END:
+#+title: Binary Search Tree Search Iterative
+#+filetags: :tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Search
+#+begin_src c
+type insert(bst t, int key){
+    node iter = t->root;
+    type value = NULL;
+    while(iter != NULL){
+        if (iter->value > key){
+            iter = iter->left;
+        }else if (iter->value < key){
+            iter = iter->right;
+        }else{
+            value = iter->value;
+            break;
+        }
+    }
+    return value;
+}
+#+end_src

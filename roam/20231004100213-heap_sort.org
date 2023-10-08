@@ -1,12 +1,14 @@
 :PROPERTIES:
 :ID:       43f7daaf-1871-4afc-a574-f87aa1992efc
+:ROAM_ALIASES: Heap
 :END:
 #+title: Heap Sort
-#+filetags: :comparison:algorithm:sorting:programming:
+#+filetags: :heap:comparison:algorithm:sorting:programming:
 
 * Note
 It is a generalization of [[id:f04cec69-b333-4c83-863d-99d7122527ed][Selection Sort]].
 As in SelectionSort  $T_{best}$, $T_{worst}$ and $T_{best}$ are the same.
+The Heap is a [[id:391457e8-49f4-4561-bc55-e98454254989][Complete Tree]].
 * Algorithm
 #+BEGIN_SRC java
 public <K extends Comparable<K>> void heapSort(seq []K){

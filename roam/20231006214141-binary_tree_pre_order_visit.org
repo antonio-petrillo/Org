@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       484770cb-910a-4a2d-98ab-7548fe51ae83
+:END:
+#+title: Binary Tree Pre Order Visit
+#+filetags: :visit:tree:algo:datastructure:
+
+* Note
+The implementation is refered to [[id:a42a71fe-219c-4b18-8787-a8b822f94987][Binary Search Tree]] but can be easily extended to an n-ary tree.
+* Pre order visit
+#+begin_src c
+static void helper_pre_order_visit(node root){
+    if(root != NULL){
+        helper_pre_order_visit(root->left);
+        helper_pre_order_visit(root->right);
+        visit_operation(root);
+    }
+}
+
+void pre_order_visit(bst t){
+    helper_pre_order_visit(t->root);
+}
+#+end_src
+** Iterative version
+#+begin_src c
+void iterative_pre_order_visit(bst t){
+    node current = t->root;
+    node previous = NULL;
+    stack stack_nodes = new_stack();
+    while (current != NULL || !is_empty(stack_nodes)){
+        if (current != NULL){
+           visit_operation(current);
+           push(&stack_nodes, current);
+           current = current->left;
+        } else {
+           current = top(stack_nodes);
+           if (current->right != NULL && previous != current->right){
+               current = current->right;
+           } else {
+              pop(&stack_nodes);
+              previous = current;
+              current = NULL;
+           }
+        }
+    }
+}
+#+end_src

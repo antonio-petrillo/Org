@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       ead46fe8-88b6-486d-825c-3a5084e56e99
+:END:
+#+title: 09-10-2023
+
+* TODO Uni
++ [ ] contatta S.Barra per slide iot
++ [ ] contatta V.Miele per credenziali
+* TODO Tirocinio
++ [ ] studia react router tutorial
++ [ ] tirocinio in presenza
+* TODO Health
++ [ ] basic exercises

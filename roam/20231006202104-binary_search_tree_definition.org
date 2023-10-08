@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       47dca4c7-a673-4341-90bb-e0d5636c7bae
+:END:
+#+title: Binary Search Tree Definition
+#+filetags: :tree:definition:datastructure:programming:
+
+* Definition
+Is a [[id:521327ac-f3c5-42a9-a004-6edfccf6b29a][Tree]] with at most $2$ child per node.
+* Formal Definition
+$T \in BST ~ class$ if and only if:
+$$T.root \gt T.left.root$$
+$$T.root \lt T.right.root$$
+$$T.left \in BST$$
+$$T.right \in BST$$
+$$\emptyset \in BST$$
+$${T.root} \cap T.left \cap T.right = \emptyset$$
+$${T.root} \cup T.left \cup T.right = T$$
