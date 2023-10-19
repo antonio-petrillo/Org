@@ -1,0 +1,8 @@
+#+title: Pdc Lesson 8
+
+* MPI, funzioni collettive
+** Operazioni di riduzione
+~MPI_REDUCE~
+** Timing
++ ~double MPI_WTime()~
++ Compute the time with an average

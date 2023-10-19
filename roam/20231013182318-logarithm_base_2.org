@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       0ac1ea32-80c0-44fd-88ca-23b338876487
+:END:
+#+title: Logarithm Base 2
+#+filetags: :math:algorithm:bit-algo:
+
+* Logarithm in Base 2 of a Power of 2
+For this algorithm to work you must be sure that the input is a power of 2, this can be easily done with [[id:6abc2b91-db30-4ee4-ba63-0ca695b48a34][Power of 2?]] predicate.
+** How it work
+If a number, say $n \in \mathbb{N}$ is an exact power of 2 the number right before, i.e. $n - 1$, will be composed by all *ones*.
+The nice fact is that this number is just the value of $\log_2(n)$, hence it can be computed efficiently with [[id:332543dd-dead-4b12-911e-57f61a570ba6][Population Count]] algorithm, this can be understanded by considering the following mapping.
+| #                  | $0$                   | $1$                    | $2$                     | $3$                       | $\cdots$ | $i$               | $\cdots$ | $n$         |
+| $2^i$              | $1$                   | $2$                    | $4$                     | $8$                       | $\cdots$ | $2^i$             | $\cdots$ | $2^n$       |
+| $\log_2(2^i)$      | $0$                   | $1$                    | $2$                     | $3$                       | $\cdots$ | $\log_2(2^i) = i$ | $\cdots$ | $n$         |
+| $popcount(2^i -1)$ | $popcount(0b1 - 1)=0$ | $popcount(0b10 - 1)=1$ | $popcount(0b100 -) = 2$ | $popcount(0b1000 - ) = 3$ | $\cdots$ | $i$               | $\cdots$ | $\log_2(n)$ |
+
+Intuitively to be a power of $2$ you have to first fill all the preceding spot with $1$, hence the number of $1$ digit of $2^i - 1 = i$.
+** Algorithm
+#+begin_src c
+int fast_log_2(int n){
+	int log2 = 0;
+	if(!is_a_power_of_2(n)) {
+		return -1;
+	}
+	return population_count(n - 1);
+}
+#+end_src

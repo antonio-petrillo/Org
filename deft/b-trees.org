@@ -1,0 +1,54 @@
+#+title: B-Trees
+
+* B-Tree
+Data structure that is designed to work well on disks or other direct-access secondary storage device.
+Like Red-Black tree they are balanced trees.
+They are good at minimizing the I/O operations.
+* Structure
+A B-Tree node can have more than 2 children.
+Although they are pervasive in database applications they can also be used for other purpouses.
+* DS on secondary storage
+We are assuming that the secondary storage is an HDD.
+An HDD is composed by 1 or more /disks/.
+A /head/ read and write data from the disks.
+The inner circle upon which the head is located is called /tracks/.
+A tracks is furthermore divided into /sectors/.
+The disks and the head are mechanical hence they are significally slower than RAM, Cache and CPU registers.
+To analyze a data structure that should live on secondary memory we must take care of these parameters.
+When the head read, to amortize costs, it reads one or more /pages/ of data, even if we are interested in only one block of a specific sector.
+* B-Tree approach
+Tipically B-tree are used to store data when data is larger than the primary memory.
+A B-tree maintains in main memory only a small part of pages at a time, hence the size of the RAM doesn't limit the size of the data structure.
+* Convention
++ Consider $x$ a pointer to an object:
+  - if $x$ is in RAM you can access the node
+  - otherwise you must first do $disk_{read}(x)$
++ $disk_{write}(x)$ write any change to $x$ back to the disk.
+Tipical pattern to work with such pointer:
+#+begin_src c
+x = a_pointer_to_an_obejct;
+DISK_READ(x);
+// here operations on x attibutes
+DISK_WRITE(x);
+// other operations that modify x from now on
+// doesn't produce side effects.
+#+end_src
+** Note
+The complexity of the operations must consider ~DISK_READ~ & ~DISK_WRITE~
+For this reason, usually, a B-Tree node is as large as a whole disk page.
+* Definition of B-Tree
+For simplicity we take care only about the data structure part, the pointer to data is implicit and travel with the data structure.
+** Btree Node
+1. Basic
+   + $x.n$ number of keys actually stored inside in node x.
+   + $x$ has $x.n$ children oredered in non decreasing order:
+       $x.n \implies x.key_1 \le x.key_2 \le \cdots \le x.key_n$
+   + $x.leaf$ a boolean that it is true if the node is a leaf.
+2. Internal, if a node is internal:
+   + contains $x.n + 1$ pointer $x.c_1, x.c_2, \cdots, x.c_n, x.c_{n+1}$ to its children, if it is a leaf then $x.cs$ is $nil$.
+3. The keys $x.key_i$ separate the range of keys.
+4. All the leaves have the same depth.
+5. All the nodes have a $lower$ & $upper$ bound to the numbers of keys it can contain.
+
+* Variations, $B^+_{Tree}$
+Store all the data in the leaves, this way we can maximize the branching factors inside the internal nodes.

@@ -1,0 +1,23 @@
+#+title: Nndl Lesson 7
+
+* Vector spaces
++ The set of the feature vectors is, usually, a Vector Space (Feature Space).
++ Given a set of vectors $v_1, v_2, \cdots , v_n$
+  Such that
+  $$\forall v \in V, \exists (c_1, c_2, \cdots , c_n) : v = \sum_{i=1}^n c_il_i$$
+  Lemma di steiniz.
+  Rivedi ortonormalizzazione di gram schmit.
++ The number of elements in the basis is said to be the dimension of the vector space.
++ Given a function $f:u \in R^n \rightarrow v = f(u) \in R^m$
+  $f$ is said to be a linear function $iff$:
+  + $f(\vec{u}+\vec{v}) = f(\vec{u}) + f(\ve{v})$
+  + $f(c \cdot \vec{v}) = c \cdot f(\vec{v})$
++ a linear function can always be seen as a matrix:
+  $f(\vec{u}) = f(\sum_{i=1}^nu_i\vec{l_i})$, where $l_i$ are the basis vectors.
+  We are writing $\vec{u}$ as a multiplication between a vector and a matrix (basis matrix)
+  $$f(\vec{u}) = f(\sum_{i=1}^nu_i\vec{l_i}) = \sum_{i=1}^na_if(\vec{l_i})$$
+  Each $f(l_i)$ is a vector of $R^m$, it furthermore can be written as:
+  $$f(\vec{l_i}) = sum_{j=1}^mb_{ij}\vec{k_j}$$
+* Note
+If our problem is linearly separable we just need a /linear combination/ to solve the problem.
+If this is not the case we need also /actuators functions/.

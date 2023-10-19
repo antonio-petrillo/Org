@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       b4441727-0ff1-48c9-8bbd-ac9ec537a191
+:END:
+#+title: Speed Up in Distributed Computing
+#+filetags: :programming:distributed:math:
+
+* What is the Speed Up
+A parallel algorithm that runs on a distributed machine we need a new way to compute its [[id:4efabdec-490c-45e0-b3a3-6be6a0f852d5][Asymptotic Growth]] we need a new metrics.
+One of this is the /Speed Up/.
+* Definition
+Consider a distributed algorithm $T$, with $T(1)$ we say that the algorithm runs one $1$ process, with $T(p)$ it runs over $p$ processes.
+
+We define *SPEED UP* the following:
+$$S(p) = \frac {T(1)} {T(p)}$$
+* What does it measure?
+How the behavior (time efficiency) of the algorithm change when we increase the number of processes.
+* Ideal Speed Up
+At best we could expect that if $T(1)$ require a time $x$, with $T(p)$ should require $\frac x p$, in other words increasing the number of process by $p$ we should see an increase in performance of $p$.
+$$S_{ideal}(p) = p$$
+
+This ideal speed up is impossible to obtain, because we need to spend time reconstructing the subproblems.
+* Definition with [[id:675ccd7d-27bf-47a0-a013-cd648ee83c2a][Overhead]]
+Considering:
+$$O_h = pT(p) - T(1)$$
+From this we can obtain:
+$$pT(p) = O_h + T(1)$$
+$$T(p) = \frac {O_h + T(1)} p$$
+With that in mind we can redefine the *SPEED UP* as:
+$$S(p) = \frac {T(1)} {T(p)}$$
+$$S(p) = \frac {T(1)} {\frac {O_h + T(1)} {p}}$$
+$$S(p) = \frac {p \cdot T(1)} {O_h + T(1)}$$
+$$S(p) = \frac {p \cdot T(1)} {\frac {O_h} {T(1)} + 1}$$
+* Why it differ from the ideal one?
+We can split our algorithm in /sequential part/ $T_s$ and /parallel part/ $T_c$.
+The first represent the part that must be done sequentially (i.e. merging the result from multiple processes).
+The latter indicates the parts that could be parallelized (i.e. in a distributed sum each process do the some of the local data before merging).
+The bigger is the /sequential part/ more the /speed up/ differ from the /ideal/.
+
+Basically $T(1) = T_s + T_c$
+The $T_s$ is not influenced by the number of processors, while $T_c$ does.
+Assuming this we can write:
+$$T(p) = T_s + \frac {T_c} p$$
+* Complessive Speed Up
+Knowing that (See [[id:d3921dcb-a3b4-422d-8eaa-f8b68ba49a9f][Efficiency]]):
+$$E(p) = \frac {1} {\alpha (p - 1) + 1}$$
+and
+$$E(p) = \frac {S(p)} {p}$$
+$$S(p) = E(p)\cdot p$$
+$$S(p) = \frac {1} {\alpha (p - 1) + 1} \cdot p$$
+$$S(p) = \frac {1} {\frac {\alpha (p - 1) + 1} {p}}$$
+$$S(p) = \frac {1} {\frac {\alpha p - \alpha + 1} {p}}$$
+$$S(p) = \frac {1} {\alpha + \frac {1 - \alpha} {p}}$$
+This is known as [[id:4967bc48-738e-4ed4-b510-d537b49b090f][Amdahl's Law]]

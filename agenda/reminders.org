@@ -1,0 +1,17 @@
+#+title: Reminders
+
+* TODO Ripeti interrupt/trap
+SCHEDULED: <2023-10-21 Sat>
++ [ ] Kernel Space
++ [ ] User Space
++ [ ] interrupt
++ [ ] trap
+* TODO Ottieni slide osmiot
++ [ ] slide S.Barra
+* TODO Ripeti PDC
++ [ ] lezione su legge di gustafson
++ [ ] ripeti legge di amdahl
+* TODO Study $B^+Trees$ for database
++ [ ] B-tree
++ [ ] B+-tree
++ [ ] Do some exercise

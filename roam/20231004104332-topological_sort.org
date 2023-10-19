@@ -5,7 +5,7 @@
 #+title: Topological Sort
 #+filetags: :graph:algorithm:programming:sorting:
 
-*Topological Order or Topological Sort
+* Topological Order or Topological Sort
 This problem consist on take $G \in DAG$ and linearize the $v \in G .vertices$ such that each node come before of each other node that it can reach through a path.
 $$G = (V,E), |V| = n$$
 $$ i \ne j \implies v_i \ne v_j$$
@@ -50,7 +50,7 @@ Proof by construction.
 Using the theorem above now we can pick $v_0 \in G.vertices, degree_{in}(v) = 0$.
 Put $v_0$ at the start of the TO.
 Then we remove the edge starting from $v_0$ and decrease the entry degree of the others node.
-If a node reach degree_{in}(v) = 0$ it will be added to a queue.
+If a node reach $degree_{in}(v) = 0$ it will be added to a queue.
 Pick the next node from the queue and repeat from the start.
 Repeat until all the nodes are processed.
 
@@ -150,7 +150,7 @@ When the DFS travers $(v,u)$ there are three cases:
 $$s[v] \lt s[u] \lt e[u] \lt e[v]$$
 **** GREY
 $$s[u] \lt s[v] \lt e[v] \lt e[u]$$
-But in this case there is a cycle and this means no TO.
+But in this case there is a cycle and this means no *TO*.
 **** BLACK
 The visit on $u$ has already ended and on $v$ is still running.
 $$e[u] \lt e[v]$$

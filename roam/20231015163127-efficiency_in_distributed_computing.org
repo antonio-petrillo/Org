@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       d3921dcb-a3b4-422d-8eaa-f8b68ba49a9f
+:END:
+#+title: Efficiency in Distributed Computing
+#+filetags: :programming:math:distributed:
+
+* Efficiency
+Is a measure directly related to [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] in distributed computing.
+* What does it measure?
+It measure how well our distributed algorithm use its resources.
+* Definition
+We define the /efficiency/ as follows:
+$$E(p) = \frac {S(p)} p$$
+Here $S(p)$ is the [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] of our algorithm.
+* Ideal Efficiency
+$$E_{ideal}(p) = \frac {S_{ideal}(p)} p = 1$$
+* Definition with [[id:675ccd7d-27bf-47a0-a013-cd648ee83c2a][Overhead]]
+$$O_h = pT(p) - T(1)$$
+$$S(p) = \frac {T(1)} {T(p)}$$
+$$E(p) = \frac {S(p)} p$$
+$$E(p) = \frac {T(1)} {p \cdot T(p)}$$
+But $p \cdot T(p) = O_h + T(1)$
+$$E(p) = \frac {T(1)} {O_h + T(1)}$$
+$$E(p) = \frac {1} {\frac {O_h} {T(1)} + 1}$$
+* Definition with [[id:675ccd7d-27bf-47a0-a013-cd648ee83c2a][Complessive Overhead]]
+Considering the complessive overhead:
+$$O_h = \alpha(p - 1)$$
+Where we consider (for detail see [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] and [[id:675ccd7d-27bf-47a0-a013-cd648ee83c2a][Overhead]]):
++ $T(1) = 1$
++ $\alpha$ is $T_s$
++ $p$ is the number of processes
+We can write the complessive efficiency from:
+$$E(p) = \frac {1} {O_h + 1}$$
+To:
+$$E(p) = \frac {1} {\alpha (p - 1) + 1}$$

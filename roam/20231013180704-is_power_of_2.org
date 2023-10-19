@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       6abc2b91-db30-4ee4-ba63-0ca695b48a34
+:ROAM_ALIASES: "Power of 2?"
+:END:
+#+title: Is Power of 2
+#+filetags: :predicate:algorithm:bit-algo:math:
+
+* Considerations
+In binary a number that is a /power of 2/ will be represented with all $0$ except one digit that will be $1$.
+We can exploit this fact to check in constant time if a number is a pow of 2.
+* How it work
+As explained above if a number is a pow of 2 in binary it has all zeros and a $1$ digit.
+Let $x \in \mathbb{N}$, if we do the $\land$ (tipycally ~&~) between $x$ and $x - 1$ we should have $0$ only if x is a power of 2, this because $x$ and $x - 1$ will have no digits in common.
+The only corner case to consider is $x = 0$, but this is easily solved.
+$$\blacksquare$$
+* Algorithm
+#+begin_src go
+func isAPowerOf2 (x int32) int32 {
+	return x != 0 && (x & (x - 1)) == 0
+}
+#+end_src
+* Time Complexity
+The algorithm, altough pretty cleaver, is extremely simple, it does just a bunch of comparison, a subtraction and a bitwise operation, hence:
+$$T(n) = O(1)$$
+* Space complexity
+It doesn't require any extra memory.
+$$T(n) = O(1)$$
+* Note
+A proper implementation may consider only unsigned numbers.

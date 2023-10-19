@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       4967bc48-738e-4ed4-b510-d537b49b090f
+:ROAM_ALIASES: "Theoretical Speed Up Law" "Ware's Law"
+:END:
+#+title: Amdahl's Law
+#+filetags: :formula:math:distributed:programming:theorem:
+
+* Amdahl's Law
+This formula is used [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] to compute the *THEORETICAL* speedup of a distributed algorithm.
+* Formula
+$$S_{latency}(s) = \frac {1} {1 - p}$$
+$$S_{latency}(s) \le \frac {1} {1 - \frac p s}$$
+Here:
++ $p$ indicates the parallel portion of the algo
++ $S_{latency}$ is the theoretical speedup
++ $s$ is the part of algorithm that can be parallelized
+* Corollary
++ $S_{latency}(s) \le \frac {1} {1 - p}$
++ $\lim_{x \to \infty} S_{latency}(s) = \frac {1} {1 - p}$
+* Derivation
+Consider an algorithm $T$ that has a serial part and a parallelizable part.
+Suppose that the parallelizable part benefits of $p$ when the system resources increases, hence the sequential parte benefits $1 - p$
+
+We can write $T$ as follow:
+$$T = (1-p)T + pT$$
+As it scale, say by $s$ the $(1-p)T$ doesn't change, while $pT$ become $\frac p s T$.
+$$T = (1-p)T + \frac p s T$$
+Hence at a fixed *WORKLOAD* $W$ the speed up become:
+$$S_{latency}(s) = \frac {TW}{T(s)W} = \frac T {T(s)} = \frac 1 {1 - p + \frac p s}$$
+* Resources
++ [[https://en.wikipedia.org/wiki/Amdahl%27s_law][Wikipedia]]

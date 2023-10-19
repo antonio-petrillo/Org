@@ -1,0 +1,48 @@
+#+title: Osmiot Lesson 8
+
+* Virtualization
+* Abstraction
+* Virtualization domains
++ storage
++ network
++ execution
+* Virtualization motivation
+Helps getting around these limitations (and much more)
++ Goal: mimic the behaviour of these interfaces
+* Componenets
++ Host: expose the an interface
++ Virtualization Layer: map the /host/ interface to another one
++ Guest: the one who use the interface provided by the /virtualization layer/
+* Virtual machine
+Is a isolated execution environment.
+** Process level VM
+Used to run a single process.
+They are ephemeral.
+*** ISA (IStruction level)
+I.E. ps1 emulator, chip8.
+*** High Level language vms
+I.E. jvm.
+*** Os-level virtualization
+I.E. docker, podman.
+** System level VM
+Provide a complete and persistent virtual hardware environment.
+Support operating systems and its many processes.
+Il /virtualization layer/  is called *VIRTUAL MACHINE MONITOR* (VMM) or *HYPERVISOR*.
+*** Hosted
+Usually they are slow.
++ VMWare Player
++ VirtualBox
+*** Baremetal
++ VMWARE ESX/ESXi
++ Microsoft Hyper-V
++ KVM on linux
+*** Hybrid
+* Complete machine emulation
+Is unfeasible for complex systems.
+* Efficient Virtualization
+We want that each VM can access the hardare with as low overhead as possible.
+See Popek and Goldber for papers.
+** Definition
++ Sensitive
++ Privileged
+* TODO recap operating systems trap,interrupt,page memory mechanism

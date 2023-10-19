@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       675ccd7d-27bf-47a0-a013-cd648ee83c2a
+:END:
+#+title: Overhead in Distributed Computing
+#+filetags: :programming:math:distributed:
+
+* Overhead
+Is a measure of how our [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] differ from the *IDEAL SPEED UP*.
+* Definition
+We define the /Overhead/ as follows:
+$$O_h = pT(p) - T(1)$$
+* Complessive Overhead
+Considering the sequential and parallel part in the [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] formula we can write the complessive overhead as follows:
+Considering:
++ $T_s$ the sequential part of the algorithm
++ $T_c$ th parallel part
++ $p$ the number of processes
+We will merge the following inside the overhead formula.
+$$T(p) = T_s + \frac {T_c} {p}$$
+To simplify the writing we made the following positions:
++ $T(1) = 1$, as is it the unit of our computing model
++ $T_s = \alpha$
++ $T_c = 1 - \alpha$
+Hence the overhead can be written as:
+$$O_h = pT(p) - 1$$
+$$T(p) = T_s + \frac {T_c} {p}$$
+$$O_h = pT_s + \frac {p T_c} {p} - 1$$
+$$O_h = pT_s + T_c - 1$$
+$$O_h = p \alpha + (1 - \alpha) - 1$$
+$$O_h = p \alpha - \alpha$$
+$$O_h = \alpha(p - 1)$$
+* Theorem
+The complessive overhead depends on $T_s$ and $p$.
+** Proof
+See the section above, we have expressed $O_h$ in terms of $\alpha$ and $p$.
+$$\blacksquare$$

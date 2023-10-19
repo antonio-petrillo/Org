@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       f2c9d551-6fef-4eb8-a305-5455a9a2dfb7
+:END:
+#+title: 2023-10-09
+
+* TODO Uni
++ [ ] contatta S.Barra per slide iot
+* DONE Tirocinio
++ [X] studia react router tutorial
++ [X] tirocinio in presenza
+* DONE Health
++ [X] basic exercises

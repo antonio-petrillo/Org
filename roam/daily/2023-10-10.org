@@ -1,13 +1,15 @@
 :PROPERTIES:
-:ID:       ead46fe8-88b6-486d-825c-3a5084e56e99
+:ID:       eff60551-072e-4368-9398-bc3887bd278a
 :END:
-#+title: 09-10-2023
+#+title: 2023-10-10
 
 * TODO Uni
 + [ ] contatta S.Barra per slide iot
 + [ ] contatta V.Miele per credenziali
+** TODO Progetto PDC
++ [ ] implementa strategia 1, 2, 3
 * TODO Tirocinio
 + [ ] studia react router tutorial
-+ [ ] tirocinio in presenza
++ [X] tirocinio in presenza
 * TODO Health
 + [ ] basic exercises

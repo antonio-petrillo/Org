@@ -1,0 +1,15 @@
+#+title: Pdc Lesson 7
+
+* lesson 7
+$T(p)$ si puó decomporre in 2 parti:
+ + $T_s(p)$ indica la parte puramente sequenziale
+ + $T_p(p)$ indica la parte parallelo
+
+On a single processor $T(1) = T_s + T_p$.
+With multiple processor $T(p) = T_s + p \cdot T^'_p$, where $T^'_p$ is the $T_P$ of $T(1)$.
+
+See, [[https://en.wikipedia.org/wiki/Gustafson%27s_law][gustafson law]],
+* Isoefficienza
+* Come scalare il problema?
+* La somma é un algoritmo scalabile
+* Problema del bilanciamento

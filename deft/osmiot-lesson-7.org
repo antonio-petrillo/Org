@@ -1,0 +1,51 @@
+#+title: Osmiot Lesson 7
+
+* Android SDK
++ NDK := sviluppo applicazioni native in ~C/C++~
++ Android Headless: android senza la parte di GUI:
+  + Faster
+  + Lighter
+  + Don't need an user to interact with
+  + useful for testing: typically through a bot
+* Android Debug Bridge (Adb)
+Consiste di 3 componenti    :
+1. Un client gira in un emulatore o su dispositivo fisico
+2. Un /daemon/ in esecuzione in background sul dispositivo che é in grado di avviare su di esso i comandi che abbiamo richiesto tramite il client
+3. Un server che gira sulla macchina di sviluppo e rimane in ascolto delle risposte ottenute dai comandi eseguiti dal daemon
+** Example
++ adb logcat: access the systems logs
++ adb text "hello world": send the string /hw/
++ adb swipe 50 50 450 100: simulate a swipe from x_0, y_0 to x_1, y_1
++ adb tap 466 17: simulate a tap at x,y
++ adb sendevent /dev/input/event0 0 0 0: una sorta di crontab per schedulare eventi, si possono aggiungere piú eventi contemporaneante
++ adb monkey -p com.android.chrome 1: send random event to the chrome process
+* File system
+Principalmente ~ext4~.
+Assume sempre di avere un disco.
+* Android standard partition
+| name     | format    | notes              |
+|----------+-----------+--------------------|
+| boot     | bootimg   | kernel + initramfs |
+| cache    | ext4      | cache              |
+| recovery | bootimg   | boot to recovery   |
+| system   | ext4      | /system partition |
+| userdata | ext4/f2fs | /data partition    |
+** Sottoalbero /data
+Ogni applicazione é un utente.
+Ogni utente puó accedere solamente ai suoi dati nel suo sottoalbero.
+Di conseguenza un'applicazione puó accedere solo alla directory in cui é installato.
+** External Storage
+É possibile inserire schede sd esterne.
+Ció aggiunge un punto vulnerabile in piú.
+* Boot loader
+Non é parte del framework android.
+É realizzato indipendentemente dai diversi vendor.
+** Scopi principali
++ ripristino informazioni di fabrica
++ scegliere tra diverse configurazioni attive
++ installare una versione differente
+* Possibile approfondimento:
+ Generazione di una distribuzione android.
+* TODO setup phone
++ installa emacs nativo
++ collegati con adb
