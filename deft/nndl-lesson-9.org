@@ -1,0 +1,65 @@
+#+title: Nndl Lesson 9
+
+* Introduction of a nn (neural network) model
+* Single neuron
+[[../assets/neuron_structure_example.png]]
+The computation of $\omega$ can be interpreted as a dot product.
+* Key idea
+Compose together many neuron together.
+The way differents neurons interact together define differents type of /nn/ (differentes models)
+* Type of ANN models
++ Feed Forward (CONV. ANN, GAN)
++ Recurrent ANN (LSTM, CTRNN)
+* ANN as graphs
+NN works like graphs, if they are a DAG we have /Feed Forward/ in which we can define a topological sort.
+If there are cycle, the graph is not a DAG, we have recurrent ANN, this type is used when the ann require the effects of previous computations.
+* ANN
+Each neuron has an /ID/.
+The output of a neuron could be the input of another.
+Wach node has an /activation function/ and a /bias/.
+* Feed Forward
+Build a topological order, there could be many, and do the computations in such order.
+In a FF ANN we can distinguish three elements:
+1. Input values / variables
+2. hidden / inner neuron
+3. output neurons
+
+Usually the output neurons correspond to neurons which do not send connection (doesn't have connection forward them)
+Feed Forward are functional mapping.
+
+Given fixed /weights/, /biases/, /activation function/:
++ $F_N : x \in \mathbb{R}^d \rightarrow y = F_N(x) \in \mathbb{R}^e$
++ $e$ number of output neurons
++ $d$ number of $f$ input variables
+
+A Feed Forward can only solve problems that admits a *FUNCTION* as a solution.
+* Multi Layer Feed Forward
++ $d$ input variable
++ $L$ grops/layers of neurons
++ a neuron belonging to the /i-th/ layer receives only connection from all the neurons $i - 1$ layer (the previous layer)
++ /i-th/ layer has $m_i$ neurons and an activation function $f_i$ associated to that layer.
+
+All the layers are /full-connected/.
+Computation ~for i = 1 TO L~:
++ computing the output of neurons of /i-th/ layer on the basis of output of $(i - 1)$ -th layer.
+* Analyzing the generic layer
+1. Computing the generic /i-th/ layer
+   $$a_i^l = \sum_{j=1}^{m_{l-1}}w_{ij}^l \cdot z_j^{l-1} + b_i^l$$
+   Where:
+   + $l$ is the layer
+   + $i$ is the index within the $l$ layer: $i = 1,2,3,\cdots m_l$
+   + $w_i^l$ is the weight of the connection that goes from the neuron $j$ belonging to the $l-1$ th layer to the neuron $i$ belonging to the layer $l$.
+   + $b_i^l$ is the bias of the /i-th/ neuron of the layer $l$.
+2. $z_i^l = f_l(a_i^l)$
+   + Each layer can be computed in parallel.
+     #+begin_src clojure
+(for [i (range 1 L) ;; for all layers
+      j (range 1 ml) ;; for each layer
+      k (range 1 (dec ml)) ;; to compute each sum
+      ]
+     (compute i j k))
+     #+end_src
+     This kind of computation is expensive, we can exploit matrices to reduce the cost.
+   + The computation of each layer $l$ as a functional mapping from a vector space $R^m_{l-1}$ to a vector space $R^m_l$
+     + The first process step (computing input) is a linear functional mapping
+     + The second step can introduce a non-linearity (depends on the type of activation function)

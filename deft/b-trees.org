@@ -52,3 +52,7 @@ For simplicity we take care only about the data structure part, the pointer to d
 
 * Variations, $B^+_{Tree}$
 Store all the data in the leaves, this way we can maximize the branching factors inside the internal nodes.
+* Insertion
+* Search
+* Deletion
+* Update

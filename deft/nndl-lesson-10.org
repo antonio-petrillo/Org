@@ -1,0 +1,13 @@
+#+title: Nndl Lesson 10
+
+* Multi layer connected ANN (a subclass of feed forward ANN)
+Inspired by the central nervous system composed by multiple layer.
+Obviously it is a simplification.
+* Note
+Before we try to solve a classification problem we first need to know the tool we want to use.
+* THEOREM: Machine Learning Neural Network are universally approximated
+Given a M.L.N.N. composed by /d-input/ variable, an output neurons (vector) and a single hidden layer composed of $m$ neurons we can approximate as well as we want any continuous function defined a compact set (closed and limited) from $\mathbb{R}^d$ to $\mathbb{R}^e$, if there is a sufficient number of hidden neurons $m - 2$, and if the activation function of hidden neuron is not a polynomium (non linear)
+** In other words
+More neurons we have the more we can approximate.
+* The basis idea of this theorem
+A single layer is a linear combination of non linear functions.
