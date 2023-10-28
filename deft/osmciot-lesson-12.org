@@ -1,0 +1,6 @@
+#+TITLE: osmciot lesson 12 IOT
+
+* Who own the data stored in the cloud?
++ IaaS, the user own the data
++ PaaS, see the term of service of specific platform
++ SaaS, you but the platform can access and also have responsibility on them.

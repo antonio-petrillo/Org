@@ -1,7 +1,7 @@
 #+title: Agenda
 
-* TODO Nutrizionista
+* DONE Nutrizionista
 SCHEDULED: <2023-10-23 Mon>
-* TODO Progetto PDC Laccetti
+* DONE Progetto PDC Laccetti
 SCHEDULED: <2023-10-18 Wed>
 DEADLINE: <2023-10-25 Wed>

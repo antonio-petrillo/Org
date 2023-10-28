@@ -29,8 +29,12 @@ $$O_h = pT_s + T_c - 1$$
 $$O_h = p \alpha + (1 - \alpha) - 1$$
 $$O_h = p \alpha - \alpha$$
 $$O_h = \alpha(p - 1)$$
+** Note
+We can stimate $T_s$ and $T_p$ by counting, respectively, the number of lines that are be executed in sequential and in parallel.
 * Theorem
 The complessive overhead depends on $T_s$ and $p$.
+$$O_h = \alpha(p - 1)$$
 ** Proof
 See the section above, we have expressed $O_h$ in terms of $\alpha$ and $p$.
+$$O_h = \alpha(p - 1)$$
 $$\blacksquare$$

@@ -33,3 +33,6 @@ We can write the complessive efficiency from:
 $$E(p) = \frac {1} {O_h + 1}$$
 To:
 $$E(p) = \frac {1} {\alpha (p - 1) + 1}$$
+* Scaled Efficiency
+Considering the [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Scaled Speed Up]] we can define the *scaled efficiency*.
+$$ES(p, n) = \frac {SS(p, n)} {p} = \frac {T(1, n)} {T(p, pn)}$$

@@ -1,0 +1,20 @@
+#+TITLE: bd tech lesson 11
+
+* B Trees
++ [BEST] h ndoes are read and a leaf is rewritten, then $C_{mm}=h+1$
++ [WORST] splitting up to the root, then $C_{mm} = 3h + 1$
++ É meglio se un record entra totalmente in un blocco solo
+** Svantaggio dei btree
+Le chiavi possono essere su piú livelli, una query su un singolo valore non da problemi ma su un range risulta complicato,
+per questo si preferiscono i B+ Trees.
+* B+ Trees
+Tutti i dati sono nell foglie, i nodi interni sono solo delle guide, devo sempre arrivare alla foglie.
+Le foglie in un B+ Tree sono connessi come una linked list.
+* Quad Trees Points
++ space driven: reference space is divided into rectangular space, regardless of the distributions of objects:
+  + grid files
+  + linear structures (quadtree, space filling curve, linear quadtree, z-ordering tree)
++ data driven: structures are organized by partitioning the set of objects, taking into account their distribution in the reference space:
+  + R-tree
+  + R*-tree
+* The KD Trees (Evolution of R-trees?)

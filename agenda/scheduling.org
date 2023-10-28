@@ -1,6 +1,6 @@
 #+title: Scheduling
 
-* Actual scheduling
+* Scheduling
 |             | Mon  | Tue  | Wed     | Thur | Fri     | Sat | Sun |
 |---------------+------+------+---------+------+---------+-----+-----|
 | 8:30 - 10:30  | tiro | tiro | osmciot | tiro | ∅       | ∅   | ∅   |

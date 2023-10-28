@@ -1,0 +1,22 @@
+#+TITLE: pdc lesson 11
+
+* Open MP (is not openmpi)
+* Shared vs Distributed (open mp Vs open mpi)
+* Shared
+I can use data without distribute them.
+Thread belonging to the same process can access the same data.
+No need for explicit communication.
+* Open MP
+Open specification for Multi Processing.
+Check what ~pragma~ does.
+#+begin_src c
+int sumtot = 0;
+#pragma omp parallel for reduction (+:sumtot)
+for(int i = 0; i < n; i++){
+  sumtot += a[i];
+}
+#+end_src
+* pbs
+#+begin_src bash
+
+#+end_src

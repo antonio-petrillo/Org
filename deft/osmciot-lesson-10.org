@@ -1,0 +1,19 @@
+#+title: Osmciot Lesson 10
+
+* Build (Dalvik)
+1. source code java
+2. I compilati java (.class) venivano compilati da Dex
+3. I file .dex potevano essere eseguiti da Dalvik
+4. I .dex vengono compressi in un APK
+5. L'APK poteva essere installabile
+* Make
+1. ruleset to build a program
+* Ant
+Antenato (?) di maven
+* Maven
+Apache build system for java.
+Written in XML (pom.xml).
+* Gradle Scripts
+Based on json.
+Is build to be traversed as a graph.
+Allow to specify which dependency pick (and also pick the sign of it)
