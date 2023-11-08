@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cd7679ba-f304-4ac3-80ad-b738a2fb5536
+:END:
+#+title: 2023-11-06
+
+* Tirocinio
++ [ ] completa struttura router
