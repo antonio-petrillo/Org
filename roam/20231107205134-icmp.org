@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       d87c3e1b-aac9-4979-99fe-4bdcf5f90466
+:END:
+#+title: ICMP
+#+filetags: :network_layer:networking:
+
+* ~Internet Control Message Protocol~ aka ~ICMP~
+Is used by hosts and routers to exchange information at the network layer.
+Typical is used to notify that an error occurred.
+
+It is considered a part of the network layer, but theoretically it's not.
+This because ICMP messages are carried on IP datagram, so ICMP should live in the layer above the [[id:1b4e177a-9688-423c-80c7-14ca76881c58][Network Layer]], but the [[id:bd97fa27-1d09-4cbe-af18-ab6cd4a71888][Transport Layer]] is a bad home for it.
+
+ICMP messages are encapsulated in IP datagram and then demultiplexed, in the same way as a [[id:6d2cbbbb-aebf-43f3-b43b-bbc57b287d70][TCP]] or [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]] packet.
+* Message format
+[[../assets/ICMP-message.png]]
+* ICMP messages
+| Type | Code | Description                    |
+|------+------+--------------------------------|
+|    0 |    0 | echo response (ping)           |
+|    3 |    0 | unreachable network            |
+|    3 |    1 | unreachable host               |
+|    3 |    2 | unreachable protocol           |
+|    3 |    3 | unreachable port               |
+|    3 |    6 | unknown network destination    |
+|    3 |    7 | unknown host destination       |
+|    4 |    0 | reduction (congestion control) |
+|    8 |    0 | echo request (ping)            |
+|    9 |    0 | announce of a router           |
+|   10 |    0 | router discovery               |
+|   11 |    0 | TTL expired                    |
+|   12 |    0 | wrong IP header                |

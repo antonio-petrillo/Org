@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       7d573f52-5fba-4f15-8300-e71a8aff9b20
+:ROAM_ALIASES: "Management Information Base"
+:END:
+#+title: MIB
+#+filetags: :networking:application:
+
+* MIB aka ~Management Information Base~
+The data about the *state* and the *configuration* of a ~managed device~ are stored in MIB.
+
+Each managed information is stored in a MIB.
+Let's say that a counter that count the number of IP datagram discarded for a bad header and the information about the status of the device are stored in different MIB.
+
+All the MIB of a device can be grouped into a ~MIB Module~.
+* Example
+[[../assets/MIB-IP-datagram-delivered-to-upper-level.png]]

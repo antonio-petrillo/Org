@@ -1,0 +1,198 @@
+:PROPERTIES:
+:ID:       1b4e177a-9688-423c-80c7-14ca76881c58
+:END:
+#+title: Network Layer
+#+filetags: :networking:network layer:
+
+* Network Layer
+Layer between [[id:bd97fa27-1d09-4cbe-af18-ab6cd4a71888][Transport Layer]] and [[id:8573d8e0-4ecb-444a-9acb-75690e9d59e9][Data Link Layer]].
+It's job is to send data from an end point to another.
+The network layer don't live entirely on one machine, one half reside on the end point while the other half live in the *router*.
+These two half are:
++ Data Plane
++ Control Plane
+[[../assets/control-plane-inside-the-router.jpg]]
+* Data Plane
+It lives inside the *ROUTER*.
+[[../assets/router-architecture-overview.png]]
+** Forwarding Approach
+*** Generalized forwarding
+There are some rule that are used to forward the packet.
+I.E. the packet for a google resource must take the first output port and the packet for Microsoft Outlook must go to the third output port.
+*** Destination based forwarding
+Let me explain with an analogy:
+1. before you enter a roundabout there is a road toll booth.
+2. before you can proceed you must say at toll booth where you are going
+3. the employee tell you which you have to take in the roundabout
+*** Input Port
+When a packet reach an import port it is routed to the correct output port through the switch fabric using a forwarding table made by the routing processor.
+After the first packet of a stream get an output port, a copy of the forwarding table is stored in the input port so the next packets can go faster.
+*** Switching Fabric
+It connect, *physically*, the input port with the output port, basically it's a network (inside another network).
+*** Output Port
+*** Routing Processor
+Execute the *Control Plane* function, both classic router and SDN operates here.
+*** Buffers size (input & output)
+When a packet cannot be instantly consumed it is stored in a buffer, when this kind of buffers are full the packet is dropped (this what cause packet loss in the upper layers).
+So how big the buffers should be?
+**** A classical approach suggest:
+$Buff Size = RTT\cdot C$, where ~RTT~ is the ~Round Time Trip~ and ~C~ is the ~link capacity~.
+**** A more modern study suggest that when there are ~N~ TCP connections:
+$BuffSize = RTT\cdot \frac{C}{\sqrt{N}}$
+**** Note
++ A  buffer to big will increase the ~queuing time~.
++ A buffer full of TCP connection will have a rough time to free space in the buffer, after an ACK a new packet will come and /re-full/ the buffer.
++ This problem is known as ~bufferbloat~
+****
+** Packet Scheduling
+As always there are more than one solution:
+**** Good old FIFO (aka FCFS - First-Come-First-Served)
+**** Priority Queue
+Each packet is label with a priority level.
+Each priority class has his own queue, i.e. HTTP has more priority than SSH, SSH more than IMAP and so on.
+If the queue is ~not preemptive~ it is not possible to interrupt the forwarding of a packet.
+The priority levels and classes are decided by the ISP.
+**** Round Robin & WFQ
+~WRQ := Weighted Fair Queueing~
+The packets are divided into class, without a rigid service priority.
+Then each class is served round robin style.
+[[../assets/wfq.png]]
+** IP
+The most important part in this layer, this is the protocol upon the rest is built on.
+*** [[id:00a3a978-0ce5-4671-b7b5-ffaa60abd85f][IPv4]]
+*** [[id:8bb2afc5-0aa3-40c7-9bfd-a12efb428876][IPv6]]
+** [[id:d87c3e1b-aac9-4979-99fe-4bdcf5f90466][ICMP]]
+** Generalized Forwarding and SDN.
+A generalized version of Forwarding can be imagined with a ~match-action~ system.
+When there is a ~match~ the system responds with a specific ~action~.
+A ~match~ could be done on the headers of the packet (forward based on the destination), a load balancer, a firewall, and many more, the ~action~ could be the forwarding (as in forwarding based on the destination or the load balancer) or even the discard (as in a firewall that detect a malevolent packet).
+This kind of ~match-action~ could be implemented with a generalized version of the ~forwarding table~.
+The device that can do this kind of job work on ~network layer~ and ~data link~ layer, hence they are different from router, they are called ~packet switch~.
+*** Figure
+[[../assets/openflow-1.0-overview.png]]
+*** Openflow
+It is a protocol that introduced a lot of key features for the SDNs and the generalized forwarding, the book focus on ~openflow 1.0~
+As said before ~generalized forwarding~ is similar to a classic SDN, but the ~forwarding table~ is more comples (but still quite easy), in ~openflow~ it's called ~flow table~.
+Each table entry have the following column:
++ A set of value of packet's header, this is used to ~match~ against a newly arrived package, usually this part is implemented in hardware.
++ A set of ~counters~ that will update when a packets match one of the row of the ~flow table~, they also contain a /timestamp/ of the last update.
++ A set of ~action~  that will be executed after a ~match~ on the ~flow table~.
+**** Match
+[[../assets/header-openflow-1.0.png]]
+Note that each row have also a priority value, when a packet match more than one packet openflow resolve using the match with greater priority.
+**** Counters
+Self explanatory, they are used to modify priority value and stuff like that.
+**** Action
+Here some of the most important action in ~openflow~:
++ ~forwarding~
++ ~dropping~ (useful in firewall)
++ ~modify-field~ (useful in NAT)
+*** Middlebox
+Every other system on a network that is not an endpoint ans also which does different things than a router is a ~middlebox~.
+In this category we can find:
++ NAT box
++ DPI firewall (Depp Packet Inspection)
++ IDS (Intrusion Detection System)
++ TCP splitter
++ WEB caching
+* Control Plane
+This part focus on *how* the forwarding table are computed.
+There are 2 main type:
++ *Control by router*, the routing algorithm is executed on each router.
++ *Centralized control*, the routing algorithm is executed on a different machine and then setted on the routers,  in this case there is also the ~CA~ (aka the ~Control Agent~) which have the job of  communicate with the controller to  set,   change and update the tables, it communicate over a simple protocol we will see later.
+** Routing algorithm
+To model the problem we consider the network as a graph.
+The job of routing algorithm is to find the path, hopefully the best (more on that later), from an host A to an host B.
+Since this is modeled as a graph we can use graph algorithm such as [[id:56e26ea1-9a81-440a-abb9-1ae3f8f964a5][BFS]] and [[id:00159d89-69fa-42b2-8ab5-884c14db7389][DFS]] to find a path, but the result may be not optimal since a network is a weighted graph, for this problem there are other algorithms that give a, usually, better result.
+The cost of a path is $$\sum_{x,y \in Path} c(x, y)$$.
+*** The algorithm we will describe can be categorized in 2 set:
++ Centralized: the algo has info about all the graph, these are also known as _algorithm link state_, shortened with ~LS~.
++ Decentralized: the algo, applied to a node, has info only on the neighbors, the  calculation of the path is distributed among the nodes (routers, hosts, etc...), this is called _vector distance_ ~DV~.
+*** Furthermore they can be divided in
++ ~Static~, they don't change often
++ ~Dynamic~, the opposite, they can change frequently, for example to adapt to network stress situation, like a congestion or some politics related to an host/router.
+*** ~LS~ Link State
+As said before in a ~LS~ algo, the topology and the costs of each edge in the network is known, this is not /given/ we have to obtain this knowledge before we can compute the path.
+One way to obtain that info is the *link-state broadcast*, basically each node send his local info (neighbors and consts) to all the other nodes in the network, after that all the nodes have _the same_ view of the network.
+**** [[id:2250123a-f138-4261-b667-5b07a5bf5956][Dijkstra]]
+Another algo strictly connected is the [[id:66f74f59-7834-48d7-a278-8396e7b85a40][Prim]].
+**** Criticism
+In a real network it can happen that the cost on a link is no the same in both direction, i.e.
+$$Cost(u,v) \neq Cost(v,u)$$, hence the Dijkstra algorithm may calculate the wrong path.
+This can happen for various reason, for example the link ~(u,v)~ can be congested while ~(v,u)~ is free.
+For this and other reason today the ~DV~ algo is preferred.
+*** ~DV~ Distance Vector
+This algo have the following properties:
+1. Distributed, each node receive & give information from its neighbors.
+2. Iterative, this process keep going until a new exchange of information is done.
+3. Autoblocking, no need to explicitly stop the algo.
+4. Asynchronous, no need for the nodes to operate synchronously.
+
+It's based on the [[id:eb686e07-d620-4efc-a252-ccf0761f4677][Bellman Ford]], in particular on the ~Bellman-Ford formula~:
+$d_x(y) = \min_v\{c(x, v) + d_v(y)\}$
+Where $$min_v$$ is applied to all the neighbors of x.
+~Bellman-Ford~, even if has theoretically slower ~Big Oh~, in practice is preferred to Dijkstra because it is decentralized and doesn't need to know all the network.
+Furthermore another reason is that it is distributed over each node and when a link change it's (i.e. congestion or the link is dead) weight it auto update.
+**** Criticism
+This algo suffer of the [[https://www.youtube.com/watch?v=f2ic7kVnhrs][count to infinity problem]].
+***** Solution
+One of the possible solution is  the so called _poisoned reverse_.
+This is a simple solution, consider ~A, B, C~ hosts and ~A can reach C through B~,
+if A have to communicate with B (send updated info) it lie about the fact it can reach C sending ~Da[C] = ∞~, so B updates his knowledge and give back to A ~new information~, then A ~can choose~ between new data and old data.
+****** Nested criticism
+This solution apply only if the ~count to infinity~ happen between host ~2 hops away~.
+** Open Shortest Path First
+One problem that afflict both ~DV~ & ~LS~ is that the internet network is just *TO BIG*.
+With ~LS~ keep the information between all the host take to much memory and to much time, with ~DV~ the algorithm will never converge.
+Another one is that internet, at the top level, is a network of tier 1 ISP's and they want to administrate their /inner structure/ so it's a little bit to optimistic that each nodes know the information about all the other nodes (this apply also to the distance).
+*** ~Autonomous System~, ~AS~
+This kink of problem are solved with ~Autonomous System~, aka ~AS~, a set of routers under a single administration (you can think of a tier 1 ISP as a gigantic ~AS~).
+
+Each ~AS~ is identified by a number ~ASN~ (aka ~AS Number~), this number is assigned by *ICANN*.
+
+Each node in a ~AS~ have info about the others and use the same routing algorithm, called ~intra-AS routing protocol~.
+** ISP routing & [[id:bd2b04dd-3f01-4a2d-85c1-86eac538ab18][BGP]]
+Now that we know about the ~AS~ use ~OSPF~ the next question is how different ~AS~ can communicate?
+The /standard/ solution for this problem is [[id:bd2b04dd-3f01-4a2d-85c1-86eac538ab18][BGP]].
+~BGP~ is ~DV~ protocol.
+Instead of send the packets towards a single destination, it is sended to a common ~CIDR~ prefix that represent a subnet.
+** Control Plane SDN
+The devices at this level are know as ~packet switch~ or simply ~switch~.
+In SDN we can identify 4 charactheristic:
+
+1. Forwarding based on flow
+2. Decoupling Data Plane & Control Plane
+3. Software
+4. Programmable
+
+Here in detail:
+*** Forward based on the flow.
+See ~Openflow~.
+It's job of the SDN plane to compute, set & manage the table on the ~switch~.
+*** Decoupling Data Plane & Control Plane
+[[../assets/SDN-decoupling.png]]
+** Software
+The ~S~ in ~SDN~ stands for software.
+~SDN~ is ~implemented~ in software.
+** Programmable
+The SDN API can be used to change the behavior of the network.
+Here an example:
+The SDN have a complete map of the network hence it can use [[id:2250123a-f138-4261-b667-5b07a5bf5956][Dijkstra]] to find the shortest path, if a link is under heavy load it can change the weight and find another path.
+** Manage a network
+A network manager, before SDN, have to manage hosts, switch & router in a network.
+*** Management infrastructure
+**** Management Server
+It's a ~NOC~ (~Network Operations Center~) that execute the _software_ that the *networks manager/s* use to administrate the network, for example in your home network
+**** Managed Devices
+Every node (either router, hub, switch, host) on the network that require to be managed.
+**** Data
+***** Config data
+Configuration file per device, like a static IP
+***** *Operational* data
+Data collected at /runtime/, like the neighbors in the network or  the statistics of the devices.
+**** Management Agent
+Software that communicate with the ~Management Server~, the ~NOC~.
+**** Network Management Protocol
+The protocol used by the the ~NOC~ and the  Management Agent.
+***** NOTE:
+This protocol don't manage the network, it's *used* to manage the network.

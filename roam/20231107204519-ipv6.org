@@ -1,0 +1,52 @@
+:PROPERTIES:
+:ID:       8bb2afc5-0aa3-40c7-9bfd-a12efb428876
+:END:
+#+title: IPv6
+#+filetags: :ip:network_layer:networking:
+
+* IPv6
+This new version use more bit that IPv4, hence it admit a greater number of IPs.
+* Datagram Structure
+[[../assets/IPv6-datagram.png]]
+** ~Version~
+Specify the version, i.e. ~IPv4~ or ~IPv6~
+** ~Traffic class~
+Similar to ~TOS~ type of service in IPv4.
+It can be used to give priority to some datagram.
+** ~Flow label~
+In the RFCs for the IPv6 there is the elusive definition of ~flow~ of data, there is a debate on what is a stream or not.
+A guideline could be: /all the data that belong to a specific flow, like a video, a file, etc.../
+** ~Payload length~
+Selfexplanatory
+** ~Next hdr~
+The protocol that will use the data in the payload.
+** ~Hop limit~
+A new form of ~TTL~, each time a datagram go through a new host the hop limit is decreased, when reaches ~0~ the datagram is discarded.
+** ~Source addr~ & ~Dest. addr~
+Selfexplanatory.
+They are 128 bit long so there is no problem of shortage of IPs.
+** ~Data~
+The payload
+* Notes on IPv6
+** No checksum
+Since there are a checksum also in the upper layer the engineers of the IETF have take the decision of remove the checksum from the IPv6 datagram.
+It was removed from IPv4 to IPv6 also because the computation of the checksum, while it is easy to compute, must be repeated at each router ending in a non zero overhead.
+** No fragmentation
+IPv4 support fragmentation of the datagram (through the headers id, and offset), this is quite expensive to do in a router, basically when in IPv4 a router receive a datagram to big it split the fragment in smaller piece and forward them, then the datagram will be recomposed.
+Since this operation is expensive especially on machine like home router, but also on professional level router, the engineers of [[https://www.ietf.org/][IETF]] removed this option.
+When a router receive a datagram to big send an [[id:d87c3e1b-aac9-4979-99fe-4bdcf5f90466][ICMP]] (i.e. datagram to big) message to the sender, then sender re-transmit the datagram using a smaller MTU.
+This work done on the end system is cheaper.
+** No more Option
++ The IPv6 datagram is smaller than IPv4
++ Interoperability with IPv4
+IPv6 is retrocompatible with IPv4, the viceversa is not true.
+* From IPv4 to IPv6
+This transition is quite difficult, the easiest way is to choice a day in which the whole internet will be powered off and do the upgrade, but this is quite problematic as solution.
+A less drastic solution is to use ~tunneling~, it's easy to explain with an example:
+#+BEGIN_EXAMPLE
+Imagine a chain of router that want to communicate, say they are: A, B, C, D, E, F
+A, B, E, F works with IPv6
+C, D with IPv4
+When B want to send a message to E or F, it wrap its datagram in a IPv4 datagram, in this case the ~TOS~ is not an upper layer but IPv6, and send it through C.
+Then D send to E, E unpack the IPv6 datagram and proceed.
+#+END_EXAMPLE

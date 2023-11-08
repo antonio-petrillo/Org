@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       37f536a1-d024-4edd-ad47-c521af783ff9
+:ROAM_ALIASES: "User Datagram Protocol"
+:END:
+#+title: UDP
+#+filetags: :networking:transport:unreliable:
+
+* User Datagram Protocol
+It is a lightweight transmission protocol that doesn't give a reliable connection.
+* UDP segment
+[[../assets/udp-header-structure.png]]
+* Error Checking
+UDP perform a simple error checking process on the datagram, in particular it uses a checksum.
+** Algorithm
+*** Sender
+Do a 1-complement of the sum of all ~16 bit~ words, an eventual carry bit will be added to the first bit.
+This value will be putted in the ~checksum~ header.
+*** Receiver
+Do the sum of all the ~16 bit~ words and also sum the ~checksum~ the result must be ~1111 1111  1111 1111~.
+*** Note
+This doesn't guarantee the integrity, for example there could be multiple error that balance themselves and give the desired checksum even there was an error.
+This is way this is considered a simple approach, but it is fast and (I think) work on most of the case.

@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       b6890aeb-af90-4386-b78a-f4c791e3cf8c
+:ROAM_ALIASES: "SRP (networking)"
+:END:
+#+title: Selective Repeat Protocol
+#+filetags: :networking:transport:
+
+* Selective Repeat Protocol
+Retransmit only the packet that contains an error.
+To accomplish that the receiver should send the number of the packet received in the ~ACK~ back to the sender.
+* Sliding window
+[[../assets/sr_seq_num_space.png]]
+Here the sliding window have some other condition, compared to [[id:e4cf3f02-7eaa-4594-a980-b9b5c1756118][GBN]], before it could advance.
+Basically the lower index can advance only when the  corresponding ~ACK~ is received.
+** Section
++ Dark Blue: packages sended, received and also ACK'd (received without corruption, etc...)
++ Blue: package sended but the sender is still waiting for the ACK
++ Grey: packages that can entry the window size before it's full
++ White: packages that cannot entry the queue/window because it's full
+* Example
+[[../assets/selective_request_protocol_example.png]]
+Note that the sender's window could differ from receiver's window.

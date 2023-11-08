@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       43007886-116d-412c-8a73-22e353d7df71
+:ROAM_ALIASES: "Simple Network Management Protocol"
+:END:
+#+title: SNMP
+#+filetags: :networking:application:
+
+* SNMP aka ~Simple Network Management Protocol~
+Usually works on [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]].
+
+Is a ~request - response~ protocol.
+A ~management server~ made a request, a ~management agent~ receive it, do some action and give a response back.
+* Use cases
+Read/Write a [[id:7d573f52-5fba-4f15-8300-e71a8aff9b20][MIB]] objects associated with the device.
+
+A ~management agent~ send a so called ~trap message~ to the ~management server~, this trap message notify that something abnormal is happening on the device so the [[id:7d573f52-5fba-4f15-8300-e71a8aff9b20][MIB]] objects have changed .
+* Messages
+SNMPv3 define 7 messages called ~PDU~ (~Protocol Data Unit~) with a specific format
+** Overview
+[[../assets/SNMP-PDU.png]]
+** Type of PDU
+| PDU's type, SNMPv3 | sender-receiver                | Description                                                   |
+|--------------------+--------------------------------+---------------------------------------------------------------|
+| GetRequest         | Manager-Agent                  | Read a MIB Object                                             |
+| GetNextRequest     | Manager-Agent                  | Get next MIB OBject from a list or table                      |
+| GetBulkRequest     | Manager-Agent                  | Get MIB in a big block of data                                |
+| InformRequest      | Manager-Manager                | Inform another Manager about some MIB (they may not be local) |
+| SetRequest         | Manager-Agent                  | Write MIB Object                                              |
+| Response           | Agent-Manager or Manager-Agent | Generated in *Response* to the other above requests             |
+| SNMPv3-Trap        | Agent-Manager                  | Something abnormal happened and some MIB Objects have changed |

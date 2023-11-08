@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       6db8a3b6-d131-4204-ba62-ff81d220f591
+:ROAM_ALIASES: "Network Address Translation"
+:END:
+#+title: NAT
+
+* Summary
+The NAT is used to reduce the utilization of IP addresses, with IPv4 we have $2^{32}$ addresses which will end soon if every end point has an unique IP.
+Basically a NAT server take an IP datagram and change the inner source IP with it's own, it also save the old IP in a table so it can send the response the  correct user.
+With NAT all the device in a ~SOHO~ (Small Office, Home Office) can be grouped into a single IP!
+* Overview
+[[../assets/NAT.png]]

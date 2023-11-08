@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       fc0a8101-cb78-4c60-834a-bbbcc1cd4bd9
+:ROAM_ALIASES: CDN
+:END:
+#+title: Content Delivery Network
+#+filetags: :networking:caching:application:
+
+* Content Delivery Network
+To avoid a big central web server with all the resource, CDNs replicate the data over the network so, when a client made a request, it can be delivered by the nearest CDN.
+* Type of CDN
+** Enter deep
+Install clusters inside the access ISPs over the world, harder to maintain but this solution is faster in general.
+** Bring home
+Create a private network, install in this network the clusters with redundant data and the connect to the access ISP, easy to maintain, cheaper but slower in general.
+* How they work
+When a CDN receive a request it chose one of the cluster that hold the required resource (possible also near to client who made the request) it redirect the request to one of the server  in that cluster.
+Usually CDNs use [[id:82a454c1-758a-4da8-9909-a5dd273af0c4][DNS]] redirect to accomplish their job.
+* Here an example
+[[../assets/CDN_example.png]]
+
+Steps' description:
+Suppose NetCinema is streaming platform that use KingCDN to deliver its contents.
+1. The client visit NetCinema
+2. The client click on a link to get a resource, like [[https://en.wikipedia.org/wiki/Ghost_in_the_Shell][Ghost in the Shell]]
+3. The local DNS (or the full process, root -> TLD -> authoritative ) redirect to the authoritative DNS of NetCinema
+4. The authoritative DNS redirect to KingCDN DNS
+5. KingCDN DNS return the IP to the server that hold the request, basically the IP of the server of the CDN that contain the result
+6. The client access to the resource on the CDN, either with HTTP, DASH or whatever

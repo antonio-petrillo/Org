@@ -1,0 +1,78 @@
+:PROPERTIES:
+:ID:       9ba62597-24b1-4a96-bcc1-5d5895439275
+:ROAM_ALIASES: "Hyper Text Transfer Protocol"
+:END:
+#+title: HTTP
+#+filetags: :networking:application:web:
+
+* Description
+The only and true web protocol.
+Based on [[id:6d2cbbbb-aebf-43f3-b43b-bbc57b287d70][TCP]] for a reliable connection, it define the structure of the message used by the web server and the User agent (it specify a client-server paradigm).
+* HTTP Request
+** Format
+[[../assets/http_request_format.jpg]]
+** Here an example:
+#+BEGIN_EXAMPLE
+GET /somdir/page.html HTTP/1.1
+Host: www.someschool.edu
+Connection: close
+User-agent: Mozilla/5.0
+Accept-language: fr
+#+END_EXAMPLE
+** Important Header Field
+*** *cookie*
+Let the user add a cookie to the request, it could be handle to keep a track of a connection (see jwt token), usually they are set by an HTTP response
+*** *If-modified-since*
+With this header is possible to create a conditional get, to keep it simple, the value for this header is a date if the requested page/resource is modified since the input value don't accept a cached value but get a /fresh/ one.
+** HTTP Methods
+*** *GET*
+Used when an user agent request a resource specified by the URL field.
+Usually they have an empty body.
+*** *POST*
+Used when the user compile a form, it send the compiled fields in the body to the web server.
+*** *HEAD*
+Behave like GET but discard the body, used to test if the web server response correctly.
+*** *PUT*
+Let the User sends to the web server on a specific path, nowadays is not used because it introduce to many security risk, it is replaced with a combo of cookie and POST method.
+*** *DELETE*
+Dual operation of PUT, it has the same problem and the same solution
+** NOTE
+1. When an URL is used in the request, the user agent *resolve* the URL with using a [[id:82a454c1-758a-4da8-9909-a5dd273af0c4][DNS]] request.
+* HTTP Response
+** Format
+[[../assets/http_response_format.jpg]]
+** Example
+#+BEGIN_EXAMPLE
+HTTP/1.1 200 OK
+Connection: close
+Date: Thu, 18 Aug 2015 15:44:04 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Tue, 18 Aug 2015 15:11:03 GMT
+Content-Length: 6821
+Content-Type: text/html
+(data data data data data .... data)
+#+END_EXAMPLE
+** Important Header Fields
+*** *Set-cookie*
+Set a cookie on the user agent who made the request.
+*** *Content-Length*
+Number of byte in the response
+*** *Content-Type*
+Specify the type of the response, i.e. ~html file~, ~image~, ~xml~ ecc...
+** Common response code
+| Code Number | Code Message               | Meaning                                         |
+|         200 | OK                         | Request Success                                 |
+|         301 | Moved Permanently          | Object moved to another URL                     |
+|         400 | Bad Request                | self explanatory                                |
+|         404 | Not Found                  | The required resource don't exist on the server |
+|         505 | HTTP Version Not Supported | self explanatory                                |
+* HTTP 2
+Standardized in the 2015, nowadays over 40% of the 10 million of /big website/ use HTTP 2.
+** HOL (Head Of Line) Blocking
+One criticism of HTTP 1 is that when a big file block the message queue it can do nothing.
+Imagine a page composed of 3 image and a big video, if the video is scheduled before the image it cause a HOL, hence the image (even if small) cannot be sended to the User agent making the website unresponsive.
+HTTP 2 divide each message in small frame and send the in a round robin style (I suppose there are more complicated mechanism, like aging, etc; ).
+* HTTP 3
+Add another underlying protocol to HTTP QUIC (based on [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]]), used in some contest in which TCP struggle like serving video resource.
+It's not completely standardized.
+It's a extension of HTTP 2.

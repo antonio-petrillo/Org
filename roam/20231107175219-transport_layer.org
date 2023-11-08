@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       bd97fa27-1d09-4cbe-af18-ab6cd4a71888
+:END:
+#+title: Transport Layer
+#+filetags: :networking:transport:
+
+* Transport Layer
+Layer between [[id:d360eb13-1020-404b-a49b-bbf138c95652][Application Layer]] and [[id:1b4e177a-9688-423c-80c7-14ca76881c58][Network Layer]] here we can find the protocol used to let the various end system comunicate to each other in the web.
+* Jargon
+At this level we work with *DATAGRAM*, sometime called *SEGMENT*.
+* Protocols
++ [[id:6d2cbbbb-aebf-43f3-b43b-bbc57b287d70][TCP]]
++ [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]]
+* Common techinique
++ [[id:e4cf3f02-7eaa-4594-a980-b9b5c1756118][GBN]]
++ [[id:b6890aeb-af90-4386-b78a-f4c791e3cf8c][SRP]]
+* Main purpouse
+The target of this level is to extend the functionality of the underlying level.
+Since the [[id:1b4e177a-9688-423c-80c7-14ca76881c58][Network Layer]] take care of sending data from *one* host to *one* another host, this means that an end point may talk to at most one other system at a time, this is not feasible.
+The /transport layer/ dispatch the data received to a /specific process/, in this way we can make a communication between processes and this let multiple comunication happens on a single machine.
+In other words it is a *MULTIPLEXER* or *DEMULTIPLEXER*, depends on the point of view.
+To achieve this purpouse the operating systems introduce the *PORT* associated to each processes to distinguish them.
+* Generic Datagram
+Independently of the choosen protocol, to work it should have at least the following information.
+The ports are in the range $[0, 2^{16} - 1]$
+[[../assets/generic_datagram_format.png]]

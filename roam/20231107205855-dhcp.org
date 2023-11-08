@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       2cb03b28-6ea1-416a-838a-f31edeae74c1
+:ROAM_ALIASES: "Dynamic Host Configuration Protocol"
+:END:
+#+title: DHCP
+#+filetags: :networking:application:
+
+* Collaborate with [[id:1b4e177a-9688-423c-80c7-14ca76881c58][Network Layer]]
+* ~Dynamic Host Configuration Protocol~
+When a new host is connected to the network DHCP give them an unique IP address (unique in that subnet), it also send information about the ~subnet mask~ and the ~default gateway~ (the address).
+It's also possible to assign a so called ~static IP~ to a specific host, in other words when an host receive a static IP from DHCP in a network, _every time_ it connect to that network receive the same IP address.
+* Overview
+[[../assets/dhcp-server-in-a-network.png]]
+* DHCP server
+The server take care of assign an unique IP to the new host.
+Usually it is installed in the router, but in more complex case like a big company with thousands of thousands of hosts or a guy obsessed with the cyber-security of the networks, it could be located on a dedicated machine, in this later case the router should be /acknowledged/ on where to find a DHCP server (~relay agent~).
+* DHCP communication
+[[../assets/DHCP-communication.png]]
+** DHCP ~Discover~
+A newly connected host send a ~DHCP request~ in particular it send a ~DHCP discover~ request, since it doesn't know the IP of the router and neither the IP of the DHCP server it send the request on the ~broadcast IP~ ~255.255.255.255~.
+on the port reserved to DHCP, aka the ~port 67~ (the request runs on [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]]).
+Since an IP datagram require the IP address of the sender, in the offer is used the addres ~0.0.0.0~.
+** DHCP ~Offer~
+Once the server receive the ~discover~ request it send back an offer (hence the name) with an _offer of IP address_.
+In the offer there are specified the ~IP of the server~,  a ~IP address~ candidate, a lifetime, a transaction ID, and other info on how the network is configured.
+*** Why Server IP and transaction ID?
+On the network there could be multiple DHCP server hence a new client can get multiple offer from which it can chose.
+** DHCP ~Request~
+This message is used to accept one of the possible offers.
+The message is sended broadcast but now it contains the DHCP server id (basically the IP) and the transaction ID so the server can understand which host is accepting the offer (remember there could be multiple host that connect at the same time to the network).
+** DHCP ~Ack~
+The server notify the client and know the client can use the newly assigned IP.
+** Extra
+DHCP offers an extra command to extend the lifetime of the connection.
+** Explore the source code
+At the following [[https://github.com/isc-projects/dhcp][link]] you can find a DHCP implementation open source.

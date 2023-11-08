@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       e4cf3f02-7eaa-4594-a980-b9b5c1756118
+:ROAM_ALIASES: "Go Back N"
+:END:
+#+title: GBN
+#+filetags: :networking:transport:
+
+* Go-Back-N
+In a GBN protocol the sender can send multiple packet at the same time without wait for the ~ACK~ response, but it cannot send more than ~N~ without waiting for an  ~ACK~ on the pipeline.
+* Sliding window
+You can think about it as a sliding window of size N
+Visually:
+[[../assets/GBN_visually.png]]
+* Characteristic
+** Attributes
+*** Base
+Oldest sequence's number in the window (See image above)
+*** Nextseqnum
+Smallest unused sequence's number (See image above)
+*** N
+Window size (See image above)
+** Section
+With the previous attributes we can identify 4 section (I'm using the color code from the image above):
++ Dark Blue: packages sended, received and also ACK'd (received without corruption, etc...)
++ Blue: package sended but the sender is still waiting for the ACK
++ Grey: packages that can entry the window size before it's full
++ White: packages that cannot entry the queue/window because it's full

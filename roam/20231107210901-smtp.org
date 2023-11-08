@@ -1,0 +1,59 @@
+:PROPERTIES:
+:ID:       6f4036c0-4177-422d-9f24-9ea08463107b
+:ROAM_ALIASES: "Simple Mail Transfer Protocol"
+:END:
+#+title: SMTP
+#+filetags: :networking:application:
+
+* Description
+The protocol underlying the emails.
+It's based on [[id:6d2cbbbb-aebf-43f3-b43b-bbc57b287d70][TCP]].
+Use other protocol, like [[id:9ba62597-24b1-4a96-bcc1-5d5895439275][HTTP]], POP3, IMAP for some action.
+* Architecture overview
+[[../assets/smtp_architecture.PNG]]
+The connection between the User Agent can be realised with HTTP or IMAP.
+* SMTP Communication
+[[../assets/smtp_message.png]]
+Here Alice want to send a message to Bob.
+** Steps
+1. The SMTP client on Alice's pc enstablish a TCP connection (on port 25) to her Mail Server
+2. The client and server identifies themself to each other
+3. Alice's User agent (SMTP client) send the email to Alice's Mail server
+4. Alice's Mail Server send the email to Bob's Mail Server
+5. When Bob want he can check his Mail Server to retrieve the mail (with HTTP or IMAP)
+** Structure of a request to send a message
+See RFC 5321.
+~S: & C:~ represent, respectively, the server and the client.
+#+BEGIN_EXAMPLE
+S: 220 hamburger.edu
+C: HELO crepes.fr
+S: 250 Hello crepes.fr
+C: MAIL FROM: <alice@crepes.fr>
+S: 250 alice@crepes.fr .... Sender ok
+C: RCPT TO <bob@hamburger.edu>
+S: 250 bob@hamburger.edu ... Recipient ok
+C: DATA
+S: 354 Enter mail, end with "." on a line by itself
+C: Do you like ketchup?
+C: What do you think about pickles?
+C: .
+S: 250 Message accepted for delivery
+C: QUIT
+S: 221 hamburger.edu closing connection
+#+END_EXAMPLE
+* Format of email message
+See RFC 5322
+Pay attention that this is the structure for a mail message, not a sequence of command for the SMTP protocol.
+** Required
+1. From:
+2. To:
+** Optional
+1. Subject:
+* Send and retrieve from server
+** Send
+When Alice want to send an email to Bob, she sends first the email to the Mail Server, this can be done with HTTP (i.e. Alice use gmail in browser) or SMTP (i.e. Alice use thunderbird on her desktop).
+** Retrieve
+When Bob want to read it's mail he access his Mail Server, this can't be done with SMTP because it is a push protocol and this is a push protocol.
+To solve this problem there are 2 protocols, HTTP (i.e. open gmail in the web), and IMAP (i.e. retrieve the mail on your desktop with thunderbird)
+* Limitations
+SMTP is older than HTTP hence it has some peculiar restriction, like the content can be encoded only in ASCII 7 (this means that the data should be first encode in binary, interpret that binary as ASCII and sended).

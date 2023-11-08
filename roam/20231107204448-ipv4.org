@@ -1,0 +1,85 @@
+:PROPERTIES:
+:ID:       00a3a978-0ce5-4671-b7b5-ffaa60abd85f
+:END:
+#+title: IPv4
+#+filetags: :ip:networking:network_layer:
+
+* IPv4
+The packet at the ~network layer~ is known as ~DATAGRAM~.
+* Datagram Structure
+[[../assets/ipv4-datagram.png]]
+** ~Version~ 4 bit
+Contains an identifier that allow the router to recognize correctly the datagram.
+** ~Header length~ 4 bit
+All the fields of an IPv4 datagram have a fixed length except for the option header which could vary.
+Typically an IP datagram doesn't have extra options, this means that usually an IP datagram is 20 bytes long.
+** ~Type of service~ 8 bit
+Aka ~TOS~, it's used to distinguish  between datagram that need low latency, i.e. ~VoIP~, or a datagram that don't prioritize latency, like ~FTP~.
+~2 bit~ of the TOS are used to explicitly notify the upper layer that there is congestion on the network.
+Don't confuse this with the type of protocol used.
+** ~Datagram length~ 16 bit
+Total length of the IP datagram, they can vary from 0 (useless!) to 65355 (to big!).
+The most common size is ~1500~.
+1500 is preferred because it is the maximum size for a ~Ethernet frame~ on the [[id:8573d8e0-4ecb-444a-9acb-75690e9d59e9][Data Link Layer]] (the layer below).
+*** ~Identifier, Flag & fragmentation offset~ (16 + 3 + 13) bit
+*** ~TTL~ 8 bit
+*** ~Protocol~ 8 bit
+This field is used when the datagram reaches the destination.
+Specify which protocol should receive the data, for example the value ~6~ specify ~TCP~, ~17~ ~UDP~, and so on (see ~IANA Protocol Numbers 2016~).
+*** ~Checksum~ 16 bit
+The IP checksum is applied only to the header, essentially is equal to [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]] checksum.
+The checksum is computed as ~sum of 1 complement of each 8 byte in the header~, the router that receive the datagram re-compute the checksum an try to match to the stored one
+Note that each router that receive the datagram must recompute the checksum before forwarding it, this because the ~TTL~ has changed.
+*** ~Source IP~ & ~Destination IP~
+When an host send a datagram it put the destination IP in the ~destination field~ and it's own IP in the ~source field~.
+*** ~Options~
+Used only on high end router.
+*** ~Data~ or ~Payload~
+Data from/to the layer above.
+In the case of [[id:6d2cbbbb-aebf-43f3-b43b-bbc57b287d70][TCP]] we have ~20 bytes~ for the IP header and ~20 bytes~ for the TCP header, hence for the payload we have $MTU - 40 bytes$ (since the MTU is usually ~1500 bytes~ we get that the payload could be, at most ~1460 bytes~).
+*** IPv4 routing
+Usually an host have only one link with the network.
+The border between an host and a physical link is called ~interface~, see ~ip a ~
+#+BEGIN_SRC shell
+[nto@fedora ~]$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp2s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+    link/ether ***************************************
+3: wlp4s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether ***************************************
+    inet 192.168.123.140/24 brd 192.168.123.255 scope global dynamic noprefixroute wlp4s0
+       valid_lft 2465sec preferred_lft 2465sec
+    inet6 ***************************** scope link noprefixroute
+       valid_lft forever preferred_lft forever
+#+END_SRC
+On the other hand a router must be connected to ~at least 2 link~.
+The /borders/ on a router are also called ~interfaces~.
+Since that both router and host can send and receive datagram IP *require* that each interfaces must have an ~IP address~.
+This mean that:
+~An IP address is associated with an interface, not with a single host~
+*** IPv4 address
+They are 32 bit long, hence there are $2^{32}$  possible IPs.
+They are described with a dotted decimal notation.
+#+BEGIN_EXAMPLE
+IP := 192.32.216.9 <==> 11000001 00100000 11011000 00001001
+#+END_EXAMPLE
+All the devices connected to Internet have an unique IP, except the devices manged by NAT (see later).
+That IP can't be chosen at random.
+IP address have a ~subnet mask~ used to create subnet, also called ~IP network~.
+[[../assets/ipv4-interfaces-and-subnetting.png]]
+See ipcalc for an intro on how to calculate subnets.
+*** ~Classless InterDomain Routing~ aka ~CIDR~
+It is a generalization of the subnetting concept.
+The IP is, as before, represented with a dotted decimal notation with an extra ~/xx~ which represent the number of bit used to identify the network name, the remaining $32 - xx $ bit can be used to identify hosts on the network.
+Visually ~a.b.c.d/xx~, here ~a.b.c.d~ is the IP and ~/xx~ are the bit used to identify the network.
+The first part, the ~x bits~ are used to create the ~forwarding table~.
+Examples:
+~192.168.1.0/24~, 24 bit are for the network, hence ~192.168.1.0~ is network name and the number from ~192.168.1.1~ to ~192.168.1.255~ can be used for the hosts.
+We will see later that some address are already taken for some purpose.
+**** ~Broadcast IP~
+When a datagram is sended to ~255.255.255.255~ it is sended to all the hosts on the network, this is called ~Broadcast IP~.

@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       d360eb13-1020-404b-a49b-bbf138c95652
+:END:
+#+title: Application Layer
+#+filetags: :networking:application:
+
+* Application Layer
+Is the topmost layer in the, the facto, internet stack standard.
+Here we can find some of the most well known protocol in web, and in the /IT/ world in general.
+* Applications
++ [[id:9ba62597-24b1-4a96-bcc1-5d5895439275][HTTP]]
++ SSH
++ TLS
++ [[id:7d573f52-5fba-4f15-8300-e71a8aff9b20][MIB]]
++ [[id:43007886-116d-412c-8a73-22e353d7df71][SNMP]]
++ [[id:6f4036c0-4177-422d-9f24-9ea08463107b][SMTP]]
++ POP3
++ [[id:2cb03b28-6ea1-416a-838a-f31edeae74c1][DHCP]]
++ [[id:82a454c1-758a-4da8-9909-a5dd273af0c4][DNS]]
++ IMAP
++ FTP
++ SFTP
++ [[id:6db8a3b6-d131-4204-ba62-ff81d220f591][NAT]]

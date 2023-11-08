@@ -1,0 +1,74 @@
+:PROPERTIES:
+:ID:       bd2b04dd-3f01-4a2d-85c1-86eac538ab18
+:ROAM_ALIASES: BGP
+:END:
+#+title: Border Gateway Protocol
+#+filetags: :networking:network_layer:
+
+* What it does?
+This protocol is used to connect various ~Autonomous System~, aka ~AS~, on the internet.
+Basically each ~AS~ have its own rules that manage the /inner/ hosts and configuration, but each ~AS~ cannot decide or manage how to communicate with other ~AS~.
+~BGP~'s job is to solve this problem.
+* ~BGP~ in detail
+It's a ~Distance Vector~ algorithm.
+When an ~AS~ want to send a packet to another ~AS~, instead of routing the packet to a specific ~IP~ it forward the packet to ~CIDR~ subnet address.
+Here are its features:
++ Obtain information on the *reachability*.
++ Find an *optimal* route towards the subnets.
+See more below
+* Overview
+[[../assets/BGP-overview.gif]]
+
+Each host that is connected only to other hosts in the same ~AS~ is ~inner router~, the others are ~gateway router~ (from here the name).
+The BGP works on [[networking/transport layer/TCP]], it keeps semi-permanent connections.
+** Example:
+1. in ~AS 200~ there is  ~128.213.X.X~ (after referred as X).
+2. ~AS 200~ send the message ~[AS 200] X~ to the other ~AS~.
+3. ~AS 400~ receive the message, take note and forward ~[AS 400] Y - [AS 200] X~ to ~ASS 500~, this means that ~AS 500~ can reach ~Y and [AS 200 X]~ through ~AS 400~.
+4. And so on.
+* Type of BGP
+There can be of 2 types:
++ iBGP (inner BGP), means that the 2 hosts are in the same ~AS~
++ eBGP (sEssion BGP), the 2 hosts are in different ~AS~
+* Best Route choice
+When a router announce a ~CIDR prefix~ for a BGP session, it store, in the request, some parameters that will be used later, the 2 most important are ~AS-PATH~ & ~NEXT-HOP~.
+** Overview
+[[../assets/BGP-next-hop-and-as-path.png]]
+** ~AS-PATH~
+List the ~AS~ in which the request gone through.
+When the request pass through a new ~AS~ the ~ASN~ (the AS Number given by ICANN) is appended to the list.
+** ~NEXT-HOP~
+This variable contains the interface of the router that started the BGP communication.
+See the image above, there are 2 paths, ~path1: AS2 -> AS3 -> X~ & ~path2: AS3 -> x~.
+With ~NEXT-HOP~ the router can distinguish between the two:
++ NEXT-HOP path1: 1d est interface
++ NEXT-HOP path2: 1c north-est interfacre
+* ~Hot potato~ routing
+The hot potato routing is the simplest way to chose between multiple path (if any) obtained by a BGP session.
+** How it work
+1. Obtain the paths by BGP.
+2. Inside the ~AS~ chose the shortest path to the ~NEXT-HOP~ (~infra-AS~).
+3. Do the same in each ~intra-AS~.
+4. NOTE: once this choice are made they are stored in the ~forwarding table~ of the router.
+** It's really used?
+As it is no, but in more modern, layered, approach is used.
+* Route selecting algorithm
+A more modern approach is to repeatedly eliminate between the multiple choice given by ~BGP~ until one remain.
+** Steps:
+1. Each choice have ~preference level~, it can be setted by the ~AS administrator~ or by another router.
+2. Filter the choice saving only the choices with the highest preference.
+3. Filter the remaining saving the choices with the ~shortest AS-PATH~.
+4. Apply ~Hot potato~ routing.
+
+Note that after step 4 there may be more than one choice, so there are others strategy to remove candidates.
+* Anycast IP
+Anycast IP is a protocol that let possible use an IP address for multiple hosts in the network.
+This is useful in [[id:82a454c1-758a-4da8-9909-a5dd273af0c4][DNS]], imagine that multiple *DNS root* server have the same IP, upon a new request to the DNS root server BGP automatically give the address of the nearest server (as said before the *concepts of nearest* is not strictly connected to the number of hops).
+This technique cannot be used for [[id:fc0a8101-cb78-4c60-834a-bbbcc1cd4bd9][CDN]] because the path can change during a communication mixing up the connections in the layers above.
+* Routing policy
+The routing policy of an ~AS~ have a central role in the BGP, they can modify the behavior of ~best route choice~.
+
+NOTE: The policy are about  ~AS~ not about routers.
+* Last words
+BGP is the the-facto standard.
+At [[https://www.routeviews.org][BGP forwarding table]] it's possible to see the BGP's table for *tier 1* ISP.

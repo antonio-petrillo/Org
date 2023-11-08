@@ -6,7 +6,10 @@
 #+filetags: :formula:math:distributed:programming:theorem:
 
 * Amdahl's Law
-This formula is used [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] to compute the *THEORETICAL* speedup of a distributed algorithm.
+This formula use [[id:b4441727-0ff1-48c9-8bbd-ac9ec537a191][Speed Up]] to compute the *THEORETICAL* speedup of a distributed algorithm.
+* Related to
++ [[id:675ccd7d-27bf-47a0-a013-cd648ee83c2a][Overhead in Distributed Computing]]
++ [[id:d3921dcb-a3b4-422d-8eaa-f8b68ba49a9f][Efficiency in Distributed Computing]]
 * Formula
 $$S_{latency}(s) = \frac {1} {1 - p}$$
 $$S_{latency}(s) \le \frac {1} {1 - \frac p s}$$

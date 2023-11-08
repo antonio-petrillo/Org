@@ -1,0 +1,89 @@
+:PROPERTIES:
+:ID:       82a454c1-758a-4da8-9909-a5dd273af0c4
+:ROAM_ALIASES: DNS
+:END:
+#+title: Domanin Name System
+#+filetags: :networking:application:
+
+* Description
+DNS stands for Domain Name System.
+It is based on [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]].
+Basically DNS map ~hostname~ to ~IP~, like ~google.com~ to ~142.250.184.78~ (in my region at the moment).
+It also have other application.
+* DNS use cases
+1. Host aliasing (the most famous use case)
+2. Mail Server aliasing
+3. Load Distribution
+4. Many more, but I don't know them
+* Architecture
+** It is a client server paradigm.
+A server can behave like a client in some case, more on later.
+When a DNS request is made first it reach the ~default name server~, which work as a cache,  and ask for the result.
+If the default name server don't has the requested resource it ask to another DNS server (here a server become a client) in particular it ask to a ~root domain server~, it return the address of ~TLD domain server~.
+Then the default name server now ask to the TLD server it return, one or more, ~authoritative domain server~, one of this will return the required resource or nothing if there isn't a match.
+*** Note
+Here I described an iterative DNS request, there is also a recursive version where each server ask the following server instead of returning an address to the previous which will do the following request.
+In the wild there is a mixed approach:
+1. From the start of the DNS request to the default name server is recursive
+2. From the default name server forward the request is iterative
+** Component
+*** default name server
+It is a DNS cache it is installed on the ISP network, there are some exception, like the famouse ~gooogle dns~ (they have ~8.8.8.8~ and ~8.8.4.4~ IP).
+If it don't has the resource it ask to TLD server
+*** TLD (Top Level Domain)
+This kind of server has the association for the last part of a hostname.
+I.E. a TLD for ~.com~ holds all the mapping for the ~.com~ hostnames (obviously there isn't only one server, hence there are multiple server for each top level domain).
+When a request arrive to a TLD server it return the address of an ~authoritative domain server~
+*** authoritative domain server
+It holds the final answer, if ther is a match of course.
+** Illustration
+[[../assets/dns_query_iterative_recursive.png]]
+* DNS records
+Each DNS server store the entry in the ~RR~ format (~Resource Record~).
+Each DNS response transport one or more RR.
+An RR have the following structure:
+| Name | Value | Type | TTL |
+TTL is the ~Time To Live  ~.
+** Type A
+In this case ~value~ contains the IPv4 address associated to ~name~.
+** Type AAAA
+Same as A but for IPv6.
+In this case ~value~ contains the IPv6 address associated to ~name~.
+** Type NS
+In this case the ~value~ associated to ~name~ contains the authoritative dns for it.
+** Type CNAME
+In this case ~value~ represent the canonical name for the ~name~.
+I.E. (foo.com, relay1.bar.foo.com, CNAME, 1024) means that the canonical name for ~foo.com~ is ~relay1.bar.foo.com~.
+** Type MX
+Same as A but it is used to get the IP of the Mail Server.
+* DNS Messages
+** Format
+[[../assets/dns_response_message_format.png]]
+** Explanation
+Both query and response have the same format.
+*** The first 12 bytes
+**** The first 16 bit
+They contains an identifier, it will be copied from a request to the response so the client can identifier which response belong to which query, remember DNS work on [[id:37f536a1-d024-4edd-ad47-c521af783ff9][UDP]] hence the order of the request is responsibility of the protocol.
+**** Flag
+***** The first bit
+Is set to 0 to represent a request and 1 for a response
+***** The others
+1.  one bit will be set (by the server) in case to specify that the DNS is authoritative
+2. another can be set (in this case by the client) to specify that the client _wants_ a recursive query , this is called ~recursion-desired flag~
+3. a bit can be setted to specify ~recursion-available~, this means that the server can do a recursive query, it is different from ~recursion-desired~
+**** *Number of* field
+There are 4 fields that start with *number of* each one of them specify the number of entries in the other 4 remaining field.
+*** Questions
+Contains information on the request that will be done.
+I.E. contains the name that will be requested and contains also the type of the request, like A, AAAA, MX, etc;
+*** Answers
+ Contains the RRs.
+*** Authority
+Contains the response from other authoritative server.
+*** Additional Information
+Self explanatory.
+An example, if I ask for a MX type here I can find a A type if present.
+* Registrar
+A registrar is company that verify the uniqueness of a hostname, if it is unique it insert them in a DNS database, obviously the company get paid for this service.
+The ICANN (Internet Corporation for Assigned Names and Numbers) is the society that validate the various registrar.
+A list of registrars can be found at [[https://www.internic.net][internic.net]]

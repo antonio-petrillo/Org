@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       c92f8405-9b9f-4e87-9d05-3907bbd76185
+:END:
+#+title: Open Shortest Path First
+#+filetags: :networking:network layer:
+
+* Where it is used
+Usually in bigger ISP, not in the locals one.
+It's used to implement an ~Autonomous System~.
+* Details
+It's a ~Link State~ protocol that use ~flooding~ technique.
+Basically whenever a weight change the message is sended in ~broadcast~ to all the host, once every host know about the topology of the network it use [[id:2250123a-f138-4261-b667-5b07a5bf5956][Dijkstra]] to compute the path.
+The ~routing algo~ is execute in place, hence on the host, without the need of communicate (during the execution) with its neighbors (no ~count to infinity problem~).
+* Network Administrator
+It's the figure that administrate the network, his job is to set the weight of the links.
+* Links update
+As said above when a weight change the link send a broadcast message to everyone with the new weight, but this isn't enough, just imagine what would happen if a link die (it can't send info to the others).
+So in the ~OSPF~ protocol each node send periodically the information, see ~RFC 2328~ for more details on that.
+* How information is shared
+The hosts communicate through ~OSPF announce~, this messages travel on ~IP datagram~ as upper layer protocol with id 89.
+This messages are also used to check if the links are still up (not dead).
+** NOTE:
+The messages are treated as an upper layer protocol but still they are on the [[id:1b4e177a-9688-423c-80c7-14ca76881c58][Network Layer]] hence they have to implement the reliable transmission and the broadcast transmission.
+* OSPF vantages
+** Security
+The hosts on the OSPF network can be authenticated, hence a malicious host can't change to his liking the forwarding table.
+** Support for ~multicast~ & ~unicast~
+With an extension of ~OSPF~, ~MOSPF~, ~Multicast OSPF~, it uses a database for the ~OSPF~ links and add a new message to the protocol for the ~broadcast~ communication.
+** Support to the hierarchy
+Imagine a network of multiple ~OSPF~  that identify different local area, this ones to communicate must be connected through another ~OSPF~, known as ~Backbone OSPF~, that is linked at the /area border router/.
+This already make an hierarchy, but obviously this can be applied recursively.
