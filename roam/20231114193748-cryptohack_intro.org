@@ -1,0 +1,136 @@
+:PROPERTIES:
+:ID:       4d86d9f2-c99f-4ac2-a5ea-f2e43a404768
+:END:
+#+title: CryptoHack Intro
+#+filetags: :programming:crypto:math:course:security:
+
+* Lesson 0: Intro
+#+BEGIN_SRC ascii
+crypto{y0ur_f1rst_fl4g}
+#+END_SRC
+* Lesson 1: FFLAGS
+Just run the associated python script.
+#+BEGIN_SRC ascii
+crypto{z3n_0f_pyth0n}
+#+END_SRC
+* Lesson 2: ASCII
+#+BEGIN_SRC clojure
+(def input [99 114 121 112 116 111 123 65 83 67 73 73 95 112 114 49 110 116 52 98 108 51 125]) 
+(-> in
+   (mapv #(Character/toString %))
+   (apply str))
+#+END_SRC
+
+#+RESULTS:
+: "crypto{ASCII_pr1nt4bl3}"
+* Lesson 3: Hex
+#+BEGIN_SRC python
+bytes.fromhex("63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d")
+#+END_SRC
+
+#+RESULTS:
+: "crypto{You_will_be_working_with_hex_strings_a_lot}"
+* Lesson 4: Base64 
+#+BEGIN_SRC python
+import base64
+solution = bytes.fromhex("72bca9b68fc16ac7beeb8f849dca1d8a783e8acf9679bf9269f7bf")
+
+base64.b64encode(solution)
+#+END_SRC
+
+#+RESULTS:
+: "crypto/Base+64+Encoding+is+Web+Safe/"
+* Lesson 5: Bytes and BigInteger
+#+BEGIN_SRC python
+from Crypto.Util.number import *
+
+long_to_bytes(11515195063862318899931685488813747395775516287289682636499965282714637259206269)
+#+END_SRC
+
+#+RESULTS:
+: "crypto{3nc0d1n6_4ll_7h3_w4y_d0wn}"
+* Lesson 6: XOR starter
+#+BEGIN_SRC python
+msg = ""
+for c in b"label":
+    msg += chr(c ^ 13)
+print("crypto\u007b{msg}\u007d")
+#+END_SRC
+
+#+RESULTS:
+: "crypto{aloha}"
+* Lesson 7: XOR properties
+#+BEGIN_SRC python
+from pwm import *
+
+key1 = bytes.fromhex("a6c8b6733c9b22de7bc0253266a3867df55acde8635e19c73313")  
+key1_xor_key2 = bytes.fromhex("37dcb292030faa90d07eec17e3b1c6d8daf94c35d4c9191a5e1e")  
+key2_xor_key3 = bytes.fromhex("c1545756687e7573db23aa1c3452a098b71a7fbf0fddddde5fc1")  
+flag_xor_key1_xor_key2_xor_key3 = bytes.fromhex("04ee9855208a2cd59091d04767ae47963170d1660df7f56f5faf")
+
+# just for fun
+key2 = xor(key1, key1_xor_key2)
+# print(key2)
+key3 = xor(key2, key2_xor_key3)
+# print(key3)
+# solution
+flag =xor(flag_xor_key1_xor_key2_xor_key3, key2_xor_key3, key)
+print(flag)
+#+END_SRC
+
+#+RESULTS:
+: "crypto{x0r_i5_ass0c1at1v3}"
+* Lesson 8: Favourite byte
+#+BEGIN_SRC python
+from pwm import *
+
+favourite = bytes.fromhex("73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d")
+
+for i in range(256):
+    print(f"{i} := {xor(i, favourite)}")
+#+END_SRC
+
+The one that makes sense are $16$ and $48$, the correct one seems $16$.
+
+#+BEGIN_SRC python
+from pwm import *
+
+favourite = bytes.fromhex("73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d")
+print(f"{xor(16, favourite)}")
+#+END_SRC
+
+#+RESULTS:
+: "crypto{0x10_15_my_f4v0ur173_by7e}"
+
+From others solution I've seen how to improve the solution:
+#+BEGIN_SRC python
+from pwm import *
+
+favourite = bytes.fromhex("73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d")
+
+for i in range(256):
+    candidate = xor(i, favourite)
+    if candidate.startswith(b"crypto"):
+        print(candidate)
+#+END_SRC
+
+#+RESULTS:
+: "crypto{0x10_15_my_f4v0ur173_by7e}"
+* Lesson 9: You either know, XOR you don't
+#+BEGIN_SRC python
+from pwm import *
+
+favourite = bytes.fromhex("0e0b213f26041e480b26217f27342e175d0e070a3c5b103e2526217f27342e175d0e077e263451150104")
+
+print(xor(favourite, b"crypto{16}")) # solution from previous step
+#+END_SRC
+
+#+RESULTS:
+: b'myXORkey'
+
+#+BEGIN_SRC python
+print(xor(favourite, b"myXORkey"))
+#+END_SRC
+
+#+RESULTS:
+: b'crypto{1f_y0u_Kn0w_En0uGH_y0u_Kn0w_1t_4ll}'

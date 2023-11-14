@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       972fa64b-4339-4757-98de-d30beb19ac8a
+:END:
+#+title: CryptoHack Modular Arithmetic
+#+filetags: :programming:math:crypto:course:security:
+
+* Lesson 0: Greatest Common Divisor
+#+BEGIN_SRC clojure
+(defn gcd [a b]
+  (if (zero? b)
+     a
+     (gcd b (mod a b))))
+
+(println (gcd 66528 52920))
+#+END_SRC
+
+#+RESULTS:
+: "1512"

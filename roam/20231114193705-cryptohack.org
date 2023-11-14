@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       13312560-1764-4d2e-870b-f2b24a69e37c
+:END:
+#+title: CryptoHack
+#+filetags: :crypto:security:math:programming:
+
+* [[https://cryptohack.org/][CryptoHack]]
+* [[id:4d86d9f2-c99f-4ac2-a5ea-f2e43a404768][CryptoHack Intro]]: [[https://cryptohack.org/courses/intro/course_details/][link]]
+* [[id:972fa64b-4339-4757-98de-d30beb19ac8a][CryptoHack Modular Arithmetic]]: [[https://cryptohack.org/courses/modular/course_details/][link]]
