@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       441df0ea-8382-4b1a-b3ce-715f39a4692e
+:ROAM_ALIASES: "Is Odd (Integer)"
+:END:
+#+title: Is Even (Integer)
+#+filetags: :interesting:predicate:algorithm:bit-algo:math:
+
+* Common implementation
+This pretty fast, it usually convert to few assembly instructions.
+#+begin_src go
+func isEven (x int32) int32 {
+	return x % 2 == 0
+}
+#+end_src
+* Fastest one 
+This usually tranlsate to only 2 assembly instruction!
+#+begin_src go
+func isEven (x int32) int32 {
+	return x & 1 == 0
+}
+#+end_src
+* Is Odd
+Just invert the control on the predicate.
+* Note
+In almost every context the difference in performance between the two implementation will not show up.
+That's because $4$ assembly instructions and $2$ assembly instructions are pretty similar, only if the program is doing a lot of this predicate check it will show a difference.
