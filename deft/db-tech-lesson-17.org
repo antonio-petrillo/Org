@@ -1,0 +1,9 @@
+#+title: Db Tech Lesson 17
+
+* Recap algebra relazionale
++ ordering
++ aggregate functions
+* Performance optimization
+#+aka: tuning
+* Cammini di accesso
+Usate per riferirsi alle tuple in un relazione.
