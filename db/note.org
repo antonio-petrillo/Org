@@ -1,0 +1,4 @@
+#+title: Note
+
+* Placeholder
+Just a placeholder to store this empty directory over git.
