@@ -1,0 +1,59 @@
+:PROPERTIES:
+:ID:       30c3fd7a-23ed-48f6-a09d-a18917ebc38e
+:ROAM_ALIASES: "Extended Euclid Algorithm"
+:END:
+#+title: Euclid Algorithm
+#+filetags: :algo:math:programming:discrete-math:
+
+* Purpouse
+Given 2 integers, compute thei $gcd$ efficiently.
+* Euclid Algorithm
+#+begin_src clojure
+(defn euclid
+  ([a b] (euclid (abs a) (abs b) nil))
+  ([a b _]
+   (loop [a a b b]
+     (if (zero? b)
+       a
+       (recur b (mod a b))))))
+#+end_src
+** Example
+#+begin_src clojure
+(euclid 81 57)
+(euclid 26513 32321)
+(euclid 1432 123211)
+#+end_src
+
+#+RESULTS:
+: 3
+: 1
+: 1
+* Extended Euclid Algorithm
+#+begin_src clojure
+(defn ext-euclid
+  ([a b] (ext-euclid (abs a) (abs b) nil))
+  ([a b _]
+   (loop [s 0 old_s 1 t 1 old_t 0 r b old_r a]
+     (if (zero? r)
+       {:bezout [old_s old_t] :gcd old_r :quotients [t s]}
+       (let [ q (quot old_r r)
+             [old_r r] [r (- old_r (* q r))]
+             [old_s s] [s (- old_s (* q s))]
+             [old_t t] [t (- old_t (* q t))]]
+         (recur s old_s t old_t r old_r))))))
+#+end_src
+** Example
+#+begin_src clojure
+(ext-euclid 81 57)
+(ext-euclid 26513 32321)
+(ext-euclid 1432 123211)
+#+end_src
+
+#+RESULTS:
+: {:bezout [-7 10], :gcd 3, :quotients [-27 19]}
+: {:bezout [10245 -8404], :gcd 1, :quotients [26513 -32321]}
+: {:bezout [-22973 267], :gcd 1, :quotients [-1432 123211]}
+* TODO Math behind
+* Resources
++ [[https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Proof][wikipedia]]
++ [[https://brilliant.org/wiki/extended-euclidean-algorithm/][brilliant]]

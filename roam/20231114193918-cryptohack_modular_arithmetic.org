@@ -16,3 +16,11 @@
 
 #+RESULTS:
 : "1512"
+* Lesson 1: Extended GCD
+Using the code from [[id:30c3fd7a-23ed-48f6-a09d-a18917ebc38e][Extended Euclid Algorithm]], I get the solutions $-8404$.
+* Lesson 2: Modular arithmetic 1
+#+begin_src clojure
+(mod 11 6) ;; => 5
+(mod 8146798528947 17) ;; => 4
+#+end_src
+The solution is $4$.
