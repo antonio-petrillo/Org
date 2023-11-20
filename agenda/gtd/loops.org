@@ -1,0 +1,23 @@
+#+title: Loops
+
+* Diet
+Current: 90.5 kg
+Target : 85.0 kg
+** 11/2023
+* LeetCode
+Target: 2 exercise per month
+** TODO 11/2023 [0/2]
+* CryptoHack
+Target: 4 exercise per month
+** DONE 11/2023 [2/3]
++ [X] 10 step cource (introduction to cryptography)
++ [X] Euclidean algorithm
++ [ ] Extended euclidean algorithm
+* THM
+Target: 2 exercise per month
+** TODO 11/2023 [/]
+* Exercism
+Target: 1 exercise per month
+** DONE 11/2023 [2/2]
++ [X] Meetup clojure
++ [X] Linked list in zig
