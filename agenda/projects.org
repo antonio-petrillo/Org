@@ -1,0 +1,19 @@
+#+title: Projects
+#+STARTUP: content showstars indent
+#+FILETAGS: project
+
+* Zig
+** NEXT Complete ziglings
+SCHEDULED: <2023-11-24 Fri>
+Reach ziglings 70.
+** Complete exercism
+** Read documentation
+* Clojure
+** Go counting (exercism)
+SCHEDULED: <2024-05-21 Tue>
+* Analisi I (E.Giusti)
+** Completa capitolo 5
+DEADLINE: <2023-11-28 Tue>
+* Aicodium analytics
+** Add tree nav ui
+SCHEDULED: <2023-11-27 Mon>

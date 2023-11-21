@@ -1,7 +1,3 @@
 #+title: Agenda
+#+STARTUP: hideall showstars indent
 
-* DONE Nutrizionista
-SCHEDULED: <2023-10-23 Mon>
-* DONE Progetto PDC Laccetti
-SCHEDULED: <2023-10-18 Wed>
-DEADLINE: <2023-10-25 Wed>

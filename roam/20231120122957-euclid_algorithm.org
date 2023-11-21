@@ -33,10 +33,12 @@ Given 2 integers, compute thei $gcd$ efficiently.
   (defn ext-euclid
     [a b]
     (let [a (abs a) b (abs b)]
-      (loop [s 0 old_s 1 t 1 old_t 0 r b old_r a]
+      (loop [s 0 old_s 1
+             t 1 old_t 0
+             r b old_r a]
         (if (zero? r)
           {:bezout [old_s old_t] :gcd old_r :quotients [t s]}
-          (let [ q (quot old_r r)
+          (let [q (quot old_r r)
                 [old_r r] [r (- old_r (* q r))]
                 [old_s s] [s (- old_s (* q s))]
                 [old_t t] [t (- old_t (* q t))]]

@@ -1,0 +1,10 @@
+#+title: Someday
+#+STARTUP: content showstars indent
+#+FILETAGS: :someday:maybe:
+
+* Prusa research 3d modeling course
+* Hacking: the art of exploits
+* Operating Systems in three easy steps 
+* The Joy of Clojure
+* Web Development in Clojure
+* Fondamenti dell'informatica teorica
