@@ -40,6 +40,9 @@
 + [[id:332543dd-dead-4b12-911e-57f61a570ba6][Population Count]]
 + [[id:6abc2b91-db30-4ee4-ba63-0ca695b48a34][Is Power of 2]]
 + [[id:0ac1ea32-80c0-44fd-88ca-23b338876487][Logarithm Base 2]]
++ [[id:441df0ea-8382-4b1a-b3ce-715f39a4692e][Is Even (Integer)]]
+* Numeric Algorithm
++ [[id:441df0ea-8382-4b1a-b3ce-715f39a4692e][Is Even (Integer)]]
 * Dynamic
 + [[id:1feeb941-0166-41c3-b76b-991b77903824][Max Subsequence]]
 * Greedy
