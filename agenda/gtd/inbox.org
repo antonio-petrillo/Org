@@ -1,3 +1,2 @@
 #+title: Inbox
 
-* Prusa research 3d modeling course

@@ -10,33 +10,13 @@
 + [ ] Read /The Joy of Clojure/
 + [ ] Read /Web Development in Clojure/
 + [ ] Learn Babashka
-* Cryptohacks
-+ [ ] Complete beginner trakcs
-* DONE Exercism
-+ [ ] 12in23 completed
-* Try Hack Me
-Choose a track to follow on thm.
-* Leet Code
-Complete leetcode exercise to build a portfolio.
-* Books
-** Technical
-*** Analisi I
-*** Fondamenti dell'informatica teorica
-*** Java concurrency in practice
-*** Operating systems
-*** Sistemi di basi di dati
-*** Hacking: the art of exploit
-*** Black Hat Python
-Rapid read skirming the content.
-** Fiction
-*** Dune 5
-*** Dune 6
-*** Mirroshades
-*** La matrice spezzata
-*** I fratelli Karamazov
-** Non Fiction
-*** Thinking fast and slow
-*** L'arte della statistica
-*** Cos'é la matematica
-*** Detto fatto
-*** Vklabe on art
+* Analisi I (E.Giusti)
+DEADLINE: <2023-11-28 Tue>
++ [ ] Completa capitolo 5
+* Java Concurrency in Practice (B.Goetz)
+DEADLINE: <2023-11-21 Tue>
++ [ ] Completa capitolo 4
+* Aicodium analytics
++ [ ] Fix logout
++ [ ] Add tree nav ui
++ [ ] Complete query services

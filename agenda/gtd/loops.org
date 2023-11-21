@@ -4,16 +4,26 @@
 Current: 90.5 kg
 Target : 85.0 kg
 ** 11/2023
+*** 21 [1/6]
++ [X] Breakfast 
++ [ ] Snack
++ [ ] Lunch 
++ [ ] Snack 
++ [ ] Dinner 
++ [-] Exercise [1/3]
+  + [X] Bike -> 
+  + [ ] Bike <-
+  + [ ] calistenics 
 * LeetCode
 Target: 2 exercise per month
 ** TODO 11/2023 [0/2]
 * CryptoHack
 Target: 4 exercise per month
-** DONE 11/2023 [3/3]
+** DONE 11/2023 [3/4]
 + [X] 10 step cource (introduction to cryptography)
 + [X] Euclidean algorithm
 + [X] Extended euclidean algorithm
-+ [ ]
++ [ ] next step on modular arithmetics intro
 * THM
 Target: 2 exercise per month
 ** TODO 11/2023 [/]
