@@ -421,3 +421,33 @@ $$ c \ge 4 k_1$$
 We can say that:
 
   $$T_{average}(n) = \Theta(n\log n)$$
+* Another approach
+The basis stucture of this algorithm never change but there are various implementation of the /partition/ algorithm.
+#+begin_src c
+void quicksort(int items[], int low, int high) {
+    int pivot;
+    if(low < high) {
+        pivot = parition(items, low, high);
+        quicksort(itesm, low, pivot - 1);
+        quicksort(itesm, pivot + 1, high);
+    }
+}
+#+end_src
+The part that vary is the partition algorithm:
+#+begin_src c
+int partition(int items[], int low, int high){
+    int firsthigh = low, p = high;
+    for(int i = low; i < high; i++){
+        if(s[i] < s[p]){
+            int tmp = s[p];
+            s[p] = s[i];
+            s[i] = tmp;
+            firsthigh++;
+        }
+    }
+    int tmp = s[p];
+    s[p] = s[firsthigh];
+    s[firsthigh] = s[p];
+    return firsthigh;
+}
+#+end_src

@@ -5,13 +5,13 @@
 #+filetags: :algorithm:programming:
 
 * Sorting
-** Comparison based 
+** Comparison Based
 + [[id:d2c8c8da-ab4e-4b0b-98b2-c248d4538edc][Insertion Sort]]
 + [[id:f04cec69-b333-4c83-863d-99d7122527ed][Selection Sort]]
 + [[id:43f7daaf-1871-4afc-a574-f87aa1992efc][Heap Sort]]
 + [[id:08bb9acb-7bc1-4fb3-ad7d-9e593141dbb2][Merge Sort]]
 + [[id:c74a0058-4305-4622-b9b5-5949f2195961][Quick Sort]]
-** Complementary
+** Non Comparison Based
 * Trees
 + [[id:e1731065-ef04-4574-94e2-9ba26e2c8c19][Binary Search Tree Insertion]]
 + [[id:4d12b81d-a3d0-4808-91a2-797f94a2641b][Binary Search Tree Search Iterative]]
@@ -43,6 +43,8 @@
 + [[id:441df0ea-8382-4b1a-b3ce-715f39a4692e][Is Even (Integer)]]
 * Numeric Algorithm
 + [[id:441df0ea-8382-4b1a-b3ce-715f39a4692e][Is Even (Integer)]]
++ [[id:4bacb4d5-2269-410e-9558-136148c8a8d7][Euclid Algorithm]]
++ [[id:4bacb4d5-2269-410e-9558-136148c8a8d7][Extended Euclid Algorithm]]
 * Dynamic
 + [[id:1feeb941-0166-41c3-b76b-991b77903824][Max Subsequence]]
 * Greedy

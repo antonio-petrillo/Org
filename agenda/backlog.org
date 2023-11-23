@@ -11,4 +11,8 @@
 * DONE Reach 90 kg (-30 kg)
 <2023-10-20 Fri>
 * DONE complete initial gtd setup
-/Entered on/ [2023-11-21 Tue 23:42]
+<2023-11-21 Tue>
+* CANCELLED Replace welcome page con org agenda (dashboard)
+<2023-11-22 Wed>
+* DONE Replicate gtd config on doom emacs
+<2023-11-22 Wed>

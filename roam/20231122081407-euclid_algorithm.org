@@ -1,12 +1,13 @@
 :PROPERTIES:
-:ID:       30c3fd7a-23ed-48f6-a09d-a18917ebc38e
+:ID:       4bacb4d5-2269-410e-9558-136148c8a8d7
 :ROAM_ALIASES: "Extended Euclid Algorithm"
 :END:
 #+title: Euclid Algorithm
-#+filetags: :algo:math:programming:discrete-math:
+#+filetags: :algo:math:programming:
 
 * Purpouse
-Given 2 integers, compute thei $gcd$ efficiently.
+Given 2 integers, compute their $gcd$ efficiently.
+
 * Euclid Algorithm
 #+begin_src clojure
 (defn euclid
@@ -28,6 +29,7 @@ Given 2 integers, compute thei $gcd$ efficiently.
 : 3
 : 1
 : 1
+
 * Extended Euclid Algorithm
 #+begin_src clojure
   (defn ext-euclid

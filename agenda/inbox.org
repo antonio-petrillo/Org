@@ -1,6 +1,7 @@
 #+title: Inbox
 #+STARTUP: content showstars indent
 #+FILETAGS: inbox
+
 * TODO Posta su discord di org agenda e gtd
 /Entered on/ [2023-11-21 Tue 23:49]
 Important stuff:
@@ -8,5 +9,6 @@ Important stuff:
 .2 org agenda
 .3 org refile
 .4 org agenda custom commands
-* TODO Replace welcome page con org agenda (dashboard)
-* TODO Replicate gtd config on doom emacs
+* TODO check if pdc has given 2nd assignment
+SCHEDULED: <2023-11-22 Wed 12:00>
+/Entered on/ [2023-11-22 Wed 08:58]

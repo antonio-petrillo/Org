@@ -12,7 +12,7 @@ Reach ziglings 70.
 ** Go counting (exercism)
 SCHEDULED: <2024-05-21 Tue>
 * Analisi I (E.Giusti)
-** Completa capitolo 5
+** NEXT Completa capitolo 5 (limit)
 DEADLINE: <2023-11-28 Tue>
 * Aicodium analytics
 ** Add tree nav ui
