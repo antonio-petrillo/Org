@@ -1,3 +1,11 @@
 #+title: Agenda
 #+STARTUP: hideall showstars indent
 
+* NEXT check if pdc has given 2nd assignment
+SCHEDULED: <2023-11-29 Wed>
+/Entered on/ [2023-11-22 Wed 08:58]
+* NEXT Contatta tutor Laura Bozzelli
+SCHEDULED: <2023-11-27 Mon>
+/Entered on/ [2023-11-24 Fri 11:13]
++ Richiedi 1 CFU
++ Richiedi inizio scrittura tesi

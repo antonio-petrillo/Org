@@ -16,3 +16,5 @@
 <2023-11-22 Wed>
 * DONE Replicate gtd config on doom emacs
 <2023-11-22 Wed>
+* DONE Go counting (exercism) in clojure
+<2023-11-22 Wed>

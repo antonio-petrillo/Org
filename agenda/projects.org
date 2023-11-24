@@ -2,18 +2,38 @@
 #+STARTUP: content showstars indent
 #+FILETAGS: project
 
-* Zig
-** NEXT Complete ziglings
-SCHEDULED: <2023-11-24 Fri>
-Reach ziglings 70.
-** Complete exercism
-** Read documentation
-* Clojure
-** Go counting (exercism)
-SCHEDULED: <2024-05-21 Tue>
 * Analisi I (E.Giusti)
 ** NEXT Completa capitolo 5 (limit)
-DEADLINE: <2023-11-28 Tue>
+DEADLINE: <2023-12-08 Fri>
 * Aicodium analytics
 ** Add tree nav ui
 SCHEDULED: <2023-11-27 Mon>
+** Analytics graph
++ [ ] Bar Plot
++ [ ] Pie Plot
++ [ ] Grid
+* Sistema ADC
+** DONE Piano Terra
++ Autovalutazione iniziale $37$
++ Qualitá del sonne $55$
+** NEXT Primo Piano
+** Secondo Piano
+** Terzo Piano
+** Quarto Piano
+** Prima Torre
+** Seconda Torre
+** Terza Torre
+** Tetto
+* Sistema ADC sotterranei
+** Sale delle storie
+** Laboratorio
+** Sala delle lezioni
+* Logonauti
+** Introduzione
+** Linguaggio Verbale
+** Linguaggio Paraverbale
+** Linguaggio Non Verbale
+** Argomentazione e Retorica
+** Applicazioni Pratiche
+** Analisi e casi studio
+** Conclusione
