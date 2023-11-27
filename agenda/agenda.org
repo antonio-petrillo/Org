@@ -9,3 +9,8 @@ SCHEDULED: <2023-11-27 Mon>
 /Entered on/ [2023-11-24 Fri 11:13]
 + Richiedi 1 CFU
 + Richiedi inizio scrittura tesi
+* NEXT Controlla spedizione rpi 5 melopero
+SCHEDULED: <2023-11-27 Mon>
+/Entered on/ [2023-11-24 Sun 21:20]
++ Richiedi stato spedizione
++ Richiedi chiarimenti

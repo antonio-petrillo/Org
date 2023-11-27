@@ -4,5 +4,3 @@ db/org-roam.db
 */org-roam.db
 *.orgids
 .orgids
-orgids
-.orgids
