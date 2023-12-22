@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       acf0d959-5489-4fa2-94b0-5f0e74187ea0
+:END:
+#+title: Reverse Bits (Knowing Size)
+#+filetags: :interesting:algorithm:bit-algo:math:
+
+* Naive implementation
+#+begin_src c
+int reverse_bits(int n) {
+  int reversed = 0;
+  for (int i = 0; i < 32; i++) {
+    reversed <<= 1;
+    reversed |= n & 1;
+    n >>= 1;
+  }
+  return reversed;
+}
+#+end_src
+** Time complexity
+$O(n)$ where $n$ is the *number of bits to reverse*.
+This is preety fast since, with an int it will require $32$ steps.
+But if you use something like:
+#+begin_src zig
+var n :u65536  = 0;
+#+end_src
+It will require $65536$ steps.
+* Bit Twiddling
+If we know the *number of bits* we can invert them with a bit of /bit-twiddling/.
+The following is the algorithm with $bit\_size = 32$.
+#+begin_src c
+int reverse_bits(int n) {
+  n = (n & 0xFFFF0000 >>> 16) | (n & 0x0000FFFF << 16);
+  n = (n & 0xFF00FF00 >>> 8) | (n & 0x00FF00FF << 8);
+  n = (n & 0xF0F0F0F0 >>> 4) | (n & 0x0F0F0F0F << 4);
+  n = (n & 0xCCCCCCCC >>> 2) | (n & 0x33333333 << 2);
+  n = (n & 0xAAAAAAAA >>> 1) | (n & 0x55555555 << 1);
+  return n;
+}
+#+end_src
+** Time complexity
+Informally speaking $O(1)$, but if we assume that the bit size $n$ can grow indefinitely it became an $O(\log_2(n))$
+** Explanations
++ First the number is grouped in $2$ half of $16$ bits then they are swapped.
++ Then it is grouped in $4$ part of $8$ bits then swapped in place.
++ The process is repeated until there are $16$ group of $1$ bit.
+*** Explain the magic numbers
+| Bits                                                                       | Hexs                     | Shift |
+|----------------------------------------------------------------------------+--------------------------+-------|
+| 11111111 11111111 11111111 11111111 <> 00000000 00000000 00000000 00000000 | 0xFFFF0000 <> 0x0000FFFF |    16 |
+| 11111111 00000000 11111111 00000000 <> 00000000 11111111 00000000 11111111 | 0xFF00FF00 <> 0x00FF00FF |     8 |
+| 11110000 11110000 11110000 11110000 <> 00001111 00001111 00001111 00001111 | 0xF0F0F0F0 <> 0x0F0F0F0F |     4 |
+| 11001100 11001100 11001100 11001100 <> 00110011 00110011 00110011 00110011 | 0xCCCCCCCC <> 0x33333333 |     2 |
+| 10101010 10101010 10101010 10101010 <> 01010101 01010101 01010101 01010101 | 0xAAAAAAAA <> 0x55555555 |     1 |

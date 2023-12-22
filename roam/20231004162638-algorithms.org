@@ -41,6 +41,7 @@
 + [[id:6abc2b91-db30-4ee4-ba63-0ca695b48a34][Is Power of 2]]
 + [[id:0ac1ea32-80c0-44fd-88ca-23b338876487][Logarithm Base 2]]
 + [[id:441df0ea-8382-4b1a-b3ce-715f39a4692e][Is Even (Integer)]]
++ [[id:acf0d959-5489-4fa2-94b0-5f0e74187ea0][Reverse Bits (Knowing Size)]]
 * Numeric Algorithm
 + [[id:441df0ea-8382-4b1a-b3ce-715f39a4692e][Is Even (Integer)]]
 + [[id:4bacb4d5-2269-410e-9558-136148c8a8d7][Euclid Algorithm]]
