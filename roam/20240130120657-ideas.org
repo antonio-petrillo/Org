@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       a56e6a03-dc73-4d86-9c95-4399093aa57b
+:END:
+#+title: Ideas
+#+filetags: :ideas:research:
+
+* Fastest way to check congruences based on powers of 2
+If I want to check if a number is congruos to $0$ I can use the following check:
+#+BEGIN_SRC c
+// need more checks on the inputs and the types
+int congruos_base_2(int n, int power) {
+  return (n & ((1 << power) - 1)) == 0;
+}
+
+congruos_base_2(12153, 2); // check congruences to 4
+congruos_base_2(12153, 1); // check congruences to 2
+congruos_base_2(12153, 4); // check congruences to 16
+#+END_SRC
+With this I will check only the but last $n - 1$ bits, which is extremely fast.
+To prove this result I need to show that:
+$$\sum_i^n {gcd(i, p)} = gcd(\sum_i^n{i},p)$$
+Where:
++ $i$, powers of $2$, the digits in the binary representation
++ $p$, power of $2$ on which check the congruence
