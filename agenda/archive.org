@@ -1,3 +1,0 @@
-#+title: Archive
-#+STARTUP: content showstars indent
-#+FILETAGS: archive

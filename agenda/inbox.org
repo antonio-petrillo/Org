@@ -1,5 +1,5 @@
 #+title: Inbox
-#+STARTUP: content showstars indent
-#+FILETAGS: inbox
-* TODO Checkout ORG drill
-/Entered on/ [2023-11-24 Fri 11:51]
+
+* Book
++ Analisi Matematica della logica
++
