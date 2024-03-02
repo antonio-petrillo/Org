@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       fb97b2d5-08f7-4ce2-9f1c-725062f938a6
+:END:
+#+title: Computability
+#+filetags: :algorithm:math:theory:
+
+* Preamble
+The proof will be a little bit informal because these are my personal notes, this is not a paper.
+* Theorem 1
+In every programming language turing complete there are program that cannot be computed.
+** Proof (reduction to the absurd)
+Given a programming language turing complete $L$ and a way to enumerate all the algorithm that can be written in $L$, say $P_i$ (i.e. *Gödel enumeration*).
+We want to compute the following algorithm $h$:
++ input: $n \in \mathbb{N}$
++ output: $P_n(i) + 1$
+
+Since we have an enumeration of all the algorithm, there is an $n_0$ such that $P_{n_0} = h$.
+Now we can compute $h(n_0)$:
+$$h(n_0) = P_{n_0} + 1 = h(n_0) + 1$$
+This is absurd, a number cannot equal to its predecessor.
+$$\blacksquare$$
