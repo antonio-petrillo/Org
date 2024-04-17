@@ -1,0 +1,15 @@
+#+title:      Health
+#+date:       [2024-04-17 Wed 13:51]
+#+filetags:   :fitness:
+#+identifier: 20240417T135123
+
+* April 2024 report
+| Date             | Diet | Sport |
+|------------------+------+-------|
+| <2024-04-17 Wed> | ✖️   |       |
+| <2024-04-18 Thu> |      |       |
+** Checkup
+| Weight | 92.0               |
+| Water  | +1L on March 2024  |
+| Fat    | -1Kg on March 2024 |
+| Muscle | +2Kg on March 2024 |
