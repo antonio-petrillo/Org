@@ -1,0 +1,9 @@
+#+title:      Bit Algorithms
+#+date:       [2024-04-24 Wed 14:07]
+#+filetags:   :algorithm:math:programming:
+#+identifier: 20240424T140717
+
+* Popcount
+[[denote:20240424T141028][Kernighan population count]]
+* Resources
++ [[https://graphics.stanford.edu/~seander/bithacks.html][Bit Twiddling Hacks]]
