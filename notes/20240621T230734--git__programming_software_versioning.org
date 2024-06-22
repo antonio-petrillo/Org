@@ -37,6 +37,13 @@ git config --global init.defaultBranch master # name of the default branch (usua
 + `git remote remove {name}` => remove the named remote
 ** Note
 + `git log --graph --oneline --all` <= a more typical use of `git log`
+* Gitignore
++ There can be multiple nested /.gitignore/, they apply from the directory they where placed
++ `/` is an anchor that specifycally match the root
++ `*` match wildcard
++ `!` negate the match
++ `#` line ignored, is a comment
+
 * Internals
 + Each commit is identified with an hash ([[https://en.wikipedia.org/wiki/SHA-1][SHA-1]])
 + Git store the information in form of objetcs under the folder *.git/objects*
