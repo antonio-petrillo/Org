@@ -21,6 +21,7 @@ git config --global init.defaultBranch master # name of the default branch (usua
 + `git {--no-pager} log {-n 10}` => log of the last $n$ commits, pager can be disabled with `--no-pager`
 + `git branch new_branch` => create a new branch from current location called /new_branch/
 + `git switch {-c} branch_name` => switch to /branch_name/, *-c* create the branche if it doesn't exist
++ `git push {name} {branch}` => push to remote repository
 ** Note
 + `git switch` is a substitute for `git checkout`
 * The remaining 10%
@@ -30,6 +31,12 @@ git config --global init.defaultBranch master # name of the default branch (usua
 + `git branch -m old new` => rename a branch
 + `git log --decorate={full|short|no}` => add some tui to git log
 + `git log --oneline` => shorter git log with some tui
++ `git log --graph` => ascii art of branches
++ `git reset --hard {commit-hash}` => reset stagend and unstaged change to current commit or the specified one
++ `git remote add {name} {uri}` => treat the /uri/ as a source of truth, with /name/ as alias, for our repo
++ `git remote remove {name}` => remove the named remote
+** Note
++ `git log --graph --oneline --all` <= a more typical use of `git log`
 * Internals
 + Each commit is identified with an hash ([[https://en.wikipedia.org/wiki/SHA-1][SHA-1]])
 + Git store the information in form of objetcs under the folder *.git/objects*
