@@ -1,0 +1,28 @@
+#+title:      git
+#+date:       [2024-06-21 Fri 23:07]
+#+filetags:   :programming:software:versioning:
+#+identifier: 20240621T230734
+
+* Git config
++ `git config --get {var_name}` => read git config variable.
++ `git config --add --global {var_name} {value}` => set git config variable
++ It's stored (usually) under `$HOME/.gitconfig`
+* Basic config
+#+begin_src bash
+git config --add --global user.name "your name" # typically the gh name
+git config --add --global user.email "your@email" # typically the gh one
+git config --global init.defaultBranch master # name of the default branch (usually master or main)
+#+end_src
+* The 90% of git
++ `git add file_or_pattern_to_add` => add file to the stage
++ `git status` => see the current status of the stage
++ `git commit -m "commit message"` => commit the staged files
++ `git commit --amend -m "new commit message"` => change the content of the last commit message
++ `git log {-n 10}` => log of the last $n$ commits, pager can be disabled with `--no-pager`
+* The remaining 10%
++ `git cat-file -p {hash}` => see content of a specific commit
+* Internals
++ Each commit is identified with an hash ([[https://en.wikipedia.org/wiki/SHA-1][SHA-1]])
++ Git store the information in form of objetcs under the folder *.git/objects*
++ Git represent directories as *tree*
++ Git represent files as *blob*
