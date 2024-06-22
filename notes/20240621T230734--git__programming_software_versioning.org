@@ -18,9 +18,18 @@ git config --global init.defaultBranch master # name of the default branch (usua
 + `git status` => see the current status of the stage
 + `git commit -m "commit message"` => commit the staged files
 + `git commit --amend -m "new commit message"` => change the content of the last commit message
-+ `git log {-n 10}` => log of the last $n$ commits, pager can be disabled with `--no-pager`
++ `git {--no-pager} log {-n 10}` => log of the last $n$ commits, pager can be disabled with `--no-pager`
++ `git branch new_branch` => create a new branch from current location called /new_branch/
++ `git switch {-c} branch_name` => switch to /branch_name/, *-c* create the branche if it doesn't exist
+** Note
++ `git switch` is a substitute for `git checkout`
 * The remaining 10%
 + `git cat-file -p {hash}` => see content of a specific commit
++ `git config --add {--global} user.email "your@email"` => set a variable global or locally
++ `git config --unset key` => unset a key
++ `git branch -m old new` => rename a branch
++ `git log --decorate={full|short|no}` => add some tui to git log
++ `git log --oneline` => shorter git log with some tui
 * Internals
 + Each commit is identified with an hash ([[https://en.wikipedia.org/wiki/SHA-1][SHA-1]])
 + Git store the information in form of objetcs under the folder *.git/objects*
