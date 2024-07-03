@@ -1,0 +1,10 @@
+#+title:      http
+#+date:       [2024-06-29 Sat 08:44]
+#+filetags:   :programming:standard:web:
+#+identifier: 20240629T084430
+
+* PUT method
++ =PUT= should be idempotent, see [[https://developer.mozilla.org/en-US/docs/Glossary/Idempotent][here]]
+
+* PATCH method
++ allow for partial modification unlike =PUT=
