@@ -38,8 +38,8 @@ git config --global init.defaultBranch master # name of the default branch (usua
 ** Note
 + `git log --graph --oneline --all` <= a more typical use of `git log`
 * Gitignore
-+ There can be multiple nested /.gitignore/, they apply from the directory they where placed
-+ `/` is an anchor that specifycally match the root
++ There can be multiple nested `.gitignore`, they apply from the directory they where placed
++ `/` is an anchor that especially match the root
 + `*` match wildcard
 + `!` negate the match
 + `#` line ignored, is a comment
@@ -49,3 +49,5 @@ git config --global init.defaultBranch master # name of the default branch (usua
 + Git store the information in form of objetcs under the folder *.git/objects*
 + Git represent directories as *tree*
 + Git represent files as *blob*
+* Rebase
+* Merge
