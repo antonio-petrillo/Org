@@ -22,7 +22,7 @@
 |  10:30-12:30 |     |     |       |     | NNDL  |
 |  12:30-14:30 |     | EaE | OSMCI |     |       |
 |  14:30-16:30 |     |     | PdC   |     | OSMCI |
-|  16:30-18:30 | MfC |     | A     |     |       |
+|  16:30-18:30 | MfC |     | DB    | EaE | DB    |
 * Piano di Studi
 * Primo Semestre
 DEADLINE: <2024-12-20 Fri>
