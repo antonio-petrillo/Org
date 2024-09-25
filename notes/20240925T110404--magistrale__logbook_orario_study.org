@@ -1,0 +1,28 @@
+#+title:      magistrale
+#+date:       [2024-09-25 Wed 11:04]
+#+filetags:   :logbook:orario:study:
+#+identifier: 20240925T110404
+
+* Links
++  [[https://informatica.dieti.unina.it/index.php/it/news/548-calendario-delle-attivita-didattiche-per-l-a-a-2024-2025][Calendario attivitá didattiche]] *MAY BREAK*
++  [[https://informatica.dieti.unina.it/index.php/it/servizi-per-gli-studenti/orario-delle-lezioni/orario-laurea-magistrale][Orario Corsi]] *MAY BREAK*
+* TODO Corsi
+| Nome                                                | Codice | Shortname | Aula    | Link | Opinione                    |
+|-----------------------------------------------------+--------+-----------+---------+------+-----------------------------|
+| Machine Learning (Neural Network and Deep Learning) |        | NNDL      | PT-2-L  |      |                             |
+| Mathematics for Cryptography                        |        | MfC       | PT-2-M  |      |                             |
+| Parallel and Distributed Computing                  |        | PdC       | PT-2-L  |      | merda totale                |
+| Encoding and Encryption                             |        | EaE       | PT-2-M  |      |                             |
+| Operating Systems for Mobile, Cloud and IoT         |        | OSMCI     | PT-2-II |      | merda a tratti interessante |
+| Advanced Databases (DB Technologies)                |        | DB        | PT-2-L  |      | meh                         |
+* Orario
+| time/weekday | Mon | Tue | Wed   | Thu | Fri   |
+|--------------+-----+-----+-------+-----+-------|
+|   8:30-10:30 |     | MfC | NNDL  |     | PdC   |
+|  10:30-12:30 |     |     |       |     | NNDL  |
+|  12:30-14:30 |     | EaE | OSMCI |     |       |
+|  14:30-16:30 |     |     | PdC   |     | OSMCI |
+|  16:30-18:30 | MfC |     | A     |     |       |
+* Piano di Studi
+* Primo Semestre
+DEADLINE: <2024-12-20 Fri>
