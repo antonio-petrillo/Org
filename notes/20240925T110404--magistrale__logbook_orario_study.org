@@ -11,18 +11,37 @@
 |-----------------------------------------------------+--------+-----------+---------+------+-----------------------------|
 | Machine Learning (Neural Network and Deep Learning) |        | NNDL      | PT-2-L  |      |                             |
 | Mathematics for Cryptography                        |        | MfC       | PT-2-M  |      |                             |
-| Parallel and Distributed Computing                  |        | PdC       | PT-2-L  |      | merda totale                |
+| Parallel and Distributed Computing                  |        | PDC       | PT-2-L  |      | merda totale                |
 | Encoding and Encryption                             |        | EaE       | PT-2-M  |      |                             |
 | Operating Systems for Mobile, Cloud and IoT         |        | OSMCI     | PT-2-II |      | merda a tratti interessante |
 | Advanced Databases (DB Technologies)                |        | DB        | PT-2-L  |      | meh                         |
 * Orario
 | time/weekday | Mon | Tue | Wed   | Thu | Fri   |
 |--------------+-----+-----+-------+-----+-------|
-|   8:30-10:30 |     | MfC | NNDL  |     | PdC   |
+|   8:30-10:30 |     | MfC | NNDL  |     | PDC   |
 |  10:30-12:30 |     |     |       |     | NNDL  |
 |  12:30-14:30 |     | EaE | OSMCI |     |       |
-|  14:30-16:30 |     |     | PdC   |     | OSMCI |
+|  14:30-16:30 |     |     | PDC   |     | OSMCI |
 |  16:30-18:30 | MfC |     | DB    | EaE | DB    |
 * Piano di Studi
+| Corso                                              | ANNO | Modulo | CFU | SSD                  |
+|----------------------------------------------------+------+--------+-----+----------------------|
+| Logic for Computer Science                         | I    |        |   6 | M-FIL/02             |
+| Advanced DB: DB Technologies                       | I    | A      |   6 | INF/01               |
+| Advanced DB: NoSQL                                 | I    | B      |   6 | INF/01               |
+| Machine Learning: Neural Network and Deep Learning | II   | A      |   6 | INF/01               |
+| Machine Learning: Statistical Learning             | I    | B      |   6 | INF/01               |
+| Computational Complexity                           | I    |        |   6 | INF/01               |
+| Operating Systems for Mobile, Cloud and IoT        | I    |        |   6 | INF/01               |
+| Parallel and Distributed Computing                 | I    |        |   6 | INF/01               |
+| Encoding and Encryption OR Algorithm Design        | I    |        |   6 | INF/01               |
+| Biometric Systems                                  | I    |        |   6 | INF/01               |
+|----------------------------------------------------+------+--------+-----+----------------------|
+| Intelligent Web                                    | II   |        |     | INF/01               |
+| Operations research                                | II   |        |     | MAT/09               |
+| Mathematics for Cryptography OR Network Security   | II   |        |   6 | MAT/05 OR ING-INF/05 |
+| Security and Privacy                               | II   |        |   6 | INF/01               |
+| Altre attività                                     | II   |        |   1 |                      |
+| Prova finale                                       | II   |        |  29 |                      |
 * Primo Semestre
 DEADLINE: <2024-12-20 Fri>
