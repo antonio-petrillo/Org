@@ -1,0 +1,76 @@
+#+title:      Neural Network and Deep Learning
+#+date:       [2024-10-06 Sun 19:16]
+#+filetags:   :logbook:nndl:study:
+#+identifier: 20241006T191657
+
+* Resources
++ Textbook: Neural Networks for Pattern Recognition, Christopher M. Bishop, Oxford, University press
+* Lesson 1 - Intro
++ A brief intro
+* Lesson 2 - Classification Problem
+** Example, Classification digits
++ The problem is, given some data, i.e. an image with an image of a digit, recognize (classify into the classes [0-9]) the data
++ The universe (population), called $V$, in which we want to classify their elements, $v ⊂ V$
++ Finite number of classes/categories $C$
++ Each $v \in V$ can be classified into only one  $c \in C$
++ Each mapping is represented by a computation that resolve always to the same deterministic computational procedure:
+  $$f_d:v \in V \rightarrow x = f_d(v)$$
+  + $x \in R$, x is usually a vector of length $p > 0$
+  + The set of all $x$ is the _DATA_, the population in which we want to solve the computation
+  + $f_d(v) = X_d$
++ Key Extraction:
+  + $F: x \in R^p \rightarrow \tilde{x} = F(x) \in R^d$
+  + $d << p$, $d$ can be lower than$*p$
+  + $F$ should be able to extract feature from $x$
++ Both $x \in X_d$ and $\tilde{x} \in X_f$ can be pre-processed
+** Summary
+[[../assets/nndl_1.png]]
+* Lesson 3
+* Lesson 4 - Network Feed Forward (FF)
++ $N$ neuroni, $N > 1$  tipically $> 100$, in deep learning network $> 1E6$
++ *Neuron*:
+  + Unique *ID*
+  + Disposed in a topological order
++ Two step computation
+  1. input or activation:
+     $$a_i = \sum_{j \in P_i} (w_{ij} \dot z_j) + b_i$$
+     + $a_i$: activation of the neuron *i-th*
+     + $j \in P_i$ all the inputs connected to the *i-th* neuron
+     + $w_{ij}$ the weight on the edge from the output of the neuron *j-th* to the *i-th*
+     + $z_j$ the output of the *j-th* neuron
+     + $b_i$ the bias of the neuron *i-th*
+  2. output or activation (confusion may arise, manco 2 nomi diversi riescono a trovare):
+     + $z_i = f_i(a_i)$
++ On each neuron we must follow, $1$ and $2$ in this specific order
++ Disadvantages: we must build a topological sort first
+** Example of network
+[[../assets/nndl_2.png]]
+** Key consideration
+A Feed Forward network implements a *FUNCTIONAL MAPPING*
+Requirement:
+$$\forall f: x \in R^d : \exists y \in R^c$$
+With also:
++ $b_i$ bias of the neuron
++ $w_{ij}$ sets of weight
++ $f(ai)$ an activation function (non linear, non polynomial)
+
+With this model we can solve _every problem_ that accept a *FUNCTION MAPPING* as a solution.
+** Treat the Bias as a weight
+We can include the bias as weight in the computation
+$$a_i = \sum_{j \in P_i} (w_{ij} \dot z_j) + b_i$$
+Assuming $z_0$ = 1, $w_{i0} = b_i$:
+$a_i = \sum_{j = 1}^{m_j} (w_{ij} \dot z_j) + b_i$, where $m_j$ is the enumeration ${1,2,3,\dots, j}$ of the inputs of the $i-th$ neuron
+$$a_i = \sum_{j = 1}^{m_j} (w_{ij} \dot z_j) + w_{i0} \dot 1$$
+$$a_i = \sum_{j = 0}^{m_j} w_{ij} \dot z_j$$
+* Multi Layer Neural Network (MLNN)
+A class of neural network in which:
++ Each hidden layer receive only inputs from the previous layer
++ Each neuron in the same layer share the same *activation function*
+
+This implement a /built-in/ topological order for the computation.
+It is still a *functional mapping*.
+
+
+
+
+* Lesson 5
