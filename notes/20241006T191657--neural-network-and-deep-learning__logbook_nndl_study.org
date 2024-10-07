@@ -5,6 +5,8 @@
 
 * Resources
 + Textbook: Neural Networks for Pattern Recognition, Christopher M. Bishop, Oxford, University press
++ [[http://neuralnetworksanddeeplearning.com/index.html][nndl online book]]
+
 * Lesson 1 - Intro
 + A brief intro
 * Lesson 2 - Classification Problem
