@@ -86,7 +86,8 @@ $$a_1a_2 \cdots a_{m_1}b_1b_2 \cdots b_{m_2}$$
 $$c_1c_2 \cdots \cdots c_{m_3}d_1d_2 \cdots d_{m_4}$$
 Chiamiamo $u$ la parola che inizia all'indice di $a_{m_1}$ e termina all'indice di $c_{m_3}$, abbiamo costruito una $u$ che rispetta i requisiti del Lemma.
 
-Dimostrazione molto elementare $\blacksquare$.
+Dimostrazione molto elementare.
+$$\blacksquare$$
 ** Insiemi quozienti (destri e sinistri) :definition:
 Questa definizione si applica anche ai semigruppi.
 Se $M$ monoid e $Y,Z \subseteq M$ definiamo:
@@ -106,5 +107,74 @@ $$ZY^{-1} = \{m \in M | \exists y \in Y : Z \cap (\{m\}Y) \ne \emptyset \}$$
 **** Definizione informale
 Le parole di $Y$ suffisso di parole di $Z$.
 ** Teorema I di Schültzenberger :theorem:
-Sia $M$ libero, $N \le M$ ($N$ sottomonoide di $M$), $N$ libero se e solo se:
+Sia $M$ libero, $N \le M$ ($N$ sottomonoide di $M$), $N$ libero $\iff$:
 $$N^{-1}N \cap NN^{-1} \subseteq N$$
+*** Dimostrazione
+**** Correttezza $$\implies$$
+Sia $m \in N^{-1}N \cap NN^{-1}$, allora per il Lemma di Levi
+$$\exists n_1,n_2,n_3,n_4 \in N | n_1m = n_2 \land mn_3 = n_4$$
+
+Da tenere bene a mente queste due equzioni:
+1. $n_1m = n_2$
+2. $mn_3 = n_4$
+
+Casi banali:
+Se $n_1 = 1_M \lor n_3 = 1_M$ allora $m \in N$
+
+Se $n_2 = 1_M \implies m = n_1 = 1_M$.
+Se $n_4 = 1_M \implies m = n_3 = 1_M$.
+
+Caso generale:
+
+Consideriamo le fattorizzazioni di $m_1$, $m_2$, $m_3$, $m_4$ (in modo da applicare il Lemma di Levi)
++ $n_1 = a_1 \cdots a_h$
++ $n_2 = b_1 \cdots b_k$
++ $n_3 = c_1 \cdots c_z$
++ $n_3 = d_1 \cdots d_s$
+
+Qui $h,k,s,t$ servono per considerare lunghezze generiche maggiori dei casi banali.
+Da notare che gli elementi delle parole $n_1,n_2,n_3,n_4$ appartengono alla base di $N$, questo perchè per definizione sono elementi di $N$ diverse da $1_N$ (quindi in $N \setminus \{1_N\}$) e non sono composte da 2 parole (quindi non sono in $(N \setminus \{1_N\})^2$).
+Ribadisco ci riferiamo ai vari $a_i, b_i, c_i, d_i$ che compongono le parole $n_1, n_2, n_3, n_4$ e non alle parole stesse.
+
+Usando il lemma di Levi con la definizione di insieme quoziente sinistro, ovvero $N^{-1}N$:
+Moltiplicando a destra $n_1m = n_2$ per $n_3$, otteniamo:
+$n_1mn_3 = n_2n_3$, ma $mn_3 = n_4$ da cui
+$n_1n_4 = n_2n_3$, considerandone le singole parole otteniamo
+$$a_1 \cdots a_h d_1 \cdots d_s = b_1 \cdots b_k c_1 \cdots c_z$$
+
+Per la fattorizzazione unica si ha che $h + s = k + z$ ed inoltre:
+$$a_1 = b_1 \cdots d_s = c_z$$
+
+Consideriamo i vari casi.
+Caso 1 $h \ge k$:
+Da $n_1m=n_2$ abbiamo $a_1 \cdots a_h m = b_1 \cdots b_k$, dato che stiamo assumendo che non esita una doppia fattorizzazione si ha che $a_{k+1} = \cdots = a_h = m = 1_N$.
+Quindi l'unico caso possibile è $h = k$.
+
+Caso 2 $h \le k$:
+Sempre da $n_1m=n_2$ abbiamo $a_1 \cdots a_h m = b_1 \cdots b_k$, da cui:
+$a_1 = b_1 \cdots a_h = b_h \land m = b_{h+1} \cdots b_k$ che per definizione sono ancora in $N$.
+
+
+Quindi per come abbiamo preso $n_1,n_2,n_3,n_4 \in N$ abbiamo mostrato che $m \in N$, il che completa questa parte della dimostrazione.
+
+$$\blacksquare$$
+**** Completezza $$\impliedby$$
+Per assurdo $N^{-1}N \cap NN^{-1}$ non *Base*.
+Allora $\exists m \in N$ con doppia fattorizzazione cioè:
++ $\exists w = x_1 \cdots x_h$
++ $\exists w = x_1^{'} \cdots x_k^{'}$
++ $x_1 \ne x_1^{'}$
+
+Dividiamo i vari casi.
+
+Caso 1 $|x_1| > |x_1^{'}|$:
+Dal Lemma di Levi $\exists v in M : x_1 = x_1^{'} \cdot v \land v x_2 \cdots x_h = x_2^{'} \cdots x_k^{'}$.
+Allora $v \in N^{-1}N \cap NN^{-1} \subseteq N$ è assurdo che $v \in N$.
+Se così fosse avremmo
+$v \ne 1_M \land x_1 = x_1^{'}v \in (N \setminus \{1_M\})^2$
+
+Segue $X$ base.
+
+$$\blacksquare$$
+*** Implicazioni
+Con monoide libero intendiamo uno che abbia una base $X$ con fattorizzazione univoca, lavorare in termini di monoidi liberi permette di generalizzare a tutti i monoidi generati dalla stessa base.
