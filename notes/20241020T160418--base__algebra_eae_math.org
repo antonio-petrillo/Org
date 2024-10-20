@@ -1,0 +1,12 @@
+#+title:      Base
+#+date:       [2024-10-20 Sun 16:04]
+#+filetags:   :algebra:eae:math:
+#+identifier: 20241020T160418
+
+* Definition
+$X \subseteq S$ is called *BASE* if it has the property of *UNIQUE FACTORIZATION* ($UF$ or $UD$ uniquely decodable).
+$\forall x_1, x_2, \cdots x_n, x_1^{'}, x_2^{'}, \cdots, x_m^{'}$ such that
+$$x_1, x_2, \cdots x_n, x_1^{'}, x_2^{'}, \cdots, x_m^{'} \implies n = m \land x_1 = x_1^{'}, x_2 = x_2^{'}, \cdots, x_n = x_m^{'}$$
+* Properties
+** Free
+A set that has a base $X$ that respect the definition it is said to be free.
