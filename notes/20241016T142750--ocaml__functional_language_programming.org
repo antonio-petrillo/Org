@@ -1,0 +1,31 @@
+#+title: #+title:      Ocaml
+#+date:       [2024-10-16 Wed 14:27]
+#+filetags:   :functional:language:programming:
+#+identifier: 20241016T142750
+
+* Functions
+| Desc                              | Code                                                                   |
+| Basic fun                         | src_ocaml{let inc x = x + 1}                                           |
+| Curried fun                       | src_ocaml{let adder x = fun y -> x + y}                                |
+| Recursive fun                     | src_ocaml{let rec pow x y = if y <= 0 then 1 else x * (pow x (y - 1))} |
+| Type hints                        | src_ocaml{let f (arg1 : type) .. (argn : type) : ret_type = impl_here} |
+| Mutual recursive fun              | src_ocaml{let rec f x1 .. xn = e1 and g y1 .. yn = e2 }                |
+| Lambda                            | src_ocaml{fun x1 .. xn -> e1}                                          |
+| Labeled arguments                 | src_ocaml{let f ~name_1:arg_1 .. ~name_n:arg_n = use arg_1 .. arg_n }  |
+| Labeled arguments with type hints | src_ocaml{let f ~name:(arg : type) : ret_type = use arg }              |
+| Default arguments                 | src_ocaml{let f ?name:(arg=value} = use arg                            |
+| Infix function                    | src_ocaml{let (++) x y = x + y;; (++) x y = x ++ y = x + y}            |
+
+Functions true nature:
+#+begin_src ocaml
+let f x1 ... xn = e1
+
+(* same as *)
+
+let f = fun x1 ->
+  fun x2 ->
+  ...
+  fun xn -> e1
+#+end_src
+* Operators
++ Float math use differents operators

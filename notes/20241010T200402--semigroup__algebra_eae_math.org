@@ -1,0 +1,9 @@
+#+title:      Semigroup
+#+date:       [2024-10-10 Thu 20:04]
+#+filetags:   :algebra:eae:math:
+#+identifier: 20241010T200402
+
+* Definitions
+A *Semigroup* is a set equipped with an associative operations.
+$$S=(A, *)$$
+If the operation $*$ commutative the semigroup is called *abelian*.

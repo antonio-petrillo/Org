@@ -1,0 +1,59 @@
+#+title:      NNDL by Michael Nielsen
+#+date:       [2024-10-07 Mon 12:54]
+#+filetags:   :book:logbook:nndl:study:
+#+identifier: 20241007T125436
+
+* Resource
+[[http://neuralnetworksanddeeplearning.com/index.html][NNDL by Michael Nielsen]]
+* Chapter 1
+** Perceptron
+Perceptron weights evidence to make decision, kinda like _bayesian statistics_.
+Neuron structure
+[[../assets/perceptron_neuron.png]]
+
+Binary inputs, binary output, i.e. accepts combination of 0 and 1 (bits) and produce 0 or 1 (single bit)
+$\sum_j w_j \dot x_j \ge threshold \rightarrow 1$, $0$ otherwise.
+
+[[../assets/ml_perceptron.png]]
+
+Simplifying the formula:
+$\sum_j w_j \dot x_j \ge threshold$
+Consider the position $bias = -threshold$, for brevity $b = bias$
+$w_j \dot x_j = \sum_j w_j \dot x_j$, that's it a _dot product_ of 2 vectors
+$w_j \dot x_j + b \ge 0 \rightarrow 1$, $0$ otherwise
+
+Perceptrons can be used to implements rudimentary logic circuit!
+*** Disadvantages
+Perceptron are hard to train, a small change in the bias (the only parameter that can be used to tune the network) may change all the results.
+\begin{eqnarray}
+  \mbox{output} = \left\{
+    \begin{array}{ll}
+      0 & \mbox{if } w\cdot x + b \leq 0 \\
+      1 & \mbox{if } w\cdot x + b > 0
+    \end{array}
+  \right.
+\tag{2}\end{eqnarray}
+** Sigmoid
+A sigmoid neuron is /more trainable/, a small change in the bias makes a small change in the output.
+Input are values in the range [0..1] (continuos).
+Output is not 0 or 1 but the result of the *sigmoid function*:
+$$\sigma(z) = \frac 1 {1 + e^{-z}}$$
+more explicitely
+$$\sigma(z) = \frac 1 {1 + e^{- \sum_j w_j \dot x_j - b}}$$
+The meaning behind the formula:
+#+begin_center
+The bigger the z values get, the more $\sigma(z) \approx 1, \sigma(z) \to 1$
+The smaller the z values get, the more $\sigma(z) \approx 0, \sigma(z) \to 0$
+#+end_center
+Sigmoid activation function
+[[../assets/sigmoid_smooth.png]]
+
+Perceptron activation function
+[[../assets/perceptron_smoothness.png]]
+
+\begin{eqnarray}
+  \Delta \mbox{output} \approx \sum_j \frac{\partial \, \mbox{output}}{\partial w_j}
+  \Delta w_j + \frac{\partial \, \mbox{output}}{\partial b} \Delta b,
+\tag{5}\end{eqnarray}
+
+** Multi Layer Perceptrons (MLP) - NOTE: They are made by sigmoid neurons!

@@ -1,4 +1,4 @@
-#+title:      Neural Network and Deep Learning
+#+title:      Neural Network and Deep Learning Course Unina
 #+date:       [2024-10-06 Sun 19:16]
 #+filetags:   :logbook:nndl:study:
 #+identifier: 20241006T191657

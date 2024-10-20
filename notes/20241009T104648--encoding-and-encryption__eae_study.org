@@ -1,0 +1,73 @@
+#+title:      Encoding and Encryption
+#+date:       [2024-10-09 Wed 10:46]
+#+filetags:   :eae:study:
+#+identifier: 20241009T104648
+
+* General
+Teacher: [[https://www.docenti.unina.it/#!/professor/414c455353414e44524f4445204c554341444c434c534e38315330315a31323644/riferimenti][Alessandro De Luca]]
+* Lezione 1
+** Intro
+Accenni storici a modelli di comunicazione:
++ Primi approcci, 1920 Nguist-Hartley
++ Meccanica statistica, inizio '900 Boltzman
++ _Modello di Shannon_, 1948 Claude Shannon, è il modello affrontato nel corso
+  [[../assets/shannon_model.jpg]]
+  Da notare che la /Noise Source/ puó essere anche un nemico che intende spiare o alterare la comunicazione
+** Scopi della codifica
++ Riduzione dei costi, anche detta compressione dei dati
++ Riduzione degli errori, comunicazione su canale, dovuti a /Rumore/ o /Nemici/
++ Sicurezza e privatezza
+** Sorgenti
+Vari esempi di sorgenti possono essere:
++ Una persona che parla (o scrive)
++ Variabile aleatoria (ad esempio latenza media per la comunicazione con il cluster Scope dell'Unina)
++ I messaggi possono essere visti come sequenza di valori generati da una variabile aleatoria
+** Note
+Il corso si concentra sul caso di una sorgente discreta (prese da alfabeto finito).
+In particolare inizialmente studieremo le codifiche come una funzione $\varphi$ dall'insieme delle parole di $S$ (ovvero $S^*$) all'insieme di codifica $A^*$ sull'alfabeto $A$.
+** Modelli di comunicazione alternativi
++ Network Information, più canali e più destinazioni
++ Algoritmica (Kolmogorov), informazione legata alla lunghezza minima di un programma che genera il messaggio
++ Semantico, significato dei messaggi, rapporto con il mondo fisico
++ Pragmatico, ad esempio quali messaggi è opportuno inviare a quale destinazione (Profilazione)
+** Proprietà del modello di Shannon
+1. Univocamente decodificabile, la funzione di codifica $\varphi : S^* \rightarrow A^*$ è iniettiva (a volte indicata con $UD$)
+2. Sequenziale, può essere visto come un morfismo di $\varphi$
+   $$\forall u, v \in S^*, \varphi(uv) = \varphi(u)\varphi(v)$$
+* Lezione 2
+** Teoremi fondamentali di Shannon (Accenno)
++ Codifica di sorgente:
+  Stima del costo della codifica (*massima compressione* ottenibile) in base all'*ENTROPIA* di una sorgente.
++ Codifica del canale:
+  Possibilità di trasmissione sul canale con probabilità di errore $\varepsilon$ arbitrariamente piccolo.
+  Quantificabile come la quantità di informazione trasmessa nell'unità di tempo per simbolo dell'alfabeto.
+  È inferiore alla *CAPACITÀ* del canale.
+** Codifica di sorgente
+$\varphi : S^* \rightarrow A^*$ codifica di sorgente se:
+1. $\forall u,v in S^*, u \ne v \imply \varphi(u) \ne \varphi(v)$, iniettiva
+2. $\forall u,v in S^*, \varphi(uv) = \varphi(u)\varphi(v)$, morfismo
+
+Una strategia per create $\varphi$ è quella di codificare ogni simbolo di una sorgente $S$ con una parola diversa di $A$, di lunghezza fissata.
+Questo appena descritto è il modo più semplice per ottenere una codifica, tipicamente non è ottimale.
+Degli esempi di codifica a lunghezza fissa sono:
++ Codifica ASCII
++ Codifica Nummeri interi a 32 bit
+
+Il caso più generale la codifica può avere una lunghezza variabile, in quel caso vanno verificate *1* e *2*.
+
+** Definizione di *CODICE*
+Dato $X = { \varphi(s), s \in S^* }$, linguaggio su $A$ (insieme di parole su $A$).
+Considerando:
+$$\forall x_1,x_2,\cdots, x_n, x_1^{'}, x_2^{'}, \cdots ,x_m^{'}$$
+Se si ha che:
+$$x_1,x_2,\cdots, x_n = x_1^{'}, x_2^{'}, \cdots ,x_m^{'}$$
+Allora $\imply$
+$$n = m \land x_1=x_1^{'}, x_2=x_2^{'}, \cdots x_n=x_m^{'}$$
+Se vale questa proprietà diremo che $X$ è *CODICE*.
+*** Esempi:
+Sia $A={a, b}$
+1. $X_1={ab, bb, ba}$ è codice
+2. $X_2={a, ba, bb}$ è codice, in particolare codice prefisso
+3. $X_3={a, ab, bb}$ è codice,  in particolare codice suffisso
+4. $X_4={a, aba, bb}$ è codice, non è prefisso e non è suffisso
+5. $X_5={a, ab, ba}$ non è codice, $aba = a \times ba = ab \times a$

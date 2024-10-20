@@ -1,0 +1,11 @@
+#+title:      Monoid
+#+date:       [2024-10-10 Thu 20:07]
+#+filetags:   :algebra:eae:math:
+#+identifier: 20241010T200746
+
+* Definitions
+A [[denote:20241010T200402][Semigroup]] with a *identity* element, usually indicated with $1$ is called Monoid.
+$$ M=(A, *), 1 \in A | \forall a \in A : a * 1 = a = 1 * a $$
+If the *semigroup* is *abelian* the *monoid* is *abelian*.
+* Submonoid
+$$ N \subseteq M, 1 \in N | \forall m, n \in N : m * n \in N $$
