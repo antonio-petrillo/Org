@@ -98,6 +98,7 @@ $$Y^{-1}Z = \{m \in M | (Y\{m\}) \cap Z, \ne \emptyset \}$$
 
 **** Definizione informale
 Le parole di $Y$ prefisse di parole di $Z$.
+Di fatti prendiamo tutte le parole di $M$ tali che; se _prefisse_ con una parola di $Y$ danno una parola di $Z$.
 
 *** Quoziente destro
 $$ZY^{-1} = \{m \in M | \exists y \in Y : my \in Z \}$$
@@ -106,6 +107,7 @@ $$ZY^{-1} = \{m \in M | \exists y \in Y : Z \cap (\{m\}Y) \ne \emptyset \}$$
 
 **** Definizione informale
 Le parole di $Y$ suffisso di parole di $Z$.
+Di fatti prendiamo tutte le parole di $M$ tali che; se _suffisse_ (concatenate) ad una parola di $Y$ danno una parola di $Z$.
 ** Teorema I di Schültzenberger :theorem:
 Sia $M$ libero, $N \le M$ ($N$ sottomonoide di $M$), $N$ libero $\iff$:
 $$N^{-1}N \cap NN^{-1} \subseteq N$$
@@ -176,5 +178,48 @@ $v \ne 1_M \land x_1 = x_1^{'}v \in (N \setminus \{1_M\})^2$
 Segue $X$ base.
 
 $$\blacksquare$$
-*** Implicazioni
+*** Corollario 1
 Con monoide libero intendiamo uno che abbia una base $X$ con fattorizzazione univoca, lavorare in termini di monoidi liberi permette di generalizzare a tutti i monoidi generati dalla stessa base.
+*** Corollario 2
+Dato $A$ alfabeto e $X \subseteq A^*$ non vuoto $X \ne \emptyset$
+$X$ è Codice (ovvero è base) se è base di un sottonomonoide libero di $A^*$.
+*** Corollario 3
+Se prendiamo un monoide $N$ sottomonoide di $M$ (ovvero $N \le M$) allora per il teorema I di Shcültzenberger vale che $N \subseteq N^{-1}N \cap NN^{-1}$.
+*** Esercizio
+Dimostrare che se $X^* = N$, dove $N \le M$ ($N$ sottomonoide di $M$) allora $N$ è libero.
+
+Dimostrazione per induzione (per potenze di $X$)
+**** Caso base $X^0$.
+In questo caso $N = 1_M$, ma $1_M$ appartiene per definizione a $X^0$.
+**** Caso induttivo
+Assumiamo vero fino a $n$, dimostriamo per $n + 1$.
+Ogni parola di $X^{n+1}$ può essere espressa come:
+$$\exists w \in X \land \exists y \in X^n : xy \in X^{n+1}$$
+Per ipotesi induttiva sappiamo che sia $w$ che $y$ sono in $N$, ma dato che $N$ è sottomonoide sappiamo che è chiuso rispetto all'operazione, quindi $wy \in X^{n+1} \land wy \in N$.
+$$\blacksquare$$
+** Monoide unitario a sinistra :definition:
+Se $N^{-1}N \subseteq N$, allora $N$ è un monoide unitario a sinistra.
+** Monoide unitario a destra :definition:
+Se $NN^{-1} \subseteq N$, allora $N$ è un monoide unitario a destra.
+** Definizione Codice Prefisso :definition:
+Dato $X \subseteq A^*$ è prefisso se $X \cap XA^+ = \emptyset$.
+In altre parole *nessuna parola di* $X$ *è prefisso di un'altra parola di * $X$.
+** Definizione Codice Suffisso :definition:
+Dato $X \subseteq A^*$ è suffisso se $X \cap A^+X = \emptyset$
+In altre parole *nessuna parola di* $X$ *è suffisso di un'altra parola di * $X$.
+** Conseguenze di Codici Prefisso (Suffissi)
+1. Se $X$ è prefisso (o suffisso) è codice se e solo se $X \ne \{1_M\}$, $X$ è diverso dal singleton della parola unitaria.
+2. $X$ codice prefisso (o suffisso) se e solo se $X$ è unitario a sinistra (a destra).
+** Definizione di Insiemi di Resto :definition:
+Definiamo gli insieme resto come la successione:
++ $R_1(X) = X^{-1}X \setminus \{ \varepsilon \}$
++ $R_2(X) = X^{-1}R_1(X) \cap R_1(X)^{-1}X$
++ $\cdots$
++ $R_n(X) = X^{-1}R_{n-1}(X) \cap R_{n-1}(X)^{-1}X$
+*** Esempio
+Sia $X=\{a, aaab, abb, bbb\}$ candidato codice su $A=\{a, b\}$, calcoliamo gli insiemi resto:
+ 1. $R_1(X)=\{aab, bb\}$
+ 2. $R_2(X)=\{b, ab\}$
+ 3. $R_3(X)=\{b, bb\}$
+ 4. $R_4(X)=\{b, bb\}$
+ 5. Entriamo in un loop $\forall n \in \mathbb{N}_{\ge 3} : R_n = R_3$
