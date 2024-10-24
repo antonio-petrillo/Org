@@ -223,3 +223,41 @@ Sia $X=\{a, aaab, abb, bbb\}$ candidato codice su $A=\{a, b\}$, calcoliamo gli i
  3. $R_3(X)=\{b, bb\}$
  4. $R_4(X)=\{b, bb\}$
  5. Entriamo in un loop $\forall n \in \mathbb{N}_{\ge 3} : R_n = R_3$
+** Lemma Sardinas & Patterson :lemma:
+Dato $X \subseteq A^*, \forall n \in \mathbb{N}_{\ge 1}$, allora:
+$w \in R_n(X) \iff \exists i,j \in \mathbb{N}_{\ge 1}$ tali che valgono le seguenti proprietà:
+1. $i + j = n + 1$
+2. $x_1 \cdots x_i w = x_1^{'} \cdots x_j^{'}$
+3. $x_1 \ne x_1^{'}$
+4. $|w| \le |x_j^{'}|$
+*** Dimostrazione
+Induzione su $n$, il caso base è banale e copre entrambe le implicazioni.
+
+**** Caso base $n = 1$.
+
+$R_1 = X^{-1}X \setminus \{\varepsilon\}$ per definizione di $R_1$
+$w \in R_1 \iff \exists x_1, x_1^{'}, w \in X : x_1 w = x_1^{'}$, dove $w \ne \varepsilon$
+
+Tecnicamente $x_1 \in X^{-1}$ e $x_1^{'} \in X$, ma in questo caso si può semplificare indicando solo $X$ (non vale in generale).
+
+Ma quindi dato che per definizione $w \ne \varepsilon$, da $x_1 w = x_1^{'}$ deduciamo che:
+1. $i = 1, j = 1, n = 1$, rispetta la definizione $i + j = n + 1$ ($1 + 1 = 1 + 1$)
+2. $x_1 w = x_1^{'}$, che equivale al punto *2* del lemma
+3. $x_1 \ne x_1^{'}$, lo si capisce grazie alla presenza di $w \ne \varepsilon$
+4. $|w| < |x_1^{'}|$, in questo caso abbiamo il minore stretto dato che $w$ è una parola di $x_1^{'}$
+   $$\blacksquare$$
+**** Induzione, assumiamo vero per $n - 1$
+Per il passo induttivo occorre dividere in 2 parti la dimostrazione, vediamo prima la conseguenza.
+$$\implies$$
+Consideriamo una parola $w \in R_n$, con $n > 1$ (altrimenti rientriamo nel caso base), per definizione:
+$$R_n = X^{-1}R_{n - 1} \cup R_{n - 1}^{-1}X$$
+Tutti gli elementi di $w \in R_n$  rispettano la proprietà:
+$$\exists x \in X, \exists r_{n - 1} \in R_{n - 1} : x w = r_{n - 1} \lor r_{n-1} w = x$$
+
+Abbiamo 2 ulteriori sottocasi da considerare:
+1. $x w = r_{n - 1}$
+2. $r_{n-1} w = x$
+
+Entrambi contengono $r_{n - 1}$ su cui è possibile applicare l'ipotesi induttiva.
+***** Caso $x w = r_{n - 1}$
+In questo caso possiamo affermare che $\exists i, j > 1$
