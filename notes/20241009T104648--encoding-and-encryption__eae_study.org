@@ -35,6 +35,8 @@ In particolare inizialmente studieremo le codifiche come una funzione $\varphi$ 
 2. Sequenziale, può essere visto come un morfismo di $\varphi$
    $$\forall u, v \in S^*, \varphi(uv) = \varphi(u)\varphi(v)$$
 * Lezione 2
+** Note
+Lezione recuperate dopo l'inizio dei corsi, probabilmente questa Lezione 2 è divisa in 3 o più lezioni.
 ** Teoremi fondamentali di Shannon (Accenno)
 + Codifica di sorgente:
   Stima del costo della codifica (*massima compressione* ottenibile) in base all'*ENTROPIA* di una sorgente.
@@ -224,6 +226,8 @@ Sia $X=\{a, aaab, abb, bbb\}$ candidato codice su $A=\{a, b\}$, calcoliamo gli i
  4. $R_4(X)=\{b, bb\}$
  5. Entriamo in un loop $\forall n \in \mathbb{N}_{\ge 3} : R_n = R_3$
 ** Lemma Sardinas & Patterson :lemma:
+Questo lemma risulta particolarmente utile nella dimostrazione del teorema di Sardinas & Patterson.
+
 Dato $X \subseteq A^*, \forall n \in \mathbb{N}_{\ge 1}$, allora:
 $w \in R_n(X) \iff \exists i,j \in \mathbb{N}_{\ge 1}$ tali che valgono le seguenti proprietà:
 1. $i + j = n + 1$
@@ -248,7 +252,8 @@ Ma quindi dato che per definizione $w \ne \varepsilon$, da $x_1 w = x_1^{'}$ ded
    $$\blacksquare$$
 **** Induzione, assumiamo vero per $n - 1$
 Per il passo induttivo occorre dividere in 2 parti la dimostrazione, vediamo prima la conseguenza.
-$$\implies$$
+
+***** Implicazione $\implies$
 Consideriamo una parola $w \in R_n$, con $n > 1$ (altrimenti rientriamo nel caso base), per definizione:
 $$R_n = X^{-1}R_{n - 1} \cup R_{n - 1}^{-1}X$$
 Tutti gli elementi di $w \in R_n$  rispettano la proprietà:
@@ -259,5 +264,115 @@ Abbiamo 2 ulteriori sottocasi da considerare:
 2. $r_{n-1} w = x$
 
 Entrambi contengono $r_{n - 1}$ su cui è possibile applicare l'ipotesi induttiva.
-***** Caso $x w = r_{n - 1}$
-In questo caso possiamo affermare che $\exists i, j > 1$
+****** Caso $x w = r_{n - 1}$
+Se $x w = r_{n - 1}$, possiamo considerare le parole $x_1 \cdots x_i x w = x_1^{'} \cdots x_j^{'}$, da notare che qui stiamo utilizzando l'ipotesi induttiva, grazie a questa possiamo prendere $x_1 \cdots x_i$ e $x_1^{'} \cdots x_j^{'}$ da ipotesi, per i quali vale anche che $i + j = (n - 1) + 1 = n$ e concatenarci $x w$ da cui otteniamo:
++ $i + j + 1 = n + 1$
++ $x_1 \ne x_1^{'}$ per costruzione
++ $|w| < |xw| \le |x_j^{'}$
+
+Quindi tutte i punti dell'implicazione sono rispettati.
+$$\blacksquare$$
+****** Caso $r_{n - 1} w = x$
+In questo caso possiamo svolgere una dimostrazione simile moltiplicando a destra per $w$.
+$$x_1 \cdots x_i r_{n-1} w = x_1^{'} \cdots x_j^{'} w$$
+Ottenendo:
+$$x_1 \cdots x_i x_{i + 1} = x_1^{'} \cdots x_j^{'} w$$
+Per la quale vale:
++ $(i + 1) + j = n + 1$
++ $x_1 \ne x_1^{'}$
++ $x_1 \cdots x_i x_{i + 1} = x_1^{'} \cdots x_j^{'} w$
++ $|w| \le |x|$, deriva proprio dal caso che stiamo considerando $r_{n - 1} w = x$
+
+Questo conclude la dimostrazione dell'implicazione per tutti i casi possibili.
+$$\blacksquare$$
+***** Viceversa se  $\impliedby$
+Supponiamo che $\exists w, x_1 \cdots x_i, x_1^{'} \cdots x_j^{'} \in X$ tali che:
+1. $1 + j = n + 1$
+2. $x_1 \cdots x_i w = x_1^{'} \cdots x_j^{'}$
+3. $x_1 \ne x_1^{'}$
+4. $|w| \le |x_j^{'}|$
+
+Anche qui occorre considerare 2 sottocasi:
+1. $|x_i w| \le |x_j^{'}|$
+2. $|x_i w| > |x_j^{'}|$
+
+
+****** Caso 1, $|x_i w| \le |x_j^{'}|$
+Possiamo aggiungere un'ulteriore ipotesi $|x_i w| \le |x_j^{'}|$, allora sicuramente $i > 1$ altrimenti avremmo $i = 1, j = 1, n = 1$ e si rientra nel caso base.
+
+Dato che consideriamo $i > 1$ possiamo usare l'ipotesi induttiva.
+
+Ponendo $r_{n-1} = x_i w$, allora $\exists x_1 \cdots x_{i - 1}, x_1^{'} \cdots x_j^{'}$ tali che:
+1. $(i - 1) + j = n - 1 + 1 = n$
+2. $x_1 \cdots x_{i - 1} x_i w =  x_1^{'} \cdots x_j^{'}$, ricordiamo che $x_i w = r_{n - 1}$
+3. $x_1 \ne x_1^{'}$
+4. $|r_{n - 1}| \le |x_j^{'}|$, deriva dal caso considerato $|x_i w| \le |x_j^{'}|$
+
+Per ipotesi induttiva $r_{n - 1} \in R_{n - 1}$.
+Poichè $x_i w = r_{n - 1} \in R_{n - 1}$ per definizione di $R_n$, $w \in R_n$.
+$$\blacksquare$$
+****** Caso 2, $|x_i w| > |x_j^{'}|$
+Poichè $|w| \le |x_j^{'}|$, allora $\exists v \in A^*$ tale che
+$vw = x_j^{'}$, da cui $x_1 \cdots x_i w = x_1^{'} \cdots x_{j - 1}^{'} v w$
+Anche in questo caso possiamo assumere $j > 1$, altrimenti avremmo $x_1^{'} \cdots x_{j - 1}^{'} = \varepsilon$ e quindi $v = x_1^{'} \cdots x_{i}$ e quindi $|x_i| \le |v| \implies |x_i w| \le |v w| = |x_j^{'}|$ che è contro le ipotesi ($|x_i w| > |x_j^{'}|$).
+Ora se riconsideriamo:
+$$x_1 \cdots x_i w = x_1^{'} \cdots x_{j - 1}^{'} v w$$
+Possiamo cancellare sia a sinistra che a destra $w$ ed otteniamo
+$$x_1 \cdots x_i = x_1^{'} \cdots x_{j - 1}^{'} v$$
+Considerando $v = x_j^{'}$ abbiamo che:
+1. $x_1 \ne x_1^{'}$
+2. $|v| \le |x_i|$
+3. $x_1 \cdots x_i = x_1^{'} \cdots x_{j - 1}^{'} v$
+4. $i + (j + 1) + 1 = n + 1$
+
+Notiamo inoltre che $w \in R_n$ dato che $v \in R_{n - 1} \land v w = x_j^{'} \in X$.
+Questo conclude la dimostrazione.
+
+$$\blacksquare$$
+** Teorema Sardinas & Patterson :theorem:
+Dato $X \subseteq A^*, X \ne \emptyset$, allora:
+$$X & codice \iff \forall n \in \mathbb{N}, n \ge 1 : R_n(X) \cap X = \emptyset$$
+*** Dimostrazione
+Dimostriamo la negazione del teorema ovvero:
+$$X & {non\;codice} \iff \exists n \in \mathbb{N}, n \ge 1 : R_n(X) \cap X \ne \emptyset$$
+**** Implicazione, $\implies$
+Se $X$ non è codice allora
+$$\exists x_1 \cdots x_h, x_1^{'} \cdots x_k^{'} \in X : x_1 \cdots x_h = x_1^{'} \cdots x_k^{'}$$
+Per minimalità possiamo supporre $x_1 \ne x_1^{'}$ (altrimenti potremmo eliminare $x_1$ ad entrambi i membri).
+
+Senza perdere di generalità supponiamo $|x_h| \le |x_k^{'}|$ (altrimenti basta invertire il ruolo delle 2 parole).
+
+Concentriamoci sugli indici $h,k$ e vediamo i possibili casi:
+
+Se $h = 1$ e $k > 1$ avremmo un assurdo dato che avremmo $x_1 = x_h = x_1^{'} \cdots x_k^{'}$ ma nelle nostre ipotesi $|x_h| \le |x_k^{'}|$.
+
+Se $h = 1$ e $k = 1$ avremmo $x_1 = x_1^{'}$ che non è nemmeno una doppia fattorizzazione e inoltre avevamo supposto $x_1 = x_1^{'}$.
+
+L'unico caso possibile è quindi $h > 1$ e $k > 1$, ma quindi possiamo applicare il lemma dimostrato in precedenza (Lemma di Sardinas & Patterson).
+Dal lemma $x_n \in R_n$ basta prendere $h,k$ tali che $h + k - 2 = n$ ed abbiamo trovato un $n \in \mathbb{N}_{\ge 1} : X \cap R_n \ne \emptyset$.
+$$\blacksquare$$
+**** Vicerversa, $\impliedby$
+Se $\exists n \in \mathbb{N}_{\ge 1} : X \cap R_n \ne \emptyset$ esiste immediatamente una doppia fattorizzazione di una parola $w$, infatti $w \in X^{-1}R_{n-1} \land w \in R_{n-1}^{-1}X$ da cui segue $X$ non codice.
+$$\blacksquare$$
+** Osservazioni sul teorema di Sardinas Patterson
+Caratterizzazione di *Codice Prefisso* e *Codice Suffisso*.
++ $X$ codice prefisso $\iff$ $R_1(X) = X^{-1}X \setminus \{\varepsilon\} = \emptyset$
++ $X$ codice suffisso $\iff$ $L_1(X) = XX^{-1} \setminus \{\varepsilon\} = \emptyset$
+** Esempi di utilizzo di Sardinas & Patterson
+*** Esempio 1
++ $X_1 = \{a, ab, bb\}$ codice suffisso
++ $R_1 = \{b\}$
++ $R_2 = \{b\}$
++ $\forall n \in \mathbb{N}_{> 0} R_n = \{b\} \implies X \cap R_n = \emptyset$
++ $X_1$ è codice
+*** Esempio 2
++ $X_2 = \{a, ab, ba\}$
++ $R_1 = \{b\}$
++ $R_2 = \{a\}$
++ $R_2 \cap X_2 \ne \emptyset$, $X_2$ non è codice
+*** Esempio 3
++ $X_3 = \{a, aba, bb\}$
++ $R_1 = \{ba\}$
++ $R_2 = \emptyset$
++ $\forall n \in \mathbb{N}_{\ge 2} R_n = \emptyset \implies R_n \cap X = \emptyset$, $X_3$ è codice
+* Lezione 3
