@@ -376,3 +376,39 @@ Caratterizzazione di *Codice Prefisso* e *Codice Suffisso*.
 + $R_2 = \emptyset$
 + $\forall n \in \mathbb{N}_{\ge 2} R_n = \emptyset \implies R_n \cap X = \emptyset$, $X_3$ è codice
 * Lezione 3
+Introduciamo dei modi per limitare il numero di insiemi resto $R_n$ da generare per controllare se $X$ è codice con Sardinas & Patterson.
+** Insieme di suffissi finito :lemma:
+Sia $X \subseteq A^+$ finito, con $k = \#X$ (dove $\#$ indica la cardinalità di $X$) e sia $L = \max_{x \in X} |x|$ ($L$ è la parola di massima lunghezza).
+Indichiamo con $Suff(X)$ l'insieme dei suffissi di $X$.
+Allora $\#Suff(X) \le kL + 1$.
+*** Dimostrazione
+Una parola di lunghezza $n$ ha al massimo $n$ suffissi non vuoti.
+Dato che nessuna delle $k$ parole in $X$ è più lunga di $L$ si ha che al massimo vi sono $kL$ suffissi (ogni parola è al più lunga $L$ ed una parola lunga $L$ ha $L$ suffissi) considerando anche la parola vuota $\varepsilon$ si ha che al più ho $kL + 1$ parole.
+$$\blacksquare$$
+** Limiti per gli i resti destri $R_n$ (vale dualmente per i resti sinistri $L_n$)
+$$\forall n \in \mathbb{N}_{\ge 1} : R_n(X) \subseteq Suff(X)$$
+Da cui dato che per un insieme finito possiamo calcolarne il suo insieme delle parti possiamo semplicemente ottenere un limite superiore considerando $|\wp(Suff(X))| = 2^{kL + 1}$.
+Questo limite è molto lasco e richiede un numero di step esponenziali e quindi abbastanza proibitivo.
+** Teorema di Levenshtein :theorem:
+Sia $X \subseteq A^+, X \ne \emptyset, k = \#X$, $X$ finito, $L = \max_{x \in X} |x|$, allora
+$$X & codice \iff \forall n \in \{1, \cdots, kL + 1\}, R_n \cap X = \emptyset$$
+*** Dimostrazione
+**** Implicazione, $\implies$
+Banalemente una conseguenza del teorema di Sardinas & Patterson, vale per ogni $n$, quindi anche per $n \in \{1, \cdots, kL + 1\}$
+$$\blacksquare$$
+**** Vicersa se, $\impliedb$
+Dimostrazione per assurdo.
+Sia $\forall n \in \{1, \cdots, kL + 1\} : R_n \cap X = \emptyset$ e per assurdo sia $X$ non codice.
+Per il teorema di Sardinas & Patterson esiste un indice più grande $m > kL + 1$ tale che $R_m \cap X \ne \emptyset$.
+Sia $r_m \in R_m \cap X$ esistono quindi:
+$$x, x^{'}, x_1 \cdots x_{m - 1} \in X, r_1 \in R_1, \cdots, r_{m - 1} \in R_{m - 1}$$
+Tali che $x r_1 = x^{'}$ ed inoltre vale una fra le seguenti:
+1. $x_ir_{i + 1} = r_i$ ($X^{-1}R_{n-1}$)
+2. $r_ir_{i + 1} = x_i$ ($R_{n-1}^{-1}X$)
+
+Ora dato che $r_1, \cdots r_m \in Suff(X)$ e $\#Suff(X) \le kL + 1 < m$.
+Quindi $\exists i, j, 1 \le i < j \le m : r_i = r_j^{'}$
+Ma:
+$$r_j \in R_j \implies r_{j + 1} \in R_{i + 1} \implies \cdots \implies r_m \in R_{m - ( j - i)} \cap X$$
+Questo però è assurdo, resto $R_{m - ( j - i)}$ più piccolo di $R_m$ che era supposto minimale.
+$$\blacksquare$$
