@@ -1,124 +1,124 @@
-#+title:      Encoding and Encryption
-#+date:       [2024-10-09 Wed 10:46]
-#+filetags:   :eae:study:
-#+identifier: 20241009T104648
+#+title: #+title:      Encoding and Encryption
+#+date:       [2024-11-10 Sun 15:44]
+#+filetags:   :course:math:study:
+#+identifier: 20241110T154425
 
-* General
-Teacher: [[https://www.docenti.unina.it/#!/professor/414c455353414e44524f4445204c554341444c434c534e38315330315a31323644/riferimenti][Alessandro De Luca]]
-* Lezione 1
-** Intro
-Accenni storici a modelli di comunicazione:
-+ Primi approcci, 1920 Nguist-Hartley
-+ Meccanica statistica, inizio '900 Boltzman
-+ _Modello di Shannon_, 1948 Claude Shannon, è il modello affrontato nel corso
-  [[../assets/shannon_model.jpg]]
-  Da notare che la /Noise Source/ puó essere anche un nemico che intende spiare o alterare la comunicazione
-** Scopi della codifica
+* Modello di Comunicazione di Shannon
+[[../assets/shannon_model.jpg]]
+
+Scopi della codifica:
 + Riduzione dei costi, anche detta compressione dei dati
 + Riduzione degli errori, comunicazione su canale, dovuti a /Rumore/ o /Nemici/
 + Sicurezza e privatezza
-** Sorgenti
-Vari esempi di sorgenti possono essere:
-+ Una persona che parla (o scrive)
-+ Variabile aleatoria (ad esempio latenza media per la comunicazione con il cluster Scope dell'Unina)
-+ I messaggi possono essere visti come sequenza di valori generati da una variabile aleatoria
-** Note
-Il corso si concentra sul caso di una sorgente discreta (prese da alfabeto finito).
-In particolare inizialmente studieremo le codifiche come una funzione $\varphi$ dall'insieme delle parole di $S$ (ovvero $S^*$) all'insieme di codifica $A^*$ sull'alfabeto $A$.
+
+Sorgenti:
++ Variabile aleatoria che emette una sequenza di segnali presi da un insieme discreto
+
 ** Modelli di comunicazione alternativi
 + Network Information, più canali e più destinazioni
 + Algoritmica (Kolmogorov), informazione legata alla lunghezza minima di un programma che genera il messaggio
 + Semantico, significato dei messaggi, rapporto con il mondo fisico
 + Pragmatico, ad esempio quali messaggi è opportuno inviare a quale destinazione (Profilazione)
+
 ** Proprietà del modello di Shannon
 1. Univocamente decodificabile, la funzione di codifica $\varphi : S^* \rightarrow A^*$ è iniettiva (a volte indicata con $UD$)
 2. Sequenziale, può essere visto come un morfismo di $\varphi$
    $$\forall u, v \in S^*, \varphi(uv) = \varphi(u)\varphi(v)$$
-* Lezione 2
-** Note
-Lezione recuperate dopo l'inizio dei corsi, probabilmente questa Lezione 2 è divisa in 3 o più lezioni.
-** Teoremi fondamentali di Shannon (Accenno)
-+ Codifica di sorgente:
-  Stima del costo della codifica (*massima compressione* ottenibile) in base all'*ENTROPIA* di una sorgente.
-+ Codifica del canale:
-  Possibilità di trasmissione sul canale con probabilità di errore $\varepsilon$ arbitrariamente piccolo.
-  Quantificabile come la quantità di informazione trasmessa nell'unità di tempo per simbolo dell'alfabeto.
-  È inferiore alla *CAPACITÀ* del canale.
-** Codifica di sorgente :definition:
-$\varphi : S^* \rightarrow A^*$ codifica di sorgente se:
-1. $\forall u,v in S^*, u \ne v \implies \varphi(u) \ne \varphi(v)$, iniettiva
-2. $\forall u,v in S^*, \varphi(uv) = \varphi(u)\varphi(v)$, morfismo
-
-Una strategia per create $\varphi$ è quella di codificare ogni simbolo di una sorgente $S$ con una parola diversa di $A$, di lunghezza fissata.
-Questo appena descritto è il modo più semplice per ottenere una codifica, tipicamente non è ottimale.
-Degli esempi di codifica a lunghezza fissa sono:
-+ Codifica ASCII
-+ Codifica Nummeri interi a 32 bit
-
-Il caso più generale la codifica può avere una lunghezza variabile, in quel caso vanno verificate *1* e *2*.
-
-** Definizione di *CODICE* :definition:
-Dato $X = { \varphi(s), s \in S^* }$, linguaggio su $A$ (insieme di parole su $A$).
-Considerando:
-$$\forall x_1,x_2,\cdots, x_n, x_1^{'}, x_2^{'}, \cdots ,x_m^{'}$$
+* Codifica di Sorgente :def:
+$\varphi : s^* \rightarrow a^*$ codifica di sorgente se:
+1. $\forall u,v \in S^*, u \ne v \implies \varphi(u) \ne \varphi(v)$, iniettiva
+2. $\forall u,v \in S^*, \varphi(uv) = \varphi(u)\varphi(v)$, morfismo
+* Definizione di Codice :def:
+Dato $X = { \varphi(s), s \in S^* }$, linguaggio su $A$ (insieme di parole su $A$), diciamo $X$ codice se vale che:
+$$\forall x_1,x_2,\cdots, x_n, x_1^{'}, x_2^{'}, \cdots ,x_m^{'} \in X$$
 Se si ha che:
-$$x_1,x_2,\cdots, x_n = x_1^{'}, x_2^{'}, \cdots ,x_m^{'}$$
+$$x_1 x_2 \cdots x_n = x_1^{'}  x_2^{'}  \cdots  x_m^{'}$$
 Allora $\implies$
 $$n = m \land x_1=x_1^{'}, x_2=x_2^{'}, \cdots x_n=x_m^{'}$$
 Se vale questa proprietà diremo che $X$ è *CODICE*.
-*** Esempi:
+** Esempi
 Sia $A={a, b}$
 1. $X_1={ab, bb, ba}$ è codice
 2. $X_2={a, ba, bb}$ è codice, in particolare codice prefisso
 3. $X_3={a, ab, bb}$ è codice,  in particolare codice suffisso
 4. $X_4={a, aba, bb}$ è codice, non è prefisso e non è suffisso
 5. $X_5={a, ab, ba}$ non è codice, $aba = a \times ba = ab \times a$
-** Lemma di Levi :lemma:
-Sia $M$ un [[denote:20241010T200746][monoide libero]] e consideriamo $m_1, m_2, m_3, m_4 \in M : m_1m_2=m_3m_4$
-E supponiamo $\lvert m_1 \rvert \ge \lvert m_3 \rvert$, $\implies$
-$$\exists v \in M : m_1 = m_3v \land vm_2 = m_4$$
-*** Dimostrazione
+* Definizione di Codice Prefisso :def:
+Dato $X \subseteq A^*$ è prefisso se $X \cap XA^+ = \emptyset$.
+In altre parole *nessuna parola di* $X$ *è prefisso di un'altra parola di * $X$.
+** Proprietà
+1. Se $X$ è prefisso è codice se e solo se $X \ne \{1_M\}$, $X$ è diverso dal singleton della parola unitaria.
+2. $X$ codice prefisso se e solo se $X$ è unitario a sinistra.
+3. $X$ codice prefisso $\iff$ $R_1(X) = X^{-1}X \setminus \{\varepsilon\} = \emptyset$ (vedi insiemi resto)
+* Definizione di Codice Suffisso :def:
+Dato $X \subseteq A^*$ è suffisso se $X \cap A^+X = \emptyset$
+In altre parole *nessuna parola di* $X$ *è suffisso di un'altra parola di * $X$.
+** Proprietà
+1. Se $X$ è suffisso è codice se e solo se $X \ne \{1_M\}$, $X$ è diverso dal singleton della parola unitaria.
+2. $X$ codice suffisso se e solo se $X$ è unitario a destra.
+3. $X$ codice suffisso $\iff$ $L_1(X) = XX^{-1} \setminus \{\varepsilon\} = \emptyset$ (vedi insiemi resto)
+* Definizione di Insiemi di Resto :def:
+Definiamo gli insieme resto come la successione:
++ $R_1(X) = X^{-1}X \setminus \{ \varepsilon \}$
++ $R_2(X) = X^{-1}R_1(X) \cap R_1(X)^{-1}X$
++ $\cdots$
++ $R_n(X) = X^{-1}R_{n-1}(X) \cap R_{n-1}(X)^{-1}X$
+*** Esempio
+Sia $X=\{a, aaab, abb, bbb\}$ candidato codice su $A=\{a, b\}$, calcoliamo gli insiemi resto:
+ 1. $R_1(X)=\{aab, bb\}$
+ 2. $R_2(X)=\{b, ab\}$
+ 3. $R_3(X)=\{b, bb\}$
+ 4. $R_4(X)=\{b, bb\}$
+ 5. Entriamo in un loop $\forall n \in \mathbb{N}_{\ge 3} : R_n = R_3$
+* Lemma di Levi :lemma:lem:
+Sia $M$ un [[denote:20241010T200746][monoide libero]]:
+$$m_1, m_2, m_3, m_4 \in M : m_1m_2=m_3m_4$$
+$$| m_1 | \ge | m_3 | \implies \exists v \in M : m_1 = m_3v \land vm_2 = m_4$$
+** Dimostrazionne
 + $$m_1 = a_1a_2 \cdots a_{m_1}$$
 + $$m_2 = b_1b_2 \cdots b_{m_2}$$
 + $$m_3 = c_1c_2 \cdots c_{m_3}$$
 + $$m_4 = d_1d_2 \cdots d_{m_4}$$
 
+
 Allineamo le parole:
-$$a_1a_2 \cdots a_{m_1}b_1b_2 \cdots b_{m_2}$$
-$$c_1c_2 \cdots \cdots c_{m_3}d_1d_2 \cdots d_{m_4}$$
-Chiamiamo $u$ la parola che inizia all'indice di $a_{m_1}$ e termina all'indice di $c_{m_3}$, abbiamo costruito una $u$ che rispetta i requisiti del Lemma.
+$$a_1 a_2 \cdots \cdots a_{m_1} b_1 \cdots b_{m_2}$$
+$$c_1 c_2 \cdots c_{m_3} d_1 \cdots d_{m_4}$$
+Chiamiamo $u$ la parola che inizia all'indice di $c_{m_3}$ e termina all'indice di $a_{m_1}$, abbiamo costruito una $u$ che rispetta i requisiti del Lemma, infatti $m_1 = c_1 \cdots c_{m_3} u = m_1 = m_3 u$.
+
 
 Dimostrazione molto elementare.
 $$\blacksquare$$
-** Insiemi quozienti (destri e sinistri) :definition:
+* Insieme Quozienti :def:
 Questa definizione si applica anche ai semigruppi.
-Se $M$ monoid e $Y,Z \subseteq M$ definiamo:
-*** Quoziente sinistro
+Se $M$ monoide e $Y,Z \subseteq M$ definiamo i quozienti sinistri e destri come:
+** Quoziente sinistro
 $$Y^{-1}Z = \{m \in M | \exists y \in Y : ym \in Z \}$$
 O alternativamente
 $$Y^{-1}Z = \{m \in M | (Y\{m\}) \cap Z, \ne \emptyset \}$$
 
-**** Definizione informale
+*** Definizione informale
 Le parole di $Y$ prefisse di parole di $Z$.
 Di fatti prendiamo tutte le parole di $M$ tali che; se _prefisse_ con una parola di $Y$ danno una parola di $Z$.
 
-*** Quoziente destro
+** Quoziente destro
 $$ZY^{-1} = \{m \in M | \exists y \in Y : my \in Z \}$$
 O alternativamente
 $$ZY^{-1} = \{m \in M | \exists y \in Y : Z \cap (\{m\}Y) \ne \emptyset \}$$
 
-**** Definizione informale
+*** Definizione informale
 Le parole di $Y$ suffisso di parole di $Z$.
 Di fatti prendiamo tutte le parole di $M$ tali che; se _suffisse_ (concatenate) ad una parola di $Y$ danno una parola di $Z$.
-** Teorema I di Schültzenberger :theorem:
+* Teorema di Schultzenberger I :theorem:thm:
+Offre una categorizzazzione dei [[denote:20241010T200746][sottomonoidi liberi]]
 Sia $M$ libero, $N \le M$ ($N$ sottomonoide di $M$), $N$ libero $\iff$:
 $$N^{-1}N \cap NN^{-1} \subseteq N$$
-*** Dimostrazione
-**** Correttezza $$\implies$$
+** Dimostrazione
+*** Correttezza $$\implies$$
 Sia $m \in N^{-1}N \cap NN^{-1}$, allora per il Lemma di Levi
-$$\exists n_1,n_2,n_3,n_4 \in N | n_1m = n_2 \land mn_3 = n_4$$
+$$\exists n_1,n_2,n_3,n_4 \in N | n_1 n_3 = n_2 n_4 \land n_1m = n_2 \land mn_3 = n_4$$
 
-Da tenere bene a mente queste due equzioni:
+Da tenere bene a mente queste due equazioni:
 1. $n_1m = n_2$
 2. $mn_3 = n_4$
 
@@ -130,14 +130,14 @@ Se $n_4 = 1_M \implies m = n_3 = 1_M$.
 
 Caso generale:
 
-Consideriamo le fattorizzazioni di $m_1$, $m_2$, $m_3$, $m_4$ (in modo da applicare il Lemma di Levi)
+Consideriamo le fattorizzazioni di $m_1, m_2, m_3, m_4$ (in modo da applicare il Lemma di Levi)
 + $n_1 = a_1 \cdots a_h$
 + $n_2 = b_1 \cdots b_k$
 + $n_3 = c_1 \cdots c_z$
 + $n_3 = d_1 \cdots d_s$
 
 Qui $h,k,s,t$ servono per considerare lunghezze generiche maggiori dei casi banali.
-Da notare che gli elementi delle parole $n_1,n_2,n_3,n_4$ appartengono alla base di $N$, questo perchè per definizione sono elementi di $N$ diverse da $1_N$ (quindi in $N \setminus \{1_N\}$) e non sono composte da 2 parole (quindi non sono in $(N \setminus \{1_N\})^2$).
+Da notare che gli elementi delle parole $n_1,n_2,n_3,n_4$ appartengono alla base di $N$, questo perchè per definizione sono elementi di $N$ diverse da $1_N$ (quindi in $\in N \setminus \{1_N\}$) e non sono composte da 2 parole (quindi non sono in $(N \setminus \{1_N\})^2$).
 Ribadisco ci riferiamo ai vari $a_i, b_i, c_i, d_i$ che compongono le parole $n_1, n_2, n_3, n_4$ e non alle parole stesse.
 
 Usando il lemma di Levi con la definizione di insieme quoziente sinistro, ovvero $N^{-1}N$:
@@ -151,7 +151,7 @@ $$a_1 = b_1 \cdots d_s = c_z$$
 
 Consideriamo i vari casi.
 Caso 1 $h \ge k$:
-Da $n_1m=n_2$ abbiamo $a_1 \cdots a_h m = b_1 \cdots b_k$, dato che stiamo assumendo che non esita una doppia fattorizzazione si ha che $a_{k+1} = \cdots = a_h = m = 1_N$.
+Da $n_1m=n_2$ abbiamo $a_1 \cdots a_h m = b_1 \cdots b_k$, dato che stiamo assumendo che non esista una doppia fattorizzazione si ha che $a_{k+1} = \cdots = a_h = m = 1_N$.
 Quindi l'unico caso possibile è $h = k$.
 
 Caso 2 $h \le k$:
@@ -162,7 +162,7 @@ $a_1 = b_1 \cdots a_h = b_h \land m = b_{h+1} \cdots b_k$ che per definizione so
 Quindi per come abbiamo preso $n_1,n_2,n_3,n_4 \in N$ abbiamo mostrato che $m \in N$, il che completa questa parte della dimostrazione.
 
 $$\blacksquare$$
-**** Completezza $$\impliedby$$
+*** Completezza $$\impliedby$$
 Per assurdo $N^{-1}N \cap NN^{-1}$ non *Base*.
 Allora $\exists m \in N$ con doppia fattorizzazione cioè:
 + $\exists w = x_1 \cdots x_h$
@@ -180,52 +180,27 @@ $v \ne 1_M \land x_1 = x_1^{'}v \in (N \setminus \{1_M\})^2$
 Segue $X$ base.
 
 $$\blacksquare$$
-*** Corollario 1
+
+** Corollario 1 :corollary:cor:
 Con monoide libero intendiamo uno che abbia una base $X$ con fattorizzazione univoca, lavorare in termini di monoidi liberi permette di generalizzare a tutti i monoidi generati dalla stessa base.
-*** Corollario 2
+** Corollario 2 :corollary:cor:
 Dato $A$ alfabeto e $X \subseteq A^*$ non vuoto $X \ne \emptyset$
 $X$ è Codice (ovvero è base) se è base di un sottonomonoide libero di $A^*$.
-*** Corollario 3
+** Corollario 3 :corollary:cor:
 Se prendiamo un monoide $N$ sottomonoide di $M$ (ovvero $N \le M$) allora per il teorema I di Shcültzenberger vale che $N \subseteq N^{-1}N \cap NN^{-1}$.
-*** Esercizio
+** Esercizio
 Dimostrare che se $X^* = N$, dove $N \le M$ ($N$ sottomonoide di $M$) allora $N$ è libero.
 
 Dimostrazione per induzione (per potenze di $X$)
-**** Caso base $X^0$.
+*** Caso base $X^0$.
 In questo caso $N = 1_M$, ma $1_M$ appartiene per definizione a $X^0$.
-**** Caso induttivo
+*** Caso induttivo
 Assumiamo vero fino a $n$, dimostriamo per $n + 1$.
 Ogni parola di $X^{n+1}$ può essere espressa come:
 $$\exists w \in X \land \exists y \in X^n : xy \in X^{n+1}$$
 Per ipotesi induttiva sappiamo che sia $w$ che $y$ sono in $N$, ma dato che $N$ è sottomonoide sappiamo che è chiuso rispetto all'operazione, quindi $wy \in X^{n+1} \land wy \in N$.
 $$\blacksquare$$
-** Monoide unitario a sinistra :definition:
-Se $N^{-1}N \subseteq N$, allora $N$ è un monoide unitario a sinistra.
-** Monoide unitario a destra :definition:
-Se $NN^{-1} \subseteq N$, allora $N$ è un monoide unitario a destra.
-** Definizione Codice Prefisso :definition:
-Dato $X \subseteq A^*$ è prefisso se $X \cap XA^+ = \emptyset$.
-In altre parole *nessuna parola di* $X$ *è prefisso di un'altra parola di * $X$.
-** Definizione Codice Suffisso :definition:
-Dato $X \subseteq A^*$ è suffisso se $X \cap A^+X = \emptyset$
-In altre parole *nessuna parola di* $X$ *è suffisso di un'altra parola di * $X$.
-** Conseguenze di Codici Prefisso (Suffissi)
-1. Se $X$ è prefisso (o suffisso) è codice se e solo se $X \ne \{1_M\}$, $X$ è diverso dal singleton della parola unitaria.
-2. $X$ codice prefisso (o suffisso) se e solo se $X$ è unitario a sinistra (a destra).
-** Definizione di Insiemi di Resto :definition:
-Definiamo gli insieme resto come la successione:
-+ $R_1(X) = X^{-1}X \setminus \{ \varepsilon \}$
-+ $R_2(X) = X^{-1}R_1(X) \cap R_1(X)^{-1}X$
-+ $\cdots$
-+ $R_n(X) = X^{-1}R_{n-1}(X) \cap R_{n-1}(X)^{-1}X$
-*** Esempio
-Sia $X=\{a, aaab, abb, bbb\}$ candidato codice su $A=\{a, b\}$, calcoliamo gli insiemi resto:
- 1. $R_1(X)=\{aab, bb\}$
- 2. $R_2(X)=\{b, ab\}$
- 3. $R_3(X)=\{b, bb\}$
- 4. $R_4(X)=\{b, bb\}$
- 5. Entriamo in un loop $\forall n \in \mathbb{N}_{\ge 3} : R_n = R_3$
-** Lemma Sardinas & Patterson :lemma:
+* Lemma di Sarinas-Patterson :lemma:lem:
 Questo lemma risulta particolarmente utile nella dimostrazione del teorema di Sardinas & Patterson.
 
 Dato $X \subseteq A^*, \forall n \in \mathbb{N}_{\ge 1}$, allora:
@@ -234,10 +209,10 @@ $w \in R_n(X) \iff \exists i,j \in \mathbb{N}_{\ge 1}$ tali che valgono le segue
 2. $x_1 \cdots x_i w = x_1^{'} \cdots x_j^{'}$
 3. $x_1 \ne x_1^{'}$
 4. $|w| \le |x_j^{'}|$
-*** Dimostrazione
+** Dimostrazione
 Induzione su $n$, il caso base è banale e copre entrambe le implicazioni.
 
-**** Caso base $n = 1$.
+*** Caso base $n = 1$.
 
 $R_1 = X^{-1}X \setminus \{\varepsilon\}$ per definizione di $R_1$
 $w \in R_1 \iff \exists x_1, x_1^{'}, w \in X : x_1 w = x_1^{'}$, dove $w \ne \varepsilon$
@@ -250,10 +225,10 @@ Ma quindi dato che per definizione $w \ne \varepsilon$, da $x_1 w = x_1^{'}$ ded
 3. $x_1 \ne x_1^{'}$, lo si capisce grazie alla presenza di $w \ne \varepsilon$
 4. $|w| < |x_1^{'}|$, in questo caso abbiamo il minore stretto dato che $w$ è una parola di $x_1^{'}$
    $$\blacksquare$$
-**** Induzione, assumiamo vero per $n - 1$
+*** Induzione, assumiamo vero per $n - 1$
 Per il passo induttivo occorre dividere in 2 parti la dimostrazione, vediamo prima la conseguenza.
 
-***** Implicazione $\implies$
+**** Implicazione $\implies$
 Consideriamo una parola $w \in R_n$, con $n > 1$ (altrimenti rientriamo nel caso base), per definizione:
 $$R_n = X^{-1}R_{n - 1} \cup R_{n - 1}^{-1}X$$
 Tutti gli elementi di $w \in R_n$  rispettano la proprietà:
@@ -264,7 +239,7 @@ Abbiamo 2 ulteriori sottocasi da considerare:
 2. $r_{n-1} w = x$
 
 Entrambi contengono $r_{n - 1}$ su cui è possibile applicare l'ipotesi induttiva.
-****** Caso $x w = r_{n - 1}$
+***** Caso $x w = r_{n - 1}$
 Se $x w = r_{n - 1}$, possiamo considerare le parole $x_1 \cdots x_i x w = x_1^{'} \cdots x_j^{'}$, da notare che qui stiamo utilizzando l'ipotesi induttiva, grazie a questa possiamo prendere $x_1 \cdots x_i$ e $x_1^{'} \cdots x_j^{'}$ da ipotesi, per i quali vale anche che $i + j = (n - 1) + 1 = n$ e concatenarci $x w$ da cui otteniamo:
 + $i + j + 1 = n + 1$
 + $x_1 \ne x_1^{'}$ per costruzione
@@ -272,7 +247,7 @@ Se $x w = r_{n - 1}$, possiamo considerare le parole $x_1 \cdots x_i x w = x_1^{
 
 Quindi tutte i punti dell'implicazione sono rispettati.
 $$\blacksquare$$
-****** Caso $r_{n - 1} w = x$
+***** Caso $r_{n - 1} w = x$
 In questo caso possiamo svolgere una dimostrazione simile moltiplicando a destra per $w$.
 $$x_1 \cdots x_i r_{n-1} w = x_1^{'} \cdots x_j^{'} w$$
 Ottenendo:
@@ -285,7 +260,7 @@ Per la quale vale:
 
 Questo conclude la dimostrazione dell'implicazione per tutti i casi possibili.
 $$\blacksquare$$
-***** Viceversa se  $\impliedby$
+**** Viceversa se  $\impliedby$
 Supponiamo che $\exists w, x_1 \cdots x_i, x_1^{'} \cdots x_j^{'} \in X$ tali che:
 1. $1 + j = n + 1$
 2. $x_1 \cdots x_i w = x_1^{'} \cdots x_j^{'}$
@@ -297,7 +272,7 @@ Anche qui occorre considerare 2 sottocasi:
 2. $|x_i w| > |x_j^{'}|$
 
 
-****** Caso 1, $|x_i w| \le |x_j^{'}|$
+***** Caso 1, $|x_i w| \le |x_j^{'}|$
 Possiamo aggiungere un'ulteriore ipotesi $|x_i w| \le |x_j^{'}|$, allora sicuramente $i > 1$ altrimenti avremmo $i = 1, j = 1, n = 1$ e si rientra nel caso base.
 
 Dato che consideriamo $i > 1$ possiamo usare l'ipotesi induttiva.
@@ -311,7 +286,7 @@ Ponendo $r_{n-1} = x_i w$, allora $\exists x_1 \cdots x_{i - 1}, x_1^{'} \cdots 
 Per ipotesi induttiva $r_{n - 1} \in R_{n - 1}$.
 Poichè $x_i w = r_{n - 1} \in R_{n - 1}$ per definizione di $R_n$, $w \in R_n$.
 $$\blacksquare$$
-****** Caso 2, $|x_i w| > |x_j^{'}|$
+***** Caso 2, $|x_i w| > |x_j^{'}|$
 Poichè $|w| \le |x_j^{'}|$, allora $\exists v \in A^*$ tale che
 $vw = x_j^{'}$, da cui $x_1 \cdots x_i w = x_1^{'} \cdots x_{j - 1}^{'} v w$
 Anche in questo caso possiamo assumere $j > 1$, altrimenti avremmo $x_1^{'} \cdots x_{j - 1}^{'} = \varepsilon$ e quindi $v = x_1^{'} \cdots x_{i}$ e quindi $|x_i| \le |v| \implies |x_i w| \le |v w| = |x_j^{'}|$ che è contro le ipotesi ($|x_i w| > |x_j^{'}|$).
@@ -329,74 +304,53 @@ Notiamo inoltre che $w \in R_n$ dato che $v \in R_{n - 1} \land v w = x_j^{'} \i
 Questo conclude la dimostrazione.
 
 $$\blacksquare$$
-** Teorema Sardinas & Patterson :theorem:
+* Teorema Sardinas & Patterson (S&P):theorem:thm:
 Dato $X \subseteq A^*, X \ne \emptyset$, allora:
 $$X & codice \iff \forall n \in \mathbb{N}, n \ge 1 : R_n(X) \cap X = \emptyset$$
-*** Dimostrazione
+** Dimostrazione
 Dimostriamo la negazione del teorema ovvero:
 $$X & {non\;codice} \iff \exists n \in \mathbb{N}, n \ge 1 : R_n(X) \cap X \ne \emptyset$$
-**** Implicazione, $\implies$
+*** Implicazione, $\implies$
 Se $X$ non è codice allora
 $$\exists x_1 \cdots x_h, x_1^{'} \cdots x_k^{'} \in X : x_1 \cdots x_h = x_1^{'} \cdots x_k^{'}$$
 Per minimalità possiamo supporre $x_1 \ne x_1^{'}$ (altrimenti potremmo eliminare $x_1$ ad entrambi i membri).
 
-Senza perdere di generalità supponiamo $|x_h| \le |x_k^{'}|$ (altrimenti basta invertire il ruolo delle 2 parole).
+Senza perdere di generalità supponiamo $|x_h| \le |x_k^{'}|$, altrimenti basta invertire il ruolo delle 2 parole e la dimostrazione procede allo stesso modo.
 
 Concentriamoci sugli indici $h,k$ e vediamo i possibili casi:
 
 Se $h = 1$ e $k > 1$ avremmo un assurdo dato che avremmo $x_1 = x_h = x_1^{'} \cdots x_k^{'}$ ma nelle nostre ipotesi $|x_h| \le |x_k^{'}|$.
 
-Se $h = 1$ e $k = 1$ avremmo $x_1 = x_1^{'}$ che non è nemmeno una doppia fattorizzazione e inoltre avevamo supposto $x_1 = x_1^{'}$.
+Se $h = 1$ e $k = 1$ avremmo $x_1 = x_1^{'}$ che non è nemmeno una doppia fattorizzazione e inoltre avevamo supposto $x_1 \ne x_1^{'}$.
 
 L'unico caso possibile è quindi $h > 1$ e $k > 1$, ma quindi possiamo applicare il lemma dimostrato in precedenza (Lemma di Sardinas & Patterson).
 Dal lemma $x_n \in R_n$ basta prendere $h,k$ tali che $h + k - 2 = n$ ed abbiamo trovato un $n \in \mathbb{N}_{\ge 1} : X \cap R_n \ne \emptyset$.
 $$\blacksquare$$
-**** Vicerversa, $\impliedby$
+*** Vicerversa, $\impliedby$
 Se $\exists n \in \mathbb{N}_{\ge 1} : X \cap R_n \ne \emptyset$ esiste immediatamente una doppia fattorizzazione di una parola $w$, infatti $w \in X^{-1}R_{n-1} \land w \in R_{n-1}^{-1}X$ da cui segue $X$ non codice.
 $$\blacksquare$$
-** Osservazioni sul teorema di Sardinas Patterson
-Caratterizzazione di *Codice Prefisso* e *Codice Suffisso*.
-+ $X$ codice prefisso $\iff$ $R_1(X) = X^{-1}X \setminus \{\varepsilon\} = \emptyset$
-+ $X$ codice suffisso $\iff$ $L_1(X) = XX^{-1} \setminus \{\varepsilon\} = \emptyset$
-** Esempi di utilizzo di Sardinas & Patterson
-*** Esempio 1
-+ $X_1 = \{a, ab, bb\}$ codice suffisso
-+ $R_1 = \{b\}$
-+ $R_2 = \{b\}$
-+ $\forall n \in \mathbb{N}_{> 0} R_n = \{b\} \implies X \cap R_n = \emptyset$
-+ $X_1$ è codice
-*** Esempio 2
-+ $X_2 = \{a, ab, ba\}$
-+ $R_1 = \{b\}$
-+ $R_2 = \{a\}$
-+ $R_2 \cap X_2 \ne \emptyset$, $X_2$ non è codice
-*** Esempio 3
-+ $X_3 = \{a, aba, bb\}$
-+ $R_1 = \{ba\}$
-+ $R_2 = \emptyset$
-+ $\forall n \in \mathbb{N}_{\ge 2} R_n = \emptyset \implies R_n \cap X = \emptyset$, $X_3$ è codice
-* Lezione 3
-Introduciamo dei modi per limitare il numero di insiemi resto $R_n$ da generare per controllare se $X$ è codice con Sardinas & Patterson.
-** Insieme di suffissi finito :lemma:
+** Corollari
+Il teorema di Sardinas & Patterson fornisce un metodo per verificare se un qualsiasi insieme $X$ è codice o meno, il teorema non fornisce nessuno limite al numero di insiemi resto da controllare, fornisce solo un /criterio/ di stop.
+* Insieme di suffissi finito :proposizione:prop:
 Sia $X \subseteq A^+$ finito, con $k = \#X$ (dove $\#$ indica la cardinalità di $X$) e sia $L = \max_{x \in X} |x|$ ($L$ è la parola di massima lunghezza).
 Indichiamo con $Suff(X)$ l'insieme dei suffissi di $X$.
 Allora $\#Suff(X) \le kL + 1$.
-*** Dimostrazione
+** Dimostrazione
 Una parola di lunghezza $n$ ha al massimo $n$ suffissi non vuoti.
 Dato che nessuna delle $k$ parole in $X$ è più lunga di $L$ si ha che al massimo vi sono $kL$ suffissi (ogni parola è al più lunga $L$ ed una parola lunga $L$ ha $L$ suffissi) considerando anche la parola vuota $\varepsilon$ si ha che al più ho $kL + 1$ parole.
 $$\blacksquare$$
-** Limiti per gli i resti destri $R_n$ (vale dualmente per i resti sinistri $L_n$)
+* Limitare gli insiemi resto da verficare con S&P
 $$\forall n \in \mathbb{N}_{\ge 1} : R_n(X) \subseteq Suff(X)$$
 Da cui dato che per un insieme finito possiamo calcolarne il suo insieme delle parti possiamo semplicemente ottenere un limite superiore considerando $|\wp(Suff(X))| = 2^{kL + 1}$.
 Questo limite è molto lasco e richiede un numero di step esponenziali e quindi abbastanza proibitivo.
-** Teorema di Levenshtein :theorem:
+* Teorema di Levenshtein (limite stretto per S&P) :thm:theorem:
 Sia $X \subseteq A^+, X \ne \emptyset, k = \#X$, $X$ finito, $L = \max_{x \in X} |x|$, allora
 $$X & codice \iff \forall n \in \{1, \cdots, kL + 1\}, R_n \cap X = \emptyset$$
-*** Dimostrazione
-**** Implicazione, $\implies$
+** Dimostrazione
+*** Implicazione, $\implies$
 Banalemente una conseguenza del teorema di Sardinas & Patterson, vale per ogni $n$, quindi anche per $n \in \{1, \cdots, kL + 1\}$
 $$\blacksquare$$
-**** Vicersa se, $\impliedb$
+*** Vicersa se, $\impliedb$
 Dimostrazione per assurdo.
 Sia $\forall n \in \{1, \cdots, kL + 1\} : R_n \cap X = \emptyset$ e per assurdo sia $X$ non codice.
 Per il teorema di Sardinas & Patterson esiste un indice più grande $m > kL + 1$ tale che $R_m \cap X \ne \emptyset$.
@@ -412,3 +366,8 @@ Ma:
 $$r_j \in R_j \implies r_{j + 1} \in R_{i + 1} \implies \cdots \implies r_m \in R_{m - ( j - i)} \cap X$$
 Questo però è assurdo, resto $R_{m - ( j - i)}$ più piccolo di $R_m$ che era supposto minimale.
 $$\blacksquare$$
+* Disuguaglianza di Kraft-Mc Millan, I formulazione (K&McM) :thm:theorem
+Sia $X \subseteq A^+$ codice, $d = \#A$ dove $A$ è un insieme finito, allora vale:
+$$\sum_{x \in X} d^{-|x|} \le 1$$
+
+Riscrittura
