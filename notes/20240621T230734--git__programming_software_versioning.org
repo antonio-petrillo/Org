@@ -35,8 +35,10 @@ git config --global init.defaultBranch master # name of the default branch (usua
 + `git reset --hard {commit-hash}` => reset stagend and unstaged change to current commit or the specified one
 + `git remote add {name} {uri}` => treat the /uri/ as a source of truth, with /name/ as alias, for our repo
 + `git remote remove {name}` => remove the named remote
++ `git reflog`, similar to `git log` but takes a specific *REFS* as argument and give information about that refs.
 ** Note
 + `git log --graph --oneline --all` <= a more typical use of `git log`
++ `git merge` accept commit hash as parameters, even `git reflog` work
 * Gitignore
 + There can be multiple nested `.gitignore`, they apply from the directory they where placed
 + `/` is an anchor that especially match the root
