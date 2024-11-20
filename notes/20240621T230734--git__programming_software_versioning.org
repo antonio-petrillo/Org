@@ -50,7 +50,7 @@ git config --global init.defaultBranch master # name of the default branch (usua
 + See the command `git cat-file -p #commit-hash`
 + See the command `git hash-file -p #commit-hash`
 + Each commit is identified with an hash ([[https://en.wikipedia.org/wiki/SHA-1][SHA-1]])
-+ Git store the information in form of objetcs under the folder *.git/objects*
++ Git store the information in form of objects under the folder *.git/objects*
 + Git represent directories as *tree*
 + Git represent files as *blob*
 * Rebase
