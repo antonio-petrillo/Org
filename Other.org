@@ -1,0 +1,21 @@
+#+title: Other
+#+author: Antonio Petrillo
+
+* TODO Assemble the Charybidis :keyboard:
+
+* TODO Assemble the SICK 68 :keyboard:
+
+* ReadingList :book:
+** Fiction :fiction:
++ [ ] Fall of Hyperion :scifi:
++ [ ] Endymion :scifi:
++ [ ] Rise of Endymion :scifi:
++ [ ] Sandman :scifi:
+** Non-fiction :non-fiction:
++ [ ] Codici e Segreti
+** Learn :learn:
++ [ ] Linear Algebra Done Right :math:
++ [ ] Understanding Analysis :math:
++ [ ] Serious Cryptography :programming:math:
++ [ ] Java Concurrency in Practice :programming:
++ [ ] Skiena :programming:

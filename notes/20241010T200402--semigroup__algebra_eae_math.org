@@ -1,0 +1,44 @@
+#+title:      Semigroup
+#+date:       [2024-10-10 Thu 20:04]
+#+filetags:   :algebra:eae:math:
+#+identifier: 20241010T200402
+
+* Definitions
+A *Semigroup* is a set equipped with an associative operations.
+$$S=(A, *)$$
+If the operation $*$ commutative the semigroup is called *abelian*.
+* Subsemigroup
+$$ S^{'} \subseteq S | \forall a, b \in S^{'} : a * b \in S^{'} $$
+* Morphism
+$$ f : S \rightarrow T & morphism \iff \forall a,b \in S \implies f(ab) = f(a)f(b) $$
+* Examples
+** Product of parts
+$S$ semigroup, $Y, Z \subseteq S \implies YZ = {yz \in S | y \in Y \land z \in Z}$
+Is still a semigroup
+Note, $Y, Z \in \mathbb{P}(S)$ (set of parts).
+** Union of powers
+Given $S$ semigroup, and $Y \subseteq S$:
+$$Y^{+} = Y \cup Y^1 \cup Y^2 \cdots \cup Y^n \cdots = \cup_{i=1}^{\infty}Y^i$$
+Is a semigroup.
+
+Usually called *Set of Words* (without empty word).
+
+Can be shown that $Y^+$ is the smallest subsemigroup that contains $Y$.
+* Properties
+** Free semigroup
+A Semigroup $S$ is said to be *FREE* if $\exists X \subseteq S$ such that $X$ is [[denote:20241020T160418][Base]].
+** Univeral property of the frees
+$S$ FREE of base $X$ $\iff$:
+$\forall S^{'}$ semigroup, $\forall f : x \rightarrow S^{'}, \exists \bar{f}$ morphism such that
+$\bar{f} : S \rightarrow S^{'}$ such that $\bar{f}_x = f$
+
+In other words:
+Every application from $X$ to another semigroup can be extended in only one way.
+** Base of semigroup
+If $S$ is FREE, the only base (the *BASE* of $M$) that generate $M$ is:
+$$S  \setminus  S^2$$
+Note that $S^2$ are the word composed by $2$ words of $S$, see *Product of parts*
+*** Corollary
+Semigroup of the same base are *isomorphic*.
+
+$Y^+$ is the free semigroup generated from the base $Y$.
