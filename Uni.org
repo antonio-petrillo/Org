@@ -2,6 +2,7 @@
 #+author: Antonio Petrillo
 
 * TODO Neural Network and Deep Learning [0/3]                   :exam:nndl:
+DEADLINE: <2025-02-22 Sat>
 + [ ] Contact for project info
 + [ ] Do project
 + [ ] Do exam
