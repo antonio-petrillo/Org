@@ -1,42 +1,32 @@
 #+title: Org agenda
 #+author: Antonio Petrillo
 
-* TODO Effettua analisi [0/2]                                      :health:
-+ [ ] analisi 
+* TODO Effettua analisi [1/2]                                      :health:
++ [X] analisi 
 + [ ] consegna alla nutrizionista
 
-* TODO Assemble the Charybidis [0/4]                             :keyboard:
-+ [ ] print all parts
+* TODO Assemble the Charybidis [1/4]                             :proj:
++ [X] print all parts
 + [ ] solder pcb
 + [ ] wait for switches to arrive
 + [ ] flash firmware
 
-* TODO Assemble the SICK 68 [0/2]                                :keyboard:
-+ [ ] Maybe not the sick 68, already printed I it is nothing special (not bad though)
-+ [ ] Look for alternatives
+* Reading list                                                         :book:
+*** La caduta di Hyperion                                       :scifi:reading:
+*** Endymion                                                         :scifi:
+*** Il risveglio di Endymion                                            :scifi:
+*** Sandman                                                   :scifi:reading:
+*** Codici e Segreti :reading:
+*** Linear Algebra Done Right                                           :math:
+*** Understanding Analysis                                              :math:
+*** Serious Cryptography :programming:math:
+*** Java Concurrency in Practice :programming:
+*** Skiena :programming:
 
-* WAIT ReadingList                                                   :book:
-:LOGBOOK:
-- State "WAIT"       from              [2025-02-20 Thu 21:34]
-:END:
+* Uni :uni:
 
-** Fiction :fiction:
-+ [ ] Fall of Hyperion :scifi:
-+ [ ] Endymion :scifi:
-+ [ ] Rise of Endymion :scifi:
-+ [ ] Sandman :scifi:
-** Non-fiction :non-fiction:
-+ [ ] Codici e Segreti
-** Learn :learn:
-+ [ ] Linear Algebra Done Right :math:
-+ [ ] Understanding Analysis :math:
-+ [ ] Serious Cryptography :programming:math:
-+ [ ] Java Concurrency in Practice :programming:
-+ [ ] Skiena :programming:
-
-* Uni :uni: 
-** TODO Neural Network and Deep Learning [0/3]           :exam:nndl:
-DEADLINE: <2025-02-22 Sat>
+** TODO Neural Network and Deep Learning [0/3]           :exam:nndl:proj:
+DEADLINE: <2025-02-24 Mon>
 + [ ] Contact for project info
 + [ ] Do project
 + [ ] Do exam
