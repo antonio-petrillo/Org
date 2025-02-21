@@ -61,27 +61,36 @@ Prof: Silvio Barra, Porfirio Tramontana, Luigi Libero Lucio Starace
 + [ ] Find exam date 
 + [ ] Do exam 
 
-** WAIT NoSQL :exam:db_b:
+** TODO NoSQL                                                  :exam:nosql:
 Prof: Andrea Cali
-** WAIT Statistical Learning :exam:stat_learn:
++ [ ] find resources
+** TODO Statistical Learning                                      :exam:sl:
 Prof: Anna Corazza
-** WAIT Computational Complexity :exam:cc:
++ [ ] find resources
+** TODO Computational Complexity                                  :exam:cc:
 Prof: Piero Andrea Bonatti
-** WAIT Logic for Compurter Science :exam:logic:
++ [ ] find resources
+** TODO Logic for Compurter Science                            :exam:logic:
 Prof: Massimo Benerecetti
++ [ ] find resources
 ** WAIT Intelligent Web :exam:web: 
 Prof: Massimo Benerecetti
 ** WAIT Operations Research :exam:op_res:
 Prof: Paola Festa
-** WAIT Biometric System :exam:biom:
+** TODO Biometric System                                        :exam:biom_sym:
 Prof: Daniel Riccio
++ [ ] find resources
 ** WAIT Security and Privacy :exam:sec_and_priv:
 Prof: Piero Andrea Bonatti
 ** WAIT Mathematics for Cryptography :exam:crypto:
 Prof: Maurizio Laporta
 ** WAIT Algorithm Design :exam:asd:
 Prof: Massimo Benerecetti
-** TODO What to do next [0/2] :courses:
-+ [ ] See when the courses begins
-+ [ ] Choose what to do:
-  + [ ] Choose courses Optional
+** What to do next :courses:
+*** Orario
+|       Corso | Lunedì   | Martedì | Mercoledì | Giovedì  | Venerdì |
+|  8:30-10:30 |          | sl      | cc        |          |         |
+| 10:30-12:30 | biom_sym |         | nosql     |          |         |
+| 12:30-14:30 |          | cc      | logic     |          |         |
+| 14:30-16:30 |          | nosql   | sl        | biom_sym |         |
+| 16:30-18:30 |          | logic   |           |          |         |
