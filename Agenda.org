@@ -25,7 +25,7 @@
 
 * Uni :uni:
 
-** TODO Neural Network and Deep Learning [0/3]              :exam:nndl:proj:
+** PROGRESS Neural Network and Deep Learning [0/3]    :exam:nndl:proj:
 DEADLINE: <2025-02-24 Mon>
 DEADLINE: <2025-03-15 Sat>
 Prof: Roberto Prevete
@@ -46,14 +46,14 @@ Prof: Alessandro De Luca
 + [X] Do exam
 + [X] Voto $\frac {27} {30}$
   
-** TODO Database Technology (mod. A) [0/3]               :exam:db_a:
+** PROGRESS Database Technology (mod. A) [0/3]               :exam:db_a:
 SCHEDULED: <2025-03-10 Mon>
 Prof: Daniel Riccio
 + [ ] Just study
 + [ ] Find exam date (usually around the 20-th of the month)
 + [ ] Do exam
 
-** TODO Operating System for Mobile and IoT [0/3]     :exam:osmciot:
+** PROGRESS Operating System for Mobile and IoT [0/3]     :exam:osmciot:
 Prof: Silvio Barra, Porfirio Tramontana, Luigi Libero Lucio Starace
 + [ ] Do research for prof Barra
   + [ ] State your idea (blockchaing trash)
