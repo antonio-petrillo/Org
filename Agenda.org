@@ -25,37 +25,63 @@
 
 * Uni :uni:
 
-** TODO Neural Network and Deep Learning [0/3]           :exam:nndl:proj:
+** TODO Neural Network and Deep Learning [0/3]              :exam:nndl:proj:
 DEADLINE: <2025-02-24 Mon>
+DEADLINE: <2025-03-15 Sat>
+Prof: Roberto Prevete
++ [ ] Prepare presentation 
 + [ ] Contact for project info
-+ [ ] Do project
-+ [ ] Do exam
-
-** DONE Parallel and Distributed Computing [5/5]          :exam:pdc:
++ [ ] choose which proj to do
+** DONE Parallel and Distributed Computing [6/6]                  :exam:pdc:
+Prof: Marco Lapegna
 + [X] Do project 1
 + [X] Do project 2
 + [X] Do project 3
 + [X] Do project 4
-+ [X] Do exam, passed with 28/30
-
-** DONE Encoding and Encryption [2/2]                             :exam:eae:
++ [X] Do exam 
++ [X] Voto $\frac {28} {30}$
+** DONE Encoding and Encryption [3/3]                             :exam:eae:
+Prof: Alessandro De Luca
 + [X] Just freakin' study
-+ [X] Do exam, passed with 27/30
++ [X] Do exam
++ [X] Voto $\frac {27} {30}$
   
 ** TODO Database Technology (mod. A) [0/3]               :exam:db_a:
+SCHEDULED: <2025-03-10 Mon>
+Prof: Daniel Riccio
 + [ ] Just study
-+ [ ] Find exam date 
++ [ ] Find exam date (usually around the 20-th of the month)
 + [ ] Do exam
 
 ** TODO Operating System for Mobile and IoT [0/3]     :exam:osmciot:
+Prof: Silvio Barra, Porfirio Tramontana, Luigi Libero Lucio Starace
 + [ ] Do research for prof Barra
   + [ ] State your idea (blockchaing trash)
   + [ ] Maybe something positive
 + [ ] Find exam date 
 + [ ] Do exam 
 
-** TODO What to do next [0/2]                                      :courses:
+** WAIT NoSQL :exam:db_b:
+Prof: Andrea Cali
+** WAIT Statistical Learning :exam:stat_learn:
+Prof: Anna Corazza
+** WAIT Computational Complexity :exam:cc:
+Prof: Piero Andrea Bonatti
+** WAIT Logic for Compurter Science :exam:logic:
+Prof: Massimo Benerecetti
+** WAIT Intelligent Web :exam:web: 
+Prof: Massimo Benerecetti
+** WAIT Operations Research :exam:op_res:
+Prof: Paola Festa
+** WAIT Biometric System :exam:biom:
+Prof: Daniel Riccio
+** WAIT Security and Privacy :exam:sec_and_priv:
+Prof: Piero Andrea Bonatti
+** WAIT Mathematics for Cryptography :exam:crypto:
+Prof: Maurizio Laporta
+** WAIT Algorithm Design :exam:asd:
+Prof: Massimo Benerecetti
+** TODO What to do next [0/2] :courses:
 + [ ] See when the courses begins
 + [ ] Choose what to do:
-  + [ ] Mandatory
-  + [ ] Optional
+  + [ ] Choose courses Optional
