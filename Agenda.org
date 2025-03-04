@@ -1,14 +1,35 @@
 #+title: Org agenda
 #+author: Antonio Petrillo
 
-* TODO Effettua analisi [1/2]                                      :health:
+* DONE Effettua analisi [2/2]                               :health:
+CLOSED: [2025-02-26 Wed 00:42] SCHEDULED: <2025-02-24 Mon>
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2025-02-26 Wed 00:42]
+:END:
 + [X] analisi 
-+ [ ] consegna alla nutrizionista
++ [X] consegna alla nutrizionista
 
-* TODO Assemble the Charybidis [1/4]                             :proj:
+  
+* TODO Complete emacs config
++ ~make-sparse-keymap~ insead of random keys, better for maintainability and for ~which-key~ integration
++ ~org-todo-keywords~ better defined based on the context:
+  + uni: follow, examp, incourse, |, passed, abandoned
+  + book: reading, suspended, |, completed
+  + gtd: inbox, act, |, discard, schedule, store, add as a resource 
+  + todo: todo, wait, | done, cancelled
+
+* TODO Software to configure:
++ Emacs (never ending)
++ Nyxt
++ A twm for wayland
++ A twm for x11
+  
+* TODO Codecrafters Git                                              :proj:
+* TODO Codecrafters Shell :proj:
+* TODO Assemble the Charybidis [2/4]                                 :proj:
 + [X] print all parts
 + [ ] solder pcb
-+ [ ] wait for switches to arrive
++ [X] wait for switches to arrive
 + [ ] flash firmware
 
 * Reading list                                                         :book:
@@ -23,75 +44,3 @@
 *** Java Concurrency in Practice :programming:
 *** Skiena :programming:
 
-* Uni :uni:
-
-** PROGRESS Neural Network and Deep Learning [0/3]    :exam:nndl:proj:
-DEADLINE: <2025-02-24 Mon>
-DEADLINE: <2025-03-15 Sat>
-Prof: Roberto Prevete
-+ [ ] Prepare presentation 
-+ [ ] Contact for project info
-+ [ ] choose which proj to do
-** DONE Parallel and Distributed Computing [6/6]                  :exam:pdc:
-Prof: Marco Lapegna
-+ [X] Do project 1
-+ [X] Do project 2
-+ [X] Do project 3
-+ [X] Do project 4
-+ [X] Do exam 
-+ [X] Voto $\frac {28} {30}$
-** DONE Encoding and Encryption [3/3]                             :exam:eae:
-Prof: Alessandro De Luca
-+ [X] Just freakin' study
-+ [X] Do exam
-+ [X] Voto $\frac {27} {30}$
-  
-** PROGRESS Database Technology (mod. A) [0/3]               :exam:db_a:
-SCHEDULED: <2025-03-10 Mon>
-Prof: Daniel Riccio
-+ [ ] Just study
-+ [ ] Find exam date (usually around the 20-th of the month)
-+ [ ] Do exam
-
-** PROGRESS Operating System for Mobile and IoT [0/3]     :exam:osmciot:
-Prof: Silvio Barra, Porfirio Tramontana, Luigi Libero Lucio Starace
-+ [ ] Do research for prof Barra
-  + [ ] State your idea (blockchaing trash)
-  + [ ] Maybe something positive
-+ [ ] Find exam date 
-+ [ ] Do exam 
-
-** TODO NoSQL                                                  :exam:nosql:
-Prof: Andrea Cali
-+ [ ] find resources
-** TODO Statistical Learning                                      :exam:sl:
-Prof: Anna Corazza
-+ [ ] find resources
-** TODO Computational Complexity                                  :exam:cc:
-Prof: Piero Andrea Bonatti
-+ [ ] find resources
-** TODO Logic for Compurter Science                            :exam:logic:
-Prof: Massimo Benerecetti
-+ [ ] find resources
-** WAIT Intelligent Web :exam:web: 
-Prof: Massimo Benerecetti
-** WAIT Operations Research :exam:op_res:
-Prof: Paola Festa
-** TODO Biometric System                                        :exam:biom_sym:
-Prof: Daniel Riccio
-+ [ ] find resources
-** WAIT Security and Privacy :exam:sec_and_priv:
-Prof: Piero Andrea Bonatti
-** WAIT Mathematics for Cryptography :exam:crypto:
-Prof: Maurizio Laporta
-** WAIT Algorithm Design :exam:asd:
-Prof: Massimo Benerecetti
-** What to do next :courses:
-*** Orario
-|       Corso | Lunedì   | Martedì | Mercoledì | Giovedì  | Venerdì |
-|-------------+----------+---------+-----------+----------+---------|
-|  8:30-10:30 |          | sl      | cc        |          |         |
-| 10:30-12:30 | biom_sym |         | nosql     |          |         |
-| 12:30-14:30 |          | cc      | logic     |          |         |
-| 14:30-16:30 |          | nosql   | sl        | biom_sym |         |
-| 16:30-18:30 |          | logic   |           |          |         |
