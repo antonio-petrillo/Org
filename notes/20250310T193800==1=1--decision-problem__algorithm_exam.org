@@ -1,0 +1,10 @@
+#+title:      Decision Problem
+#+date:       [2025-03-10 Mon 19:38]
+#+filetags:   :algorithm:exam:
+#+identifier: 20250310T193800
+#+signature:  1=1
+
+* Decision Problem
+Chiamiamo *Decision Problem* tutti quei problemi che vengono risolti da una risposta *True/False*.
+Ad esempio:
++ Graph Reachability, ovvero se da un punto posso arrivare ad un altro

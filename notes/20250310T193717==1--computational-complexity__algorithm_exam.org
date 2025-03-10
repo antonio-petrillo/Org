@@ -1,0 +1,16 @@
+#+title:      computational complexity
+#+date:       [2025-03-10 Mon 19:37]
+#+filetags:   :algorithm:exam:
+#+identifier: 20250310T193717
+#+signature:  1
+
+* Lezione 1 <2025-03-04 Tue>
++ [[denote:20250310T193800][1=1  Decision Problem]]
++ [[denote:20250310T193957][1=2  Optimization Problem]]
+
+** Note
++ Introdurremo le macchine di Turing come meccanismo come /formal method/ per esprimere gli algoritmi da trattare
++ Nei problemi, _pratici_, esponenziali/fattoriali tipicamente gli operandi sono piccoli e quindi risultano abbastanza trattabili
+  + Ad esempio i robot che assemblano i circuiti
+
+* Lezione 2 <2025-03-11 Tue>
