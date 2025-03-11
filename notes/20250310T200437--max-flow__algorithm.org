@@ -20,5 +20,8 @@ Data un Network $N = (V, E, s, t, c)$:
 
 Il tempo è circa $O(n³C)$ (una ricerca per ogni $O(n²)$ per ogni nodo $n$) dove $C$ rappresenta la capacità massima di un arco.
 L'encoding di $C$ può essere esponenziale e rendere l'algoritmo inutile.
+Ovvero $C$ viene rappresentato in una base $b > 1$, ad esempio consideriamo $b = 2$ quindi binario, $m = \log_2(C)$ è il numero di bit necessari.
+Con $m$ bit posso rappresentare $2^m$ valori (in generale $b^m$), se consideriamo una rete in cui ad ogni iterazione il flusso aumenta sempre di $1$ per raggiungere il massimo occorrono un numero esponenziale di iterazioni.
+Questo algoritmo è falsamente polinomiale, anche detto *Pseudo Polinomiale*.
 
 Si può dimostrare che se si usa una *BFS* il costo diventa semplicemente $O(n³)$, ignorando quindi $C$.

@@ -7,6 +7,6 @@
 Racchiudono quella classe di problemi a cui serve una risposta precisa (da trovare tramite ottimizzazione).
 Ad ogni /Problema di Ottimizzazione/ è associato un [[denote:20250310T193800][1=1  Decision Problem]] più semplice.
 
-* Esempio Max Flow
+* Esempio [[denote:20250310T200437][Max Flow]]
 Trovare il flusso massimo in una rete.
 Il problema di decisione associato può essere quello di decidere (quindi con una risposta *True/False*) se un determinato valore è il flusso massimo.
