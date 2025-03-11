@@ -14,5 +14,7 @@
   + Ad esempio i robot che assemblano i circuiti
 
 * Lezione 2 <2025-03-11 Tue>
-+ Completata la trattazione del [[denote:20250310T200437][Max Flow]].
-+ 
++ Completata la trattazione del [[denote:20250310T200437][Max Flow]]
++ Introduzione al TSP (Travelsman Salesman Problem)
+
+* Lezione 3 <2025-03-12 Wed>
