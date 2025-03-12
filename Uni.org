@@ -37,11 +37,11 @@ Prof: Silvio Barra, Porfirio Tramontana, Luigi Libero Lucio Starace
 + [ ] Find exam date 
 + [ ] Do exam 
 
-** TODO NoSQL [2/5]                                       :exam:nosql:
+** TODO NoSQL [3/5]                                            :exam:nosql:
 Prof: Andrea Cali
 + [X] find resources
 + [X] iscrizione lezioni
-+ [ ] dockerize mongo-db
++ [X] dockerize mongo-db
 + [ ] dockerize neo4j (look for alternatives like datadog)
 + [ ] dockerize key-value db (like redis)
   NOTE: maybe redis is overkill and hard to setup
