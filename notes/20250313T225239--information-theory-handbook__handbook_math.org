@@ -1,0 +1,31 @@
+#+title:      Information Theory Handbook 
+#+date:       [2025-03-13 Thu 22:52]
+#+filetags:   :handbook:math:
+#+identifier: 20250313T225239
+
+* Self information
++ Eventi molto probabili contengono poca informazione
++ Eventi poco probabili contengono molta informazione
++ La somma di informazioni è additiva
+
+L'unica funzione che rispetta queste caratteristiche è:
+$$I(x) = - \log {P(x)}$$
+
+* TODO Entropia
+$$H(X) = \mathbb{E}[I(x)] = - \sum_x {P(x) \log {P(x)}} = \sum_x { P(x) \log {\frac 1 {P(x)}} }$$
+
+Aggiungere limite superiore ed inferiore
+
+* Kullback Leiber
+Misura quanto differiscono due variabili aleatorie
+$$D_{KL}(P || Q) = \sum_x {P(x) \log {\frac {P(x)} {Q(x)}}}$$
+
+* Informazione Mutua 
+È una versiona particolare della divergenza di Kullback Leiber, in particolare misura quanto sono indipendenti due variabili aleatorie.
+Ciò avviene ponendo (date due variabili aleatorie $X, Y$):
++ $P(X, Y) = p(x,y) $
++ $Q(X, Y) = p(x)p(y)$
+
+Quindi:
+$$I(p(x,y) || p(x)p(y)) = \sum_{x, y} {p(x, y) \log {\frac {p(x, y)} {p(x) p(y)}}}$$
+

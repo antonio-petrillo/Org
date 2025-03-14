@@ -1,0 +1,48 @@
+#+title:      Deep Learning (Ian Goodfellow)
+#+date:       [2025-03-13 Thu 13:09]
+#+filetags:   :ai:book:exam:logbook:
+#+identifier: 20250313T130942
+
+* Target
+Learn up to CNN for NNDL course.
+
+* Intro
++ I primi approcci alla IA risultavano limitate dato che non riuscivano ad estrapolare informazioni dai dati (vedi GEB)
++ Ogni pezzo di informazione riguardo un oggetto è detto feature
++ Molti problemi risultano più semplici se ci concentriamo sulle giuste feature, e di conseguenza le reti neurali risultano migliori se allenate su quei parametri
+
+Separare linearmente i punti può essere molto più facile con la giusta rappresentazione.
+In quella cartesiana sulla destra servono molte rette (e di conseguenza svariati calcoli), mentre in quella polare ne basta una a separare i due colori.
+[[../assets/rapresentation-matter.png]]
+
+Uno degli esempi migliori (e più famoso) di rete neurale sono i *Feed Forward Multi Layer Perceptron* (MLP).
+
+** Remark
++ Deep Learning is a _kind_ of Machine Learning
++ Deep Learning represent the world as an hierarchy of concepts31
+
+* Chapter 1 
++ Tensor: just an n-dimensional array, apparently in this contex $n=3$
++ Una matrice per essere invertibile deve avere righe e colonne indipendenti:
+  + Equivale a dire che $det(A) \ne 0$ e $A$ è una matrice quadrata
+  
+* Chapter 2,3,4
+Recap su concetti di algebra lineare, statistica ed analisi.
++ [[denote:20250313T225011][Handbook]]
+
+* Appendix
+** Python env
+Create environment:
+#+begin_src sh
+python -m venv /path/to/where/create/env
+#+end_src
+
+Activate environment:
+#+begin_src sh
+source /path/to/where/create/env/bin/activate
+#+end_src
+
+Exit env (~C-d~ works fine):
+#+begin_src sh
+deactivate
+#+end_src

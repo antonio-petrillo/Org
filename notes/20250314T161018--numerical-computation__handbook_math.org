@@ -1,0 +1,5 @@
+#+title:      Numerical Computation
+#+date:       [2025-03-14 Fri 16:10]
+#+filetags:   :handbook:math:
+#+identifier: 20250314T161018
+

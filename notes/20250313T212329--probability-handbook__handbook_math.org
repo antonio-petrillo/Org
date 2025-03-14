@@ -1,0 +1,170 @@
+#+title:      Probability handbook
+#+date:       [2025-03-13 Thu 21:23]
+#+filetags:   :handbook:math:
+#+identifier: 20250313T212329
+
+* Discrete Variables
+Una variabile discreta é descritta da una funzione di *Massa di Probabilità* anche detta *PMF* (/Probability Mass Function/).
+Si denota con $P(\mathbb{X})$, oppure (io preferisco questa) $P(\mathbb{X} = x)$, ovvero che la variabile aleatoria $\mathbb{X}$ assuma il valore $x$.
+La notazione $x ~ P(\mathbb{X})$ indica che $x$ segue la distribuzione $P(\mathbb{X})$.
+
++ I valori di $P$ sono tutti i possibili valori di $\mathbb{X}$.
++ $\forall x \in \mathbb{X} 0 \le P(\mathbb{X}) \le 1$
++ $\sum_{x \in \mathbb{X}} P(x) = 1$
+
+** Distribuzione uniforme
+Ogni elemento di $\mathbb{X}$ ha la stessa probabilità di /uscire/.
++ $P(\mathbb{X} = x_i) = \frac 1 k$, dove $||\mathbb{X}|| = k$
++ $\sum_i P(\mathbb{X} = x_i) = \sum_i \frac 1 k = \frac k k = 1$
+
+* Continous Variables
+Simili a quelle discrete ma si applicano al continuo (grazie al cazzo).
+In questo caso di parla di *Densità di Probabilità*, anche detta *PDF* (Probability Density Function).
+
++ I valori di $p$ sono tutti i possibili valori di $\mathbb{X}$.
++ $\forall x \in \mathbb{X} 0 \le p(\mathbb{X}) \le 1$
++ $\int_{x \in \mathbb{X}} p(x) = 1$
+
+** Distribuzione uniforme
+Ogni elemento di $\mathbb{X}$ ha la stessa probabilità di /uscire/, in questo caso si considera la probabilità che $x$ sia in un intervallo $[a, b]$, ovvero $_{[a, b]}p(x) dx$.
+$u(x; a, b)$, qui $a$ e $b$ sono gli estremi dell'intervallo ($a < b$), il $;$ indica che $u$ è parametrizzato da $u$.
+Se $x \notin [a, b]: u(x; a, b) = 0$, altrimenti $x \in [a, b] : u(x; a, b) = \frac 1 {b - a}$.
+Notiamo che si integra in $1$.
+
+Con $x \sim U(a, b)$ indichiamo che $x$ si distribuisce uniformemente in $[a, b]$.
+
+* Probabilità marginalle
+$\forall x \in \mathbb{X}, P(\mathbb{X} = x) = \sum_y P(\mathbb{X} = x, \mathbb{Y} = y)$
+$\forall x \in \mathbb{X}, p(\mathbb{X} = x) = \int_y p(\mathbb{X} = x, \mathbb{Y} = y) dy$
+
+* Probabilità condizionata
+$$P(a | b) = \frac {P(a, b)} {P(b)}$$
+$$P(a,b) = P(a| b) P(b)$$
+$$P(a,b) = P(b| a) P(a)$$
+$$P(a,b) = P(b| a) P(a)$$
+
+* Indipendenza condizionata
+Due variabili $x, y$ sono indipendenti dato $z$ se:
+$$\forall x \in \mathbb{X}, \forall y \in \mathbb{Y}, \forall z \in \mathbb{Z}, P(\mathbb{X} = x, \mathbb{Y} = y | \mathbb{Z} = z) = P(\mathbb{X} = x | \mathbb{Z} = z) P(\mathbb{Y} = y | \mathbb{Z} = z)$$
+In questo caso $\mathbb{X},\mathbb{Y},\mathbb{Z}$ formano una catena di Markov
+$$\mathbb{X} \rightarrow \mathbb{Y} \rightarrow \mathbb{Z}$$
+
+* Teorema di Bayes
+Dati:
+$$P(b| a) P(a) = P(a| b) P(b)$$
+
+$$P(b| a) = \frac {P(a| b) P(b)} {P(a)}$$
+
+* Chain Rule
+$$P(x^{(1)}, \cdots, x^{(n)}) = P(x^{(1)}) \prod_{i=2}^n P(x^{(i)} | x^{(1)}, \cdots, x^{(i - 1)})$$
+Esempi:
++ $P(a, b, c) = P(a | b, c) P(b, c)$
++ $P(b, c) = P(b | c) P(c)$
++ $P(a, b, c) = P(a | b, c) P(b | c) P(c)$
++ $P(a, b | c) = P( a | b, c) P( b | c)$
++ $P(a, b, c) = P(a, b | c) P(c) = P(a | b, c)P(b | c)P(c)$
+
+* Valore atteso (Media $\mathbb{E}$)
+$$\mathbb{E}_{x \sim P(f(x))} = \sum_x {P(x) f(x)}$$
+$\mathbb{E}_{x \sim p(f(x))} = \int_x {p(x) f(x)} dx$
+
+Il valore atteso è lineare:
+$$\mathbb{E}[\alpha f(x) + \beta g(x)] = \alpha\mathbb{E}[f(x)] + \beta\mathbb{E}[g(x)]$$
+
+* Varianza (Deviazione standard al quadrato $\sigma$)
+$$Var(f(x)) = \mathbb{E}[(f(x) - \mathbb{E}[f(x)])^2]$$
+$$\sigma = \sqrt {Var(f(x))}$$
+
+* Covarianza
+Indica quanto due variabili siano linearmente dipendenti.
+$$Cov(f(x), g(y)) = \mathbb{E}[(f(x) - \mathbb{E}[f(x)]) (g(y) - \mathbb{E}[g(y)])]$$
+
+Notiamo che
+$$Cov(f(x), f(x)) = Var(f(x))$$
+
+* Distribuzione di probabilità
+** Bernoulli  
++ $\mathbb{X}=\{0, 1\}$
++ $P(X = 0) = p$
++ $P(X = 1) = 1 - p$
++ $P(X = x) = p^{x}(1 - p)^{1 - x}$
++ $\mathbb{E}_{\mathbb{X}} = p$
++ $Var_{\mathbb{X}}(x) = p(1-p)$
++ $H(x) = (p - 1)\log(p - 1) - p \log p$
+  
+** Multinoulli e Multinomiale
+Simile alla bernoulliana, gli stati possibili anzichè 2 (ovvero 0 o 1) sono $k$, quindi $\{0, \cdots, k - 1\}$.
+Viene usata per definire le probabilità quando si ha una serie di oggetti enumerati.  
+Ogni stato $i$ ha un probabilità $p_i$.
+La probabilità si calcola come il dot product del vettore p per quello unitario:
+$$1^Tp$$
+La trasposta è solo per il formalismo matematico.
+La differenza tra /multinoulli/ e /multinomiale/ è che la prima ogni stato viene visitato una sola volta, mentre nel secondo si conta quante volte si presenta una stato.
+Per specificare meglio il secondo caso, si ha un set di stati e da essi se ne prende un campione, la multinomiale considera le varie ripetizioni degli stati più probabili. 
+
+** Gaussian (Normale)
+È la variabile aleatoria continua più utilizzata.
+
+$$\mathcal{N}(x| \mu, \sigma^2) = \sqrt{\frac 1 {2\pi\sigma^2}} e^{- \frac {(x - \mu)^2} {2\sigma^2}}$$
+
+I parametri che controllano la normale sono:
++ $\mu \in \mathbb{R}$ a cui è associata la media della distribuzione 
++ $\sigma \in \mathbb{R}^+$ a cui è associata la deviazione standard (ovvero $Var(X) = \sigma^2$)
+
+Per valutare la /PDF/ dobbiamo elevare al quadrato ed invertire $\sigma$, questo può essere costoso se eseguito molte volte, per ridurre il numero di operazioni si può parametrizzare con $\beta \in \mathbb{R}^+$
+$$\mathcal{N}(x| \mu, \frac 1 \beta) = \sqrt{\frac \beta {2\pi}} e^{- \frac {1} {2} \beta(x - \mu)^2}$$
+
+Questa distribuzione è utile nel caso in cui non si abbiano ulteriori informazioni riguardo la distribuzione dei dati.
+Per la legge dei grandi numeri qualsiasi distribuzione abbastanza grande tende a distribuirsi come la /Normale/.
+
+La normale multivariata è la generalizzazione della normale in $\mathbb{R}^n$.
+Viene parametrizzata con $\mu$, il vettore delle medie delle variabili aleatorie, e $\Sigma$ ovvero una *matrice simmetrica* che rappresenta la matrice di *covarianza* delle variabili.
+
+$$\mathcal{N}(x| \mu, \Sigma) = \sqrt{\frac 1 {2\pi^n det(\Sigma)}} e^{- \frac {1} {2} (x - \mu)^T\Sigma^{-1}(x - \mu)$$
+
+Anche questa forma può risultare costosa da calcolare, ssi può approssimare con la *matrice di precisione* $\beta$
+$$\mathcal{N}(x| \mu, \beta^{-1}) = \sqrt{\frac {det(\beta)} {2\pi^n}} e^{- \frac {1} {2} (x - \mu)^T\beta(x - \mu)$$
+
+** Esponenziale
+Usata per modellare processi con un forte picco iniziale che successivamente tende a 0, come ad esempio la vita di una batteria.
+$$p(x;\lambda )={\begin{cases}\lambda e^{-\lambda x}&x>0,\\0&x\leq 0.\end{cases}}$$
+
+** Laplace
+Simile all'esponenziale ma ci permette di posizionare il picco intorno al punto $\mu$.
+$$p(x; \mu, \lambda) = \frac 1 {2\lambda} e^{- \frac {|x - \mu|} {\lambda}}$$
+
+Si può pensare a questa distribuzione come una doppia esponenziale.
+
+** Dirac
+Usata quando vogliamo specificare che tutta la massa si raggruppa intorno ad un singolo punto.
+Questa distribuzione viene definita tramite la funzione $\delta$ di Dirac.
+$$p(x) = \delta(x - \mu)$$
+
+La funzione $\delta$ di Dirac vale $0$ ovunque tranne che in nel punto di cluster (anche detto $0$), ma comunque si integra in $1$, $\int \delta(x) dx = 1$
+L'uso più frequente è quello della *distribuzione empirica*.
+$$\hat p(x) = \frac 1 n \sum_{i = 1}^n \delta(x - x_i)$$
+
+
+* Useful properties of Common Functions 
+** Logistic Sigmoid
+Questa funzione viene spesso usata per generare la $\phi$ per una distribuzione Bernoulliana dato che i suoi valori sono tutti in $(0,1)$
+$$\sigma(x)= \frac 1 {1 + e^{-x}}$$
+
+** Softplus
+È utile per generare  $\mu$ o $\beta$ per una distribuzione /Normale/.
+Emerge spesso quando si manipolano espressioni con la *sigmoide*.
+$$\zeta(x) = \log(1 + e^{x})$$
+
+Il nome deriva dal fatto che è una versione smooth di
+$$x^+ = max(0, x)$$
+
+** Properties 
++ $\sigma(x) = \frac {e^x} {e^x + e^0}$
++ $\frac d {dx} \sigma(x) = \sigma(x) (1 - \sigma(x))$
++ $1 - \sigma(x) = \sigma(-x)$
++ $\log \sigma(x) = - \zeta(-x)$
++ $\frac d {dx} \zeta(x) = \sigma(x)$
++ $\forall x \in (0, 1), \sigma^{-1}(x) = \log(\frac x {1 - x})$
++ $\forall x > 0, \zeta^{-1}(x) = \log(e^x - 1)$
++ $\zeta(x) - \zeta(-x) = x$
++ $\sigma^{-1}(x)$ è anche detta funzione *logit*
