@@ -3,3 +3,5 @@
 #+filetags:   :handbook:math:
 #+identifier: 20250314T161018
 
+* Softmax
+$$softmax(x)_i = \frac {e^{x_i}} {\sum_{j}^n e^{x_j}}$$
