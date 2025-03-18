@@ -1,6 +1,6 @@
 #+title:      Bit Algorithms
 #+date:       [2024-04-24 Wed 14:07]
-#+filetags:   :algorithm:math:programming:
+#+filetags:   :algorithm:math:meta:programming:
 #+identifier: 20240424T140717
 
 * Algorithms

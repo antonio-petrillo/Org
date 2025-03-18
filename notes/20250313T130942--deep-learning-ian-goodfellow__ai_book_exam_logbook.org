@@ -30,6 +30,74 @@ Uno degli esempi migliori (e più famoso) di rete neurale sono i *Feed Forward M
 Recap su concetti di algebra lineare, statistica ed analisi.
 + [[denote:20250313T225011][Handbook]]
 
+* Chapter 5
+Risolvere un Task ~T~
++ Machine Learning solve problems that are much harder to solve with a /classical program/
++ Problemi risolvibili con ML:
+  + Classificazione:
+    + Data un oggetto capire a quale fra $k$ possibili classi appartiene
+    + Il processo di aprendimento parte da una set di feature $n$ dalla quale estrarre informazione 
+    + L'output sarà una funzione discrimante fra le $k$ classi
+  + Regression:
+    + Dato un spazio n-dimensionale suddividerlo tramite un hyperpiano
+    + Si può vedere come un caso speciale di /Classificazione/ con sole 2 classi (il processo di apprendimento è diverso) 
+
+** Regression
+I problemi di regressione di solito sono del tipo:
++ $x \in \mathbb{R}^n$ in input
++ predire il valore $y$ di output
++ Nella regressione lineare, l'output è una funzione lineare
+
+Definiamo l'output come:
+$$\hat y = w^Tx$$
+  
+Dove $w$ sono i parametrin input del ML, i vari $w_i$ sono i pesi da associare ad ogni caratteristica in input (questo è comune a molti processi di ML).
+Nota che indichiamo l'output con $\hat y$ perchè è una predizione, quindi non è detto che sia il valore reale di output $y$. 
+
+*** Task ~T~
+Predirre $y$ tramite $\hat y = w^Tx$.
+
+*** Stima della predizione
+**** Regressione lineare
+
+Per stimare l'efficienza della rete possiamo utilizzare la **media delle distanze** tra l'output ed il valore atteso (noto a priori).
+$$MSE_{test} = \frac 1 m \sum_{i} (\hat y^{test}_i - y^{test}_i)^2$$
+Possiamo esprimere questo stimatore anche tramite la funzione di norma quadra.
+$$MSE_{test} = \frac 1 m ||\hat y^{test} - y^{test}||_2$$
+
+Come allenare il modello?
+
+L'idea più semplice è quello di minimizzare la norma fra la predizione e il valore atteso, quindi corrisponde a minimizzare il gradiente:
+
+$$\nabla_w MSE_{train} = 0$$
+$$\nabla_w \frac 1 m ||\hat y^{(train)} y^{(train)}||_2 = 0$$
+$$ \frac 1 m \nabla_w ||X^{(train)}w - y^{(train)}||_2 = 0$$
+$$ \frac 1 m \nabla_w (X^{(train)}w - y^{(train)})^T(X^{(train)}w - y^{(train)}) = 0$$
+$$ \nabla_w (X^{(train)}w - y^{(train)})^T(X^{(train)}w - y^{(train)}) = 0$$
+Dato che vogliamo minimizzare $\nabla \cdots$ il fattore $\frac 1 m$ è ininfluente.
+$$\nabla_w (w^TX^{(train)}^TX^{(train)}w -2w^TX^{(train)}^Ty^{(train)} - y^{(train)}^Ty^{(train)})$$
+$$2X^{(train)}^TX^{(train)} -2X^{(train)}^Ty^{(train) = 0$$
+$$w = (X^{(train)}^TX^{(train)}^{-1}X^{(train)}y^{(train)}$$
+
+Quindi possiamo aggiornare i pesi con
+
+$$\hat y = w^T x + b$$
+** Misura delle performace ~P~
+Supponiamo di voler risolvere un task ~T~, indichiamo con ~P~ una misura di quanto accurata sia la rete ML, chiamiammo questa misura *Accurancy*.
+La si può calcolare in due modi:
+1. Proporzione fra gli output per cui la rete ha risposto correttamente
+2. Proporzione fra gli output per cui la rete ha risposto male
+
+Siamo interessati a come la rete risponde /into the wilds/ (nei casi reali quindi) quindi i dati su cui misuriamo gli errori non possono essere quelli dell'allenamento.
+
+Questo è uno degli aspetti più complicati del ML e Deep Learning (DL).
+
+** The experience ~E~
+È il processo di estrarre informazione da un *dataset*.
+Esistono due metodi di apprendimento:
+1. Supervised, ogni entry del dataset è labellato (ha quindi /la soluzione/), in pratica gli stiamo dicendo cosa imparare
+2. Unsupervised, la rete non riceve istruzioni di nessun tipo, in questo modo estrapola informazioni in modo autonomo dai dati, può anche trovare pattern a noi sconosciuti
+
 * Appendix
 ** Python env
 Create environment:

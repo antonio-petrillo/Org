@@ -1,0 +1,14 @@
+#+title:      Turing Machines
+#+date:       [2025-03-18 Tue 12:40]
+#+filetags:   :math:
+#+identifier: 20250318T124043
+#+signature:  1=3
+
+* Definizione Macchine di Turing
+$$M = (K, \Sigma, \delta, s)$$
+Dove:
++ $K$ è l'insieme degli stati
++ $s \in K$ lo stato iniziale
++ $\Sigma$ è un'insieme finito di simboli (l'alfabeto della macchina)
++ $\delta$ è la funzione di transizione (il programma da eseguire)
+  $$\delta : K \times K \rightarrow (K \cup \{"yes", "no", h\}) \times \Sigma \times \{\leftarrow, \rightarrow, - \}$$

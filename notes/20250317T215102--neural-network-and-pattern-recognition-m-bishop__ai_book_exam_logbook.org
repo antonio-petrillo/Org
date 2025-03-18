@@ -1,0 +1,28 @@
+#+title:      Neural Network and Pattern Recognition (M. Bishop)
+#+date:       [2025-03-17 Mon 21:51]
+#+filetags:   :ai:book:exam:logbook:
+#+identifier: 20250317T215102
+
+* Chapter 1
+** Curse of dimensionality
+Più aumento le dimensioni più i dati che ho diventano sparsi e questo genera una rappresentazione molto sparsa del nostro problema.
+** Tipi di learning
++ Supervised:
+  Il processo di apprendimento /Supervised/ si ha quando abbiamo un dataset in cui ogni entry è labellata.
++ Unsupervised:
+  Non possiede (o ignora) il campo target del dataset così la rete estrae da sola le informazioni dai dati (in alcuni contesti i risultati di questi due primi approcci sono uguali).
++ Reinforcement:
+  Migliora con l'utilizzo, ad ogni output la rete chiede quanto fosse accurata la predizione ed aggiusta i parametri di conseguenza.
+** Error
+Una delle formule più usate (ed intuitive) per calcolare l'errore è:
+\begin{equation*}
+E = \frac 1 2 \sum_{n=1}^{N} (y(x^{(n)}; w) - t^{(n)})^2
+\end{equation*}
+In questa formula $x^{(n)}$ e $t^{(n)}$ sono da considerarsi elementi del dataset, $x$ è l'input, mentre $t$ è il valore atteso.
+Questa funzione di errore misuare la distanza tra il valore ottenuto e quello atteso.
+** Generalization
+Per stimare la capacità di un polinomio di generalizzare su nuovi dati (non visti quindi) è conveniente considerare il *root-mean-square* error (*RMS*).
+\begin{equation*}
+E^{RMS} = \sqrt{\frac 1 N \sum_{n=1}^{N} (y(x^{(n)}; w^*) - t^{(n)})^2}
+\end{equation*}
+Dove $w^*$ rappresenta il vettore che minimizza l'errore, notiamo che tutti gli altri parametri sono fissi e quindi $w$ è l'unico valore a variare.
