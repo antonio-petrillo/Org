@@ -3,9 +3,13 @@
 #+filetags:   :ai:book:exam:logbook:
 #+identifier: 20250317T215102
 
-* Chapter 1
-** Curse of dimensionality
-Più aumento le dimensioni più i dati che ho diventano sparsi e questo genera una rappresentazione molto sparsa del nostro problema.
+* Chapter 1 [6/6]
++ [X] Section 1
++ [X] Section 2
++ [X] Section 3
++ [X] Section 4
++ [X] Section 8
++ [X] Section 9
 ** Tipi di learning
 + Supervised:
   Il processo di apprendimento /Supervised/ si ha quando abbiamo un dataset in cui ogni entry è labellata.
@@ -26,3 +30,106 @@ Per stimare la capacità di un polinomio di generalizzare su nuovi dati (non vis
 E^{RMS} = \sqrt{\frac 1 N \sum_{n=1}^{N} (y(x^{(n)}; w^*) - t^{(n)})^2}
 \end{equation*}
 Dove $w^*$ rappresenta il vettore che minimizza l'errore, notiamo che tutti gli altri parametri sono fissi e quindi $w$ è l'unico valore a variare.
+** Classificatori
+I *classificatori,* preso un input ci dicono a quale classe (finita enumerabile) appartiene, usata in problemi che richiedono 2 o più risposte.
+Ad esempio compro/non compro, riconosci gli elementi nell'immagine e così via.
+Vengono modellati con funzioni con la seguente firma:
+$$y_k = y_k(x; w)$$
+Dove $y_k$ indica che è la funzione discriminante per la classe $k$ mentre $w$ indica i pesi.
+La soluzione dei classificatori sono un set di funzioni discriminanti.
+** Regressori
+I regressori preso un input restituiscono un valore numerico.
+Ad esempio, sapendo che questi sono i movimenti del mercato predici le fluttuazioni per domani.
+$$y = y(x; w)$$
+La $w$ sono sempre i pesi, qui l'output è un valore.
+I regressori dividono lo spazio tramite hyperpiani.
+** Feature Extraction
+Prima di dare i dati in input li si pre processa per /renderli più maneggevoli/.
+Le reti *Convoluzionali* fanno qualcosa di simile ma in modo autonomo.
+** Curse of dimensionality
+Più aumento le dimensioni più i dati che ho diventano sparsi e questo genera una rappresentazione molto sparsa del nostro problema
+** Usare il teorema di Bayes per la classificazione
+Consideriamo un classificatore binario, quindi con $k=2$ classi ed un dataset con $l = 8$ feature.
+Indico con $C_k$ le classi e $X^l$ le feature, il numero nelle celle indica quanti elementi del dataset sono effettivamente in quella classe
+
+| P(C_k,X^l) | X^1 | X^{2} | X^{3} | X^{4} | X^{5} | X^{6} | X^{7} | X^{8} |
+|------------+-----+-------+-------+-------+-------+-------+-------+-------|
+| C_1        |   2 |     6 |     7 |     6 |     2 |     1 |     0 |     0 |
+| C_2        |   0 |     0 |     0 |     1 |     3 |     5 |     4 |     2 |
+|------------+-----+-------+-------+-------+-------+-------+-------+-------|
+
+Sommando una singola riga otteniamo la probabilità di appartenere a quella classe $P(C_1) = \sum_{i=1}^{8} P(C_1, X^i)$.
+La $P(C_k)$ è probabilità a posteriori di una singola classe.
+La singola cella è la probabilità congiunta $P(C_k, X^l)$.
+
+
+Usiamo Bayes.
+1. $P(X^l | C_k) = \frac {P(C_k, X^l)} {P(C_k)}$
+2. $P(C_k | X^l) = \frac {P(C_k, X^l)} {P(X_l)}$
+
+A noi interessa la seconda formula, ma è difficile da calcolare su dati empirici, possiamo semplificare il calcolo tramite la formula di Bayes.
+$$P(C_k | X^l) = \frac {P(X^l | C_k) P(C_k)} {P(X^l)}$$
+Cosa dice questa formula?
+$P(C_k|X^l)$ è la probabilità di appartenere alla classe $C_k$ dato che abbiamo osservato la feature $X^l$.
+In altre parole ci da la probabilità che il pattern appartenghi alla classe $C_k$ una volta osservato il vettore di feature $X^l$.
+
+La probabilità $P(X^l)$ può essere espressa come:
+$$P(X^l) = P(X^l | C_1)P(C_1) + P(X^l | C_2)P(C_2)$$
+** Bayes in generale
+Update the *degree of belief* starting from prior and observing a new event:
+\begin{equation*}
+posterior = \frac {likelihood \times prior} {normalization\_factor}
+\end{equation*}
+** Decision Boundary
+Per *minimizzare* l'errore di misclassificazione possiamo prendere la classe che *massimizza* la probabilità a posteriori.
+Osservando /feature vector x/ minimizziamo l'errore scegliendo la probabilità a posteriori tale che:
+\begin{equation*}
+P(C_i | x) > P(C_j | x), \forall i \ne j
+\end{equation*}
+Notiamo che $p(x)$ può essere semplificato.
+Riscrivendo tramite la formula di bayes:
+\begin{equation*}
+P(x|C_i)P(C_i) > P(x | C_j) P(C_j)
+\end{equation*}
+Possiamo quindi dividere lo spazio in varie *decision region* chiamiamo *decision boundaries* le /zone di confine/ tra queste regioni.
+Questa tecnica ci da un modo di stimare a quale classe appartengono i vettori $x$ in input.
+*** Osserviamo l'errore
+Consideriamo sempre un caso con 2 sole classi per semplificare la notazione.
+$$P(error) = P(x \in R_2, C_1) + P(x \in R_1, C_2)$$
+$$P(error)= P(x \in R_2 | C_1) P(C_1) + P(x \in R_1 | C_2) P(C_2)$$
+$$P(error)= \int_{R_2} p(x|C_1)P(C_1) dx + \int_{R_1} p(x|C_2)P(C_2) dx$$
+[[../assets/misclassification-error.png]]
+
+Minimizzare l'errore equivale a minimizzare l'area di /overlapping/
+*** Minimizzare l'errore
+$$P(correct) = \sum_{k=1}^{c} P(x \in R_k, C_k)$$
+$$P(correct) = \sum_{k=1}^{c} \int_{R_k} p(x|C_k)P(C_k) dx$$
+Questa probabilità come accennato sopra è minimizzata, scegliendo $R_k$ tale che $x$ viene assegnato a $R_k$.
+*** Discriminant functions
+Possiamo usare le formule indicate sopra per costuire un set di funzioni discriminanti.
+All'atto pratico non possiamo integrare come in analisi, o comunque non abbiamo tutti questi dati.
+* Chapter 2
+Just a recap on probability and statistics.
+
+* Chapter 3 - Single Layer Neuron [0/3]
++ [ ] Section 1
++ [ ] Section 2
++ [ ] Section 5
+* Chapter 4 - Multi Layer Perceptron [0/4]:
++ [ ] Section 1
++ [ ] Section 2
++ [ ] Section 3
++ [ ] Section 8
+* Chapter 6 - Error Functions [0/4]:
++ [ ] Section 1
++ [ ] Section 6
++ [ ] Section 7
++ [ ] Section 9
+* Chapter 7 - Parameter Optimization Algorithm [0/3]:
++ [ ] Section 1
++ [ ] Section 4
++ [ ] Section 5
+* Chapter 8 - Pre processing and feature extractions [0/3]:
++ [ ] Section 1
++ [ ] Section 2
++ [ ] Section 5
