@@ -117,6 +117,85 @@ Just a recap on probability and statistics.
 + [ ] Section 5
 ** Intro
 Come accennato nel capitolo 1, invece che calcolare le funzioni discriminanti (espresse tramite la Bayes Rule) si approssimano a partire da untraining set (quindi a partire da dati).
+Le funzioni discriminanti possono essere approssimate da funzioni parametriche (anzichè calcolare le densità di probabilità) in cui cerchiamo un valore appropriato per i parametri.
+** Two Classes
+Come detto $x$ viene messa in $C_1$ se $y(x) > 0$ ed in $C_2$  se $y(x) < 0$ (con 2 classi basta una funzione discriminante).
+The simplest choice is:
+$$y(x) = w^Tx + w_0$$
+Dove $w$ sono i pesi e $w_0$ è il bias.
+La regione di decisione è $y(x) = 0$, che rappresentda un hyperpiano $d-1$ dimensionale ($|w| = d$).
+In altre parole se abbiamo punti in 3d, l'iperpiano è un piano, se abbiamo punti in 2d l'iperpiano è una retta, se abbiamo punti in 4d l'iperpiano è un volume e così via.
+Dati $x^A$ e $x^B$ due vettori sull'iperpiano abbiamo:
+$$y(x^A) = 0 = y(x^B) \iff w^T(x^A - x^B) = 0$$
+$w$ è normale ad ogni punto sull'hyperpiano, $w$ indica l'orientazione del piano.
+
+Sia $x$ un punto sull'hyperplane la distanza dal centro è data da:
+$$l = \frac {w^Tx} {||w||} = - \frac {w_0} {||w||}$$
+
+Il bias $w_0$ rappresenta l'offset dell'iperpiano (distanza dal centro dell'iperpiano).
+[[../assets/geom-bias.png]]
+
+Spesso includiamo il bias nel vettore $w$ (ovver $\hat w = <w_0, w>$), da cui:
+$$y(x) = \hat w^Tx$$
+** More than 2 classes ($k$ classes)
+In questo caso possiamo considerare:
+$$y_k(x) = w^T_kx + w_{k_0}$$
+
+L'hyperplane ha la forma:
+$$(w_k - w_j)^Tx + (w_{k_0} - w_{j_0}) = 0$$
+
+La distanza dall'origine è:
+$$-\frac {(w_{k_0} - w_{j_0})} {||w_k - w_j||}$$
+
+Gli output sono:
+$$\sum_{i=1}^{d} w_{ki}x_i + w_{k_0}$$
+
+Includendo il bias tra gli input (dandogli $w_0 = 1$ per non alterarlo).
+$$\sum_{i=0}^{d} w_{ki}x_i$$
+
+Abbiamo così realizzato una *Full Connected Network*.
+[[../assets/full-conn-net.png]]
+** Logistic Discrimination
+Per come abbiamo definito $y_k$ è una funzione lineare, questo non basta per il machine learning, vogliamo si che questo output lineare passi attraverso una funzione altamente non lineare.
+$$y_k(x) = g(w^T_kx + w_{k_0})$$
+$g$ è la *activation function* (funzione di attivazione).
+
+*** Sigmoide (Logistic Sigmoid)
+Una delle funzioni più utilizzate è la *sigmoide*
+$$sigmoid(a) = \frac 1 {1 + e^{-a}}$$
+
+Possiamo derivare la sigmoide con il seguente processo, sempre nel caso di classificazione a 2 classi e poi si generalizza da li.
+Consideriamo una classificazione a 2 classi, le classi sono distribuite secondo la *normale* con la stessa matrice di covarianza, $\Sigma_1 = \Sigma_2 = \Sigma$, tale che:
+$$p(x | C_k) = \frac 1 {(2\pi)^{\frac d 2} |\Sigma|^{\frac 1 2}} e^{- \frac 1 2 (x - \mu_k)^T\Sigma^{-1}(x - \mu_k)}$$
+
+Da cui
+
+$$p(C_1 | x) = \frac {p(x | C_1) P(C_1)} {p(x | C_1) P(C_1) + p(x | C_2) P(C_2)}$$
+
+Dividiamo tutto a destra per $p(x | C_1) P(C_1)$ e otteniamo
+$$p(C_1 | x) = \frac {1} {1 + \frac {p(x | C_2) P(C_2)} {p(x | C_1) P(C_1)
+}}$$
+
+Ponendo
+$$a = \ln \frac {p(x|C_1)P(C_1)} {p(x|C_2)P(C_2)}$$
+Otteniamo
+$$p(C_1|x) = \frac 1 {1 + e^{-a}}$$
+
+Questo mostra che possiamo usare la sigmoide al posto delle funzioni di densità
+*** Heaviside Step Function
+Questa modella il modo in cui funziona il sistema nervoso:
+
+\begin{equation*}
+g(a) =
+\begin{cases}
+0 & \text{when a < 0}\\
+1 & \text{when a $\ge$ 0}
+\end{cases}
+\end{equation*}
+
+Quando un neurone supera un certo threshold /fire/ (si attiva), vedi *Gödel, Escher, Bach*.
+
+Le prime reti ad utilizzare questa funzione di attivazione sono noti come *PERCEPTRON*.
 * Chapter 4 - Multi Layer Perceptron [0/4]:
 + [ ] Section 1
 + [ ] Section 2
