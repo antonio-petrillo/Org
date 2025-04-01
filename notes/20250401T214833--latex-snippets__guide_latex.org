@@ -1,0 +1,23 @@
+#+title:      Latex Snippets
+#+date:       [2025-04-01 Tue 21:48]
+#+filetags:   :guide:latex:
+#+identifier: 20250401T214833
+
+* Reosources
++ [[https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols]]
+* Align equation on =
+#+begin_src latex
+\begin{align*}
+a &= b \\
+  &=c \\
+  &= d.
+\end{align*}
+#+end_src
+
+Preview:
+
+\begin{align*}
+a &= b \\
+  &=c \\
+  &= d.
+\end{align*}

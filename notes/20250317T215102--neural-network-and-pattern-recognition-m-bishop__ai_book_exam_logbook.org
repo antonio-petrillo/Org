@@ -315,9 +315,9 @@ Nei due casi l'approccio è differente:
 ** Efficienza
 Senza la back propagation (algoritmo) ad ogni forward saremmo costretti a propagare a ritroso solo una delle derivate rispetto all'input, considerando un input di dimensione $O(W)$ servono $O(W^2)$ operazioni (per ogni forward $O(W)$ una propagazione a ritroso $O(W)$).
 La back propagation permette di propagare a ritroso /in batch/, quindi il costo totale per aggiornare i pesi è $O(W) + O(W) = O(W)$.
-* Chapter 6 - Error Functions [1/4]
+* Chapter 6 - Error Functions [2/4]
 + [X] Section 1
-+ [ ] Section 6
++ [X] Section 6
 + [ ] Section 7
 + [ ] Section 9
 
@@ -348,6 +348,27 @@ $$p(t_{k}|x) = \frac 1 {\sqrt{2\pi\sigma^2}} e^{-\frac {\{y_k(x;w) - t_{k}^{2}\}
 Qui abbiamo sostituito $h_k$ con il modello $y_{k}(x;w)$.
 Ora abbiamo una funzione per l'errore:
 $$E = \frac 1 {2\sigma^{2}}\sum_{n=1}^{k=1}\sum_{k=1}^{c}\{y_k(x;w)^n - t^n_k\}^2 + Nc\ln\sigma + \frac {Nc} 2 \ln (2\pi)$$
+
+Notiamo che se conosciamo $w^*$ che  minimizziamo l'errore possiamo calcolare $\sigma^2$:
+$$\sigma^2 = \frac 1 {Nc} \sum_{n=1}^{N}\sum_{k=1}^{c}\{y_k(x^n, w^*)) - t_k\}^{2}$$
+$\sigma^2$ è proporzionale all'errore residuo della funzione di errore (somma dei quadrati) al suo minimo.
+
+
+L'errore dipende solo dai pesi quindi possiamo eliminare il secondo e terzo termine (ovvero $Nc\ln\sigma + \frac {Nc} 2 \ln (2\pi)$), questo ci riporta alla funzione di errore che abbiamo visto fino ad ora.
+$$E = \frac 1 {2}\sum_{n=1}^{k=1}\sum_{k=1}^{c}\{y_k(x;w)^n - t^n_k\}^2$$
+Ovvero
+$$E = \frac 1 {2}\sum_{n=1}^{k=1}||y_k(x;w)^n - t^n_k||^2$$
+** Root Mean Square
+$$E^{RMS} = \frac {\sum_n ||y_k(x^n, w^*) - t^n||^{2}}  {\sum_n||t^n - \bar t||^{2}}$$
+Dove $w^*$ rappresenta i pesi della *trained network*, $\bar t$ indica la media del test vector
+$$\bar t = \frac 1 {N'} \sum_{n = 1}^{N'} t^n}$$
+Questo valore è sempre limitato.
+Minimizzare questo errore comporta che la rete minimizza in base alla media del test set.
+** Problemi di classificazione
+Abbiamo visto il *mean square error* ed anche il *root mean square error* sono utili e minimizzano la probabilità di missclassificazione, però tutte le proprietà mostrate sono state estrapolate a partire da alcune assunzioni, come ad esempio che i dati abbiano una distribuzione normale $\mathcal{ N}$, in problemi di classificazione non è mai il caso, per questo occorre trovare una funzione di errore più adatta a questo tipo di problema.
+I problemi di classificazione vengono meglio descritti da una distribuzione Bernoulliana (2 classi) e Multinomiale (K classi).
+** Cross Entropy
+** Cross Entropy a più classi
 * Chapter 7 - Parameter Optimization Algorithm [0/3]
 + [ ] Section 1
 + [ ] Section 4
