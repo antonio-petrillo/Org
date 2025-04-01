@@ -206,7 +206,7 @@ Ad esempio lo XOR non è linearmente separabile come si può vedere:
 ** Single Layer Network (aka Perceptron)
 [[https://en.wikipedia.org/wiki/Frank_Rosenblatt][Rosenblatt]] è stato il primo ad aggiungere una funzione di attivazione non lineare all'output, in particolare basata sul /superamento della soglia/.
 Il perceptron apprende modificando i suoi parametri di input, ad ogni iterazione calcola il gradiente e modifica ogni peso in base ad esso, da notare che il tutto è moltiplicato per $\eta$ (ovvero il *learning rate*)
-* Chapter 4 - Multi Layer Perceptron [4/4]:
+* Chapter 4 - Multi Layer Perceptron [4/4]
 + [X] Section 1
 + [X] Section 2
 + [X] Section 3
@@ -306,17 +306,53 @@ Abbiamo ora un modo per calcolare $\delta_j$ a partire dai vari $\delta_k$ che r
 Da notare che $g'(a_{j})$ è locale mentre la somma viene dagli step successivi.
 *** Risorse
 + [[https://www.youtube.com/watch?v=VMj-3S1tku0][Andrej Karpathy]]
-
-* Chapter 6 - Error Functions [0/4]:
-+ [ ] Section 1
+** Aggiornamento parametri
+Una volta calcolate le derivate possiamo aggiornare i parametri, il metodo più semplice è quello del *learning rate*, ovvero di spostarsi di un certa quantità $\eta$ (tipicamente piccola) per la derivata appena calcolata.
+Si può fare in modalità *on-line* dove ogni volta che si calcola una derivata si aggiornano i pesi, oppure *batch* dove vengono aggiornati una volta calcolate tutte le derivate.
+Nei due casi l'approccio è differente:
+- Online: $\Delta w_{ji} = - \eta \delta_ix_i$
+- Batch: $\Delta w_{ji} = - \eta \frac {\sum_n\delta_i^nx_i^n} {n}$
+** Efficienza
+Senza la back propagation (algoritmo) ad ogni forward saremmo costretti a propagare a ritroso solo una delle derivate rispetto all'input, considerando un input di dimensione $O(W)$ servono $O(W^2)$ operazioni (per ogni forward $O(W)$ una propagazione a ritroso $O(W)$).
+La back propagation permette di propagare a ritroso /in batch/, quindi il costo totale per aggiornare i pesi è $O(W) + O(W) = O(W)$.
+* Chapter 6 - Error Functions [1/4]
++ [X] Section 1
 + [ ] Section 6
 + [ ] Section 7
 + [ ] Section 9
-* Chapter 7 - Parameter Optimization Algorithm [0/3]:
+
+Ricordiamo che il goal delle reti neurali non è quello di memorizzare il training set, ma quello di capire/catturare le funzioni che generano i dati.
+Il modo migliore di catturare questi generatori è conoscere $p(x, t)$ dove $x$ è l'input e $t$ il target, questa è piuttosto onerosa da calcolare e quindi calcoliamo $p(x, t) = p(t|x)p(x)$.
+Un altra formula da tenere a mente è $p(x) = \int_t p(x,t) dt$.
+Le funzioni di errore che vedremo sono basate sul fatto che le coppie $(x^{n}, t^{n})$ del dataset siano prese in modo casuale e sulla *maximum likelihood* che si può esprimere come:
+$$\mathcal{L} = \prod_n p(x^{n}, t^{n})$$
+$$\mathcal{L} = \prod_n p(t^{n}|x^{n})p(x^n)$$
+Definiamo l'errore come il logaritmo della likelihood
+$$E = -\ln \mathcal{L} = -\ln(\prod_n p(t^{n}|x^{n})p(x^{n})) = -\sum \ln (p(t^{n}|x^{n})) -\sum \ln(p(x^n))$$
+Il *meno* $-$ viene aggiunto perchè noi vogliamo spostarci nella direzione opposta rispetto all'errore.
+Come discussoin precedenza, la scelta di come implementare $p(t^n|x^n)p(x^n)$ ci da varie funzioni di errore (pratiche diciamo) che possono risolvere problemi diversi in modo più o meno accurato.
+Il termine $\sum \ln(p(x^n))$ non dipende dalla rete quindi lo possiamo ignorare.
+Siamo arrivati ad una funzione di errore del tipo
+$$E = -\sum \ln (p(t^{n}|x^{n}))$$
+** Sum of squares error
+Consideriamo un problema con $c$ classi $t_k, k \in {1, \cdots, k}$ in cui le classi target $t$ ed i dati $x$ siano indipendenti (quindi i dati li possiamo assumere distribuiti secondo una *Gaussiana*), così possiamo scrivere:
+$$p(t|x) = \prod_{k=1}^{c}p(t_{k}|x)$$
+La distribuzione gaussiana implica che $t_k$ è data da una funzione deterministica di $x$ più del rumore $\varepsilon$ gaussiano, quindi:
+$$t_k = h_k(x) + \varepsilon_k$$
+Quindi $p(\varepsilon_k)$ è:
+$$p(\varepsilon_k) = \frac 1 {\sqrt{2\pi\sigma^2}} e^{-\frac {\varepsilon_k^2}{2\sigma^2}}$$
+$\varepsilon_k$ è facilmente calcolabile:
+$$\varepsilon_k = t_k - h_k(x)$$
+Quindi la probabilità delle classi di output diventa
+$$p(t_{k}|x) = \frac 1 {\sqrt{2\pi\sigma^2}} e^{-\frac {\{y_k(x;w) - t_{k}^{2}\}}{2\sigma^2}}$$
+Qui abbiamo sostituito $h_k$ con il modello $y_{k}(x;w)$.
+Ora abbiamo una funzione per l'errore:
+$$E = \frac 1 {2\sigma^{2}}\sum_{n=1}^{k=1}\sum_{k=1}^{c}\{y_k(x;w)^n - t^n_k\}^2 + Nc\ln\sigma + \frac {Nc} 2 \ln (2\pi)$$
+* Chapter 7 - Parameter Optimization Algorithm [0/3]
 + [ ] Section 1
 + [ ] Section 4
 + [ ] Section 5
-* Chapter 8 - Pre processing and feature extractions [0/3]:
+* Chapter 8 - Pre processing and feature extractions [0/3]
 + [ ] Section 1
 + [ ] Section 2
 + [ ] Section 5
