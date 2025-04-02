@@ -315,11 +315,11 @@ Nei due casi l'approccio è differente:
 ** Efficienza
 Senza la back propagation (algoritmo) ad ogni forward saremmo costretti a propagare a ritroso solo una delle derivate rispetto all'input, considerando un input di dimensione $O(W)$ servono $O(W^2)$ operazioni (per ogni forward $O(W)$ una propagazione a ritroso $O(W)$).
 La back propagation permette di propagare a ritroso /in batch/, quindi il costo totale per aggiornare i pesi è $O(W) + O(W) = O(W)$.
-* Chapter 6 - Error Functions [2/4]
+* Chapter 6 - Error Functions [4/4]
 + [X] Section 1
 + [X] Section 6
-+ [ ] Section 7
-+ [ ] Section 9
++ [X] Section 7
++ [X] Section 9
 
 Ricordiamo che il goal delle reti neurali non è quello di memorizzare il training set, ma quello di capire/catturare le funzioni che generano i dati.
 Il modo migliore di catturare questi generatori è conoscere $p(x, t)$ dove $x$ è l'input e $t$ il target, questa è piuttosto onerosa da calcolare e quindi calcoliamo $p(x, t) = p(t|x)p(x)$.
@@ -367,8 +367,49 @@ Minimizzare questo errore comporta che la rete minimizza in base alla media del 
 ** Problemi di classificazione
 Abbiamo visto il *mean square error* ed anche il *root mean square error* sono utili e minimizzano la probabilità di missclassificazione, però tutte le proprietà mostrate sono state estrapolate a partire da alcune assunzioni, come ad esempio che i dati abbiano una distribuzione normale $\mathcal{ N}$, in problemi di classificazione non è mai il caso, per questo occorre trovare una funzione di errore più adatta a questo tipo di problema.
 I problemi di classificazione vengono meglio descritti da una distribuzione Bernoulliana (2 classi) e Multinomiale (K classi).
-** Cross Entropy
-** Cross Entropy a più classi
+** Cross Entropy for 2 classes
+We have 2 classes $C_1$ and $C_2$, we want to compute the posterior probability:
++ $P(C_1|x)$
++ $P(C_2|x)$
+
+Se consideriamo $y = P(C_1 | x)$ allora $P(C_2|x) = 1 - y$.
+Usiamo uno schema di codifica per il target in cui $t = 1$ se appartiene alla classe $C_1$ e $t=0$ se l'input è in $C_2$, con questo schema possiamo scrivere la probabilità di osservare uno degli output come una Bernoulliana:
+$$p(t|x) = y^{t}(1 - y)^{1 - t}$$
+Con questa formula consideriamo ora la probabilità di osservare il trianing set (Ovvero la probabilità di osservare tutto il training set di fila), in altre parole calcoliamo la likelihood.
+$$\prod_n (y^n)^{t^n}(1 - y^n)^{1 - t^{n}}$$
+Come negli altri casi conviene *minimizzare il logaritmo negativo*, otteniamo così la funzione di errore della *cross-entropy*.
+$$E = -\sum_{n}\{t^{n}\ln(y^{n}) + (1 - t^{n})\ln(1 - y^{n})\}$$
+*** Proprietà della cross entropy (Per la backpropagation)
+Differenziamo l'errore rispetto all'output ottenuto $y^{n}$.
+$$\frac {\partial{E}} {\partial{y^{n}}} =  - \frac {t^{n}} {y^{n}} + \frac {(1 - t^{n})} {(1 - y^{n})}$$
+
+$$\frac {\partial{E}} {\partial{y^{n}}} =   \frac {-t^{n}(1 - y^{n}) + y^{n}(1 - t^{n})} {y^{n}{(1 - y^{n})}$$
+
+$$\frac {\partial{E}} {\partial{y^{n}}} =   \frac {-t^{n} + t^{n}y^{n} + y^{n} - t^{n}y^{n}} {y^{n}{(1 - y^{n})}$$
+
+$$\frac {\partial{E}} {\partial{y^{n}}} =  \frac {(y^{n} - t^{n})} {y^{n}(1 - y^{n})}$$
+
+Questa quantità è minimizzata quando
+$$\forall n, y^{n} = t^{n}$$
+Dato che l'output può essere visto come una probabilità possiamo usare la *logistic sigmoid* come attivazione, quindi l'errore rispetto all'attivazione è solamente:
+$$\delta^{n} = \frac {\partial{E}} {\partial{a^{n}}} = y^{n} - t^{n}$$
+*** Cosa fare se $t^{n}$ è continua?
+L'errore è minimo quando (anche nel caso in cui la variabile sia continua)
+$$E_{min} = -\sum_{n}\{t^{n}\ln(t^{n}) + (1 - t^{n})\ln(1 - t^{n})\}$$
+In questo caso abbiamo perso informazioni sulla $y^{n}$ (ovvero l'output della rete), quindi nel caso in cui $t^{n}$ continua utilizziamo la differenza tra $E$ e $E_{min}$
+$$E_{continuos} = E - E_{min}$$
+$$E_{continuos} = -\sum_{n}\{t^{n}\ln\frac{y^{n}}{t^{n}} + (1 - t^{n})\ln\frac {1 - y^{n}} {1 - t^{n}}\}$$
+
+** Cross Entropy a più classi ($c$ classi)
+Generalizzare è piuttosto semplice, in questo caso la probabilità di osservare il training set è:
+$$p(t^{n}|x^{n}) = \prod_{k=1}^{c} (y_{k}^{n})^{t^{n}}$$
+Quindi l'errore è
+$$E = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln y_{k}^{n}$$
+Che è minimo quando
+$$E_{min} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln t_{k}^{n}$$
+E sempre nel caso in cui $E$ sia continua possiamo usare la differnza con il minimo, ottenendo
+$$E_{continuos} = E - E_{min}$$
+$$E_{continuous} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln \frac {y_{k}^{n}} {t_{k}^{n}}$$
 * Chapter 7 - Parameter Optimization Algorithm [0/3]
 + [ ] Section 1
 + [ ] Section 4
