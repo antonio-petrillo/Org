@@ -410,10 +410,19 @@ $$E_{min} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln t_{k}^{n}$$
 E sempre nel caso in cui $E$ sia continua possiamo usare la differnza con il minimo, ottenendo
 $$E_{continuos} = E - E_{min}$$
 $$E_{continuous} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln \frac {y_{k}^{n}} {t_{k}^{n}}$$
-* Chapter 7 - Parameter Optimization Algorithm [0/3]
-+ [ ] Section 1
+* Chapter 7 - Parameter Optimization Algorithm [1/3]
++ [X] Section 1
 + [ ] Section 4
 + [ ] Section 5
+** Error surfaces
+Find the weight vector $w$ such that $E(w) = 0$ (minimize the error).
+Al variare di $w$ genera una superficie che risiede nello spazio dei pesi della rete, quindi possiamo visualizzare l'errore come una superficie.
+Come vedremo il *gradient descend* soffre di un problema di minimo locale, in altre parole possiamo capire quando abbiamo trovato un minimo per $\nabla E$ ma nessuno ci assicura che questo sia il minimo assoluto come si può vedere nell'immagine:
+[[../assets/gradient-descent-multiple-local-minimum.png]]
+Here $D$ is the global minimum and $A,B,C$ are local, we don't know on which one the gradient descent will go.
+Non esiste una forma chiusa quindi lo approssimiamo in iterazioni successive (*epoch*).
+** Optimization in practice
+Il modo in cui inizializziamo i pesi può influenzare il processo di apprendimento.
 * Chapter 8 - Pre processing and feature extractions [0/3]
 + [ ] Section 1
 + [ ] Section 2
