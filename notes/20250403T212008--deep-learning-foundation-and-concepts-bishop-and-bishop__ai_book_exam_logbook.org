@@ -1,0 +1,21 @@
+#+title:      Deep Learning: Foundation and Concepts (Bishop and Bishop)
+#+date:       [2025-04-03 Thu 21:20]
+#+filetags:   :ai:book:exam:logbook:
+#+identifier: 20250403T212008
+
+Appunti sui vari capitoli e relative sezioni dal libro di testo consigliato per il corso di /Neural Network and Deep Learning/ della Federico II.
+
+* Chapter 6 - [0/2]
++ [ ] Section 2 [0/3]:
+  + [ ] Section 2.1
+  + [ ] Section 2.2
+  + [ ] Section 2.3
++ [ ] Section 3 [0/3]:
+  + [ ] Section 3.1
+  + [ ] Section 3.2
+  + [ ] Section 3.3
+* Chapter 10 - [0/2]
++ [ ] Section 1
++ [ ] Section 2
+* Chapter 12 - [0/1]
++ [ ] Section 1
