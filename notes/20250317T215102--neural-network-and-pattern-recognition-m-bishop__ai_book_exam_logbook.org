@@ -4,6 +4,8 @@
 #+identifier: 20250317T215102
 #+STARTUP: fold
 
+Appunti sui vari capitoli e relative sezioni dal libro di testo consigliato per il corso di /Neural Network and Deep Learning/ della Federico II.
+
 * Chapter 1 [6/6]
 + [X] Section 1
 + [X] Section 2
@@ -410,10 +412,10 @@ $$E_{min} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln t_{k}^{n}$$
 E sempre nel caso in cui $E$ sia continua possiamo usare la differnza con il minimo, ottenendo
 $$E_{continuos} = E - E_{min}$$
 $$E_{continuous} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln \frac {y_{k}^{n}} {t_{k}^{n}}$$
-* Chapter 7 - Parameter Optimization Algorithm [1/3]
+* Chapter 7 - Parameter Optimization Algorithm [3/3]
 + [X] Section 1
-+ [ ] Section 4
-+ [ ] Section 5
++ [X] Section 4
++ [X] Section 5
 ** Error surfaces
 Find the weight vector $w$ such that $E(w) = 0$ (minimize the error).
 Al variare di $w$ genera una superficie che risiede nello spazio dei pesi della rete, quindi possiamo visualizzare l'errore come una superficie.
@@ -422,8 +424,52 @@ Come vedremo il *gradient descend* soffre di un problema di minimo locale, in al
 Here $D$ is the global minimum and $A,B,C$ are local, we don't know on which one the gradient descent will go.
 Non esiste una forma chiusa quindi lo approssimiamo in iterazioni successive (*epoch*).
 ** Optimization in practice
-Il modo in cui inizializziamo i pesi può influenzare il processo di apprendimento.
-* Chapter 8 - Pre processing and feature extractions [0/3]
-+ [ ] Section 1
-+ [ ] Section 2
-+ [ ] Section 5
+In pratica possiamo ottimizzare l'apprendimento modificando:
++ come inizializziamo i pesi
++ come calcoliamo l'errore
++ come terminiamo l'apprendimento
++ quali funzioni di attivazione utilizzare
+*** Inizializzazione pesi
+Per evitare eventuali problemi di simmetria nella rete i pesi vanno inizializzati con valori casuali piccoli, abbastanza piccoli che non saturino la funzione di attivazione (il libro considera la sigmoide in questo caso).
+Usare tutti valori troppo piccoli rallenta però l'addestramento.
+*** Criterio di terminazione
+Il più semplice è limitare il numero di allenameti, di solito ci si riferisce a questa tecnica con il termine di *epoch*.
+Un'altro è quello di terminare quando la *loss* scende sotto una certa soglia o in alternativa quando per un determinato numero di epoche la rete non migliora.
+** Gradient descent
+Il criterio di aggioramento visto fino ad ora è
+$$\Delta w^{(\tau)} = -\eta \nabla E|_{w^{(\tau)}}$$
+Qui $\eta$ è il learning rate e caratterizza quanto velocemente apprende la rete, un valore troppo piccolo rallenta di molto il processo di training, dall'altra parte un valore troppo grande potrebbe far spostare l'errore da un punto ad un altro, tipicamente si sceglie un valore piccolo e poi si va di /fine tuning/  se necessario.
+*** Momentum
+Per riprendere la metafora della superficie di errore, introduciamo il *momento* che, proprio come in fisica, indica il momento di inerzia di un corpo.
+Idealmente se la nostra funzione di errore sta scendendo rapidamente il momento la spingerà ancora di più lungo la direzione in cui sta andando (in base a quanto tempo si è spostata in quella direzione), questo aiuta a superare in molti casi dei minimi locali in cui si bloccherebbe il gradient descend.
+$$\Delta w^{(\tau)} = -\eta \nabla E|_{w^{(\tau)}} + \mu \Delta w^{(\tau - 1)}$$
+Qui $\mu$ è un parametro scelto da noi, di solito viene chiamato *MOMENTUM PARAMETER* ($0 \le \mu \le 1$).
+Riassumendo il /momentum/ aiuta quando:
++ l'apprendimento oscilla
++ l'apprendimento è troppo lento
+* Chapter 8 - Pre processing and feature extractions [3/3]
++ [X] Section 1
++ [X] Section 2
++ [X] Section 5
+Tipicamente prima di allenare la rete (o utilizzarla) occorre trasformare i dati in un formato più digeribile/comodo.
+** Feature extraction
+Anzichè fornire i dati così come li ottieniamo possiamo modificarli cercando di manternere quanta più informazione possibile, ecco alcuni esempi:
++ nell'MNIST dataset anzichè usare 256x256 pixel, le immagini vengono ridotte a 28x28
++ in IRIS dataset anzichè usare tutti i dati delle iris ci si si focalizza solo sulla foglia ed il sepalo (non so cosa cazzo sia)
++ con le immagini si possono usare dei filtri per ridurre il numero di pixel (gaussian filter et simila)
+** Input normalization
+Si applica quando vogliamo normalizzare tutti gli input per avere valori simili.
+Occorre trattare ogni variabile indipendentemente, per ognuna di esse calcoliamo la media e varianza
+$$\bar x_{i} = \frac 1 N \sum_{n=1}^{N}x_{i}^{(n)}$$
+$$\sigma_{i}^{2} = \frac 1 {N -1} \sum_{n=1}^{N}(x_{i}^{(n)} - \bar x_{i}})^{2}$$
+Dove $n$ varia da $\{1, \cdots, N\}$ sulle label dei pattern.
+Definiamo ora il nuovo dataset normalizzato come
+$$\tilde x_{i}^{n} = \frac {x_{i}^{n} - \bar x_{i}^{n}} {\sigma_{i}}$$
+Queste nuove variabili hanno media $0$ e varianza $1$, quindi sono distribuiti normalemente secondo $\mathcal{N}(x_i, \mu=0, \sigma=1), i \in \{1, \cdots, N\}$.
+** Feature selection
+Nel caso abbiamo alcune variabili fortemente correlate con altre, possiamo ridurre la dimensione del dataset scartando alcune di queste.
+Per farla ultra banale
+#+begin_example
+Se una variabile che indica il tempo dice che piove non ho bisogno di un'altra variabile che mi dice se serve l'ombrello.
+La prima può servire anche per altri tipi di inferenze mentre la seconda no, quindi conviene mantenere la prima variabile.
+#+end_example
