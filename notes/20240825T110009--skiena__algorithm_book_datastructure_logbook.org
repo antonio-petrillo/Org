@@ -1,0 +1,111 @@
+#+title:      skiena
+#+date:       [2024-08-25 Sun 11:00]
+#+filetags:   :algorithm:book:datastructure:logbook:
+#+identifier: 20240825T110009
+
+* Ch1
+** [[https://leetcode.com/problems/daily-temperatures/description/][Daily temperatures]]
+*** Naive
+#+begin_src go
+func solve(temps []int) []int {
+	res := make([]int, len(temps))
+	for i, temp := range temps {
+		j := i + 1
+		for j < len(temps) && temps[j] <= temp {
+			j++
+		}
+		res[i] = j - i
+	}
+	return res
+}
+#+end_src
+All test passes but it is too slow $O(n^2)$, I must go down to $O(n)$.
+*** Solution
+Traverse the ~temps~ backwards and keep a stack for all the maximum temps up to that point.
+It is like a Kadane algorithm but backward.
+#+begin_src go
+func Solve(temps []int) []int {
+	res := make([]int, len(temps))
+	stack := []int{}
+
+	for i := len(temps) - 1; i >= 0; i-- {
+		for len(stack) > 0 && temps[stack[len(stack) - 1]] <= temps[i] {
+			stack = stack[:len(stack) - 1]
+		}
+
+		if len(stack) > 0 {
+			res[i] = stack[len(stack) - 1] - i
+		}
+
+		stack = append(stack, i)
+	}
+
+	return temps
+}
+#+end_src
+Time complexity $O(n)$.
+PS: wtf? go doesn't have stack in their standard collection...
+** [[https://leetcode.com/problems/rotate-list/description/][Rotate List]]
+Not that hard, some edge cases can be simplified, but it is ok overall
+#+begin_src go
+/**
+ ,* Definition for singly-linked list.
+ ,* type ListNode struct {
+ ,*     Val int
+ ,*     Next *ListNode
+ ,* }
+ ,*/
+func rotateRight(head *ListNode, k int) (ret *ListNode) {
+	if head == nil {
+		return
+	}
+	size := 0
+	for ht := head; ht != nil; ht = ht.Next {
+		size++
+	}
+	k %= size // wrap over list length
+	if k == 0 {
+		return head
+	}
+	k = size - k // take the "dual", the first k to skip
+	ht := head
+	for ; ht != nil; ht = ht.Next {
+		k--
+		if k == 0 {
+			ret = ht.Next // the next will be the new ehad
+			ht.Next = nil // unlink current node
+			break
+		}
+	}
+	tl := ret // look for the end of the list
+	for tl.Next != nil {
+		tl = tl.Next
+	}
+	tl.Next = head // link the previous end to the head
+	return // naked return go brr...
+}
+#+end_src
+
+** [[https://leetcode.com/problems/wiggle-sort-ii/][Wiggle Sort II]]
+I should create an exercise similar to this one that require the `buildHeap` (from heapsort) to find the best solution
+#+begin_src go
+import "sort"
+
+func wiggleSort(nums []int) {
+    sorted := append([]int{}, nums...)
+    sort.Slice(sorted, func(i, j int) bool {
+        return sorted[i] < sorted[j]
+    })
+    high := len(nums) - 1
+    low := high >> 1
+    for i := 0; i < len(nums); i++ {
+        if i & 1 == 0 {
+            nums[i] = sorted[low]
+            low--
+        } else {
+            nums[i] = sorted[high]
+            high--
+        }
+    }
+}
+#+end_src

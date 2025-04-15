@@ -1,0 +1,17 @@
+#+title:      Is exact power of 2
+#+date:       [2024-04-29 Mon 15:02]
+#+filetags:   :algorithm:math:programming:
+#+identifier: 20240429T150254
+
+* Algorithm
+#+begin_src c
+int is_exact_power_of_2(int n) {
+  return !(n & (n - 1));
+}
+#+end_src
+
+* Note
+In binary an exact power of $2$ has all the bits set to $0$ but one, hence if a number don't share any digit with it's predecessor it is a power of 2.
+
+* Time complexity
+An extremely easy and intuitive $O(1)$.

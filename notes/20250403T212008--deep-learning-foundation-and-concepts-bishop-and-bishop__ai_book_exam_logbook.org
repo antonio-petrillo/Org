@@ -1,0 +1,122 @@
+#+title:      Deep Learning: Foundation and Concepts (Bishop and Bishop)
+#+date:       [2025-04-03 Thu 21:20]
+#+filetags:   :ai:book:exam:logbook:
+#+identifier: 20250403T212008
+
+Appunti sui vari capitoli e relative sezioni dal libro di testo consigliato per il corso di /Neural Network and Deep Learning/ della Federico II.
+
+* Chpater 5 - Confusion Matrix [EXTRA]
+Introduciamo un paio di valori utili per stimare le performance di una rete per un problema di classificazione:
++ $TN$, true negative, valori per cui la rete ha risposto *NO* correttamente
++ $TP$, true positive, valori per cui la rete ha risposto *SI* correttamente
++ $FN$, false negative, valori per cui la rete ha risposto *NO* in modo erroneo
++ $FP$, false positive, valori per cui la rete ha risposto *SI* in modo erroneo
++ $N$ numero di elementi, ovvero $N = TN + TP + FN + FP$
+
+Per seguire il libro di testo prendo l'esempio di una rete che deve classificare fra tumore e non tumore.
+[[../assets/confusion-matrix-intro.png]]
+** Accuracy
+È il rapporto tra il numero di risposte corrette rispetto al numero di risposte totali
+$$Accuracy = \frac {TN + TP} {N} = \frac {TN + TP} {TP + TN + FP + FN}$$
+L'*Accuracy* può essere fuorviante se il numero di elementi per classe è fortemente sbilanciato.
+È il numero di persono correttamente classificate nel problema cancro/non cancro, dato che il numero di persone con il cancro è molto inferiore l'accuracy non è una  buona metrica.
+[[../assets/accuracy-matrix.png]]
+** Precision
+È una misura della precisione della risposta, ovvero delle domande a cui risponde positivamente, quante di queste sono effettivamente corrette (visto come probabilità, /degree of belief/).
+$$Precision = \frac {TP} {TP + FP}$$
+Indica la probabilità che una persona etichettata come _ha il cancro_ abbia effettivamente il cancro.
+[[../assets/precision-matrix.png]]
+** Recall
+È la probabilità che un oggetto che appartiene ad una classe venga effettivamente inserito/classificato in quella classe.
+$$Recall = \frac {TP} {TP + FN}$$
+Nell'esempio è la probabilità che una persona che ha il cancro venga classificata come tale.
+[[../assets/recall-matrix.png]]
+** False Positive Rate
+Probabilità che una persona normale venga classificata come una che ha il cancro.
+$$FalsePositiveRate = \frac {FP} {FP + TN}$$
+** False Discovery Rate
+È la probabilità che una persona venga classificata come positiva ma in realtà non ha il cancro.
+$$False Discovery Rate = \frac{FP} {FP + TP}$$
+** Use cases
++ Alta precisione minimizza falsi positivi
++ Alta recall minimizza i miss (categogarizzazioni sbagliate)
++ Aumentare uno diminuisce l'altro
+*** High Precision, Low Recall
+Il modello predice meno positivi ma in modo più accurato.
+Un buon esempio sono gli *spam filters*.
+*** High Recall, Low Precision
+Cattura la maggior parte dei positivi ma può includere molti falsi positivi.
+Un buon esempio è quello del *cancer screeening*.
+
+
+* Chapter 6 - Deep Neural Network [2/2]
+Introduzione ad alcune caratteristice del deep learning, di base i modelli deep riescono ad utilizzare meglio una grande quantità di dati, megli di SVM e Radial Basis Functions.
++ [X] Section 2 [3/3]:
+  + [X] Section 2.1
+  + [X] Section 2.2
+  + [X] Section 2.3
++ [X] Section 3 [3/3]:
+  + [X] Section 3.1
+  + [X] Section 3.2
+  + [X] Section 3.3
+
+È stato mostrato che le reti a due livelli sono degli /approssimatori universali/.
+** Funzioni di attivazioni (non lineari) di comune utilizzo
++ logistic sigmoid: $\sigma(x) = \frac 1 {1 - e^{-x}}$
+  - soffre di vanishing graient, il gradiente tende a $0$ esponenzialmente quando gli input diventano molto grandi
++ tangente iperbolica: $tanh(x) = \frac {e^{x} - e^{-x}} {e^{x} + e^{-x}}$
+  - soffre di vanishing graient, il gradiente tende a $0$ esponenzialmente quando gli input diventano molto grandi
++ hard tanh: $h(x) = \max(-1, \min(1, x))$
+  - soffre di vanishing graient, il gradiente tende a $0$ esponenzialmente quando gli input diventano molto grandi
++ softplus: $softplus(x) = \ln(1 + e^{x})$
+  - anche al crescere di $x$ il gradiente non scompare
+  - da notare che $sofplus(x) \simeq x$
+  - a volte chiamata *SoftReLU*
++ REctified Linear Unit (aka ReLU): $ReLU(x) = max(0, a)$
+  - in pratica è quella che da i risultati migliori
+  - tecnicamente non è derivabile in $x=0$ ma può essere ignorato
+  - la softplus è una versione smooth della ReLu
++ LeakyReLU: $LReLU(x) = \max(0,x) + \alpha \min(0, x)$
+  - la ReLU performa bene su valori positivi ma non con quelli negativì
+  - utilizzata quando i pesi della rete possono diventare negativi
+  - $0 < \alpha < 1$
++ Absolute Funcion: $abs(x) = |x|$
+  - non derivabile in $x = 0$
+
+[[../assets/activ-fns-plots.png]]
+** Deep Networks
+Sono adatte per task altamente complessi e non lineari, come trovare un gatto in un'immagine.
+Ogni strato impara una feature semplice e negli strati successivi vengono combinati in concetti più complessi.
+Ad ogni livello di profondità abbiamo un numero di combinazioni esponenziale (in termini di bias induction).
+Il numero di combinazioni è esponenziale in base al numero di layer a disposizione.
+Possiamo vedere anche i layer successivi come differenti trasformazioni dei dati.
+** Unsupervised Learning
+Si ha quando i dati non sono labellati, un esempio tipico (e a quanto pare il più famoso) sono gli *autoencoders*.
+L'idea degli autoencoders è di trovare da soli delle informazioni sui dati; il modo più semplice è quello di chiedere alla rete che dato un input deve dare in output lo stesso valore.
+Per non rendere il processo triviale (ovvero tunare i pesi in modo da non alterare l'input) occorre ridurre il numero di /hidden layer/ così la rete è costretta a trovare una sorta di encoding dell'immagine.
+* Chapter 7 - RMSProp and ADAM [EXTRA]
++ [X] Section 7.3.3
+** AdaGrad - Automatic gradient
+L'idea è quella di diminuire il learning rate al passare del tempo, approcci classici sono:
++ linear
++ power law
++ exponential decay
+** RMSProp - Root Mean Square Propagation
+È un improvment di *AdaGrad*, modifica il learning rate in modo adattivo rispetto alla media dei gradienti calcolati fino a quel momento.
+** ADAM - Adaptive Moment
+È la combinazione di RMSProp con il Momentum.
+* Chapter 9 - Early stopping [EXTRA]
++ Controllare come migliora l'errore epoca dopo epoca, etc...
+* Chapter 10 - Convolutional Neural Network [2/2]
++ [X] Section 1
++ [X] Section 2
+L'idea base delle *CNN* è quello di identificare pattern nei dati che sono invarianti secondo alcune trasformazioni.
+Si parla di *STRIDE* quando lo shift della convoluzione è superiore a 1.
+Dopo vari strati di convoluzione serve ricombinare tutte le informazioni ottenute in modo da avere la risposta nel numero di classi desiderato, e non le feature identificate dalle varie convoluzioni, in altre parole ci servono dei fully connected layer alla fine di una CNN.
+* Chapter 12 - [1/1]
++ [X] Section 1
+Vision Transformers often outperforms CNNs.
+Il *transfer learning* nei transformer è particolarmente efficiente, è possibile allenare delle reti su grandi dati e poi tramite fine tuning adattarle a dataset molto più piccoli.
+Particolarmente efficaci come *language models*.
+** Attention
+Focus on specific word.

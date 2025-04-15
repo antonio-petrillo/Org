@@ -1,0 +1,86 @@
+#+title: Uni agenda
+#+author: Antonio Petrillo
+#+filetags: uni
+
+** PROGRESS Neural Network and Deep Learning [0/3]    :exam:nndl:proj:
+SCHEDULED: <2025-03-03 Mon>
+Prof: Roberto Prevete
++ [ ] Prepare presentation 
++ [ ] Contact for project info
++ [ ] choose which proj to do
+** DONE Parallel and Distributed Computing [6/6]                  :exam:pdc:
+Prof: Marco Lapegna
++ [X] Do project 1
++ [X] Do project 2
++ [X] Do project 3
++ [X] Do project 4
++ [X] Do exam 
++ [X] Voto $\frac {28} {30}$
+** DONE Encoding and Encryption [3/3]                             :exam:eae:
+Prof: Alessandro De Luca
++ [X] Just freakin' study
++ [X] Do exam
++ [X] Voto $\frac {27} {30}$
+  
+** PROGRESS Database Technology (mod. A) [2/3]                  :exam:db_a:
+DEADLINE: <2025-03-13 Thu>
+Prof: Daniel Riccio
++ [X] Just study
++ [X] Find exam date (usually around the 20-th of the month)
++ [ ] Do exam
+
+** PROGRESS Operating System for Mobile and IoT [0/3]        :exam:osmciot:
+Prof: Silvio Barra, Porfirio Tramontana, Luigi Libero Lucio Starace
++ [ ] Do research for prof Barra
+  + [ ] State your idea (blockchaing trash)
+  + [ ] Maybe something positive
++ [ ] Find exam date 
++ [ ] Do exam 
+
+** TODO NoSQL [2/5]                                            :exam:nosql:
+Prof: Andrea Cali
++ [X] find resources
++ [X] iscrizione lezioni
++ [ ] dockerize mongo-db
++ [ ] dockerize neo4j (look for alternatives like datadog)
++ [ ] dockerize key-value db (like redis)
+  NOTE: maybe redis is overkill and hard to setup
+
+** TODO Computational Complexity [2/2]                       :exam:cc:
+Prof: Piero Andrea Bonatti
++ [X] find resources
++ [X] iscrizione lezioni
+
+** TODO Logic for Compurter Science          [2/2]        :exam:logic:
+Prof: Massimo Benerecetti
++ [X] find resources
++ [X] iscrizione lezioni
+
+** TODO Statistical Learning [2/2]                           :exam:sl: 
+Prof: Anna Corazza
++ [X] find resources
++ [X] iscrizione lezioni
+** WAIT Operations Research :exam:op_res:
+Prof: Paola Festa
+** WAIT Intelligent Web :exam:web: 
+Prof: Massimo Benerecetti
+** WAIT Operations Research :exam:op_res:
+Prof: Paola Festa
+** TODO Biometric System [1/2]                         :exam:biom_sym:
+Prof: Daniel Riccio
++ [ ] find resources
++ [X] iscrizione lezioni
+** WAIT Security and Privacy :exam:sec_and_priv:
+Prof: Piero Andrea Bonatti
+** WAIT Mathematics for Cryptography :exam:crypto:
+Prof: Maurizio Laporta
+** WAIT Algorithm Design :exam:asd:
+Prof: Massimo Benerecetti
+** Orario :schedule:
+|       Corso | Lunedì           | Martedì       | Mercoledì     | Giovedì          | Venerdì |
+|-------------+------------------+---------------+---------------+------------------+---------|
+|  8:30-10:30 |                  | sl PT-II-H    | cc PT-II-L    |                  |         |
+| 10:30-12:30 | biom_sym PT-II-L |               | nosql PT-II-L |                  |         |
+| 12:30-14:30 |                  | cc PT-II-H    | logic PT-II-L |                  |         |
+| 14:30-16:30 |                  | nosql PT-II-H | sl PT-II-L    | biom_sym PT-II-H |         |
+| 16:30-18:30 |                  | logic PT-II-H |               |                  |         |

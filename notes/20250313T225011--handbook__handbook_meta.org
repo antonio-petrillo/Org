@@ -1,0 +1,10 @@
+#+title:      Handbook
+#+date:       [2025-03-13 Thu 22:50]
+#+filetags:   :handbook:meta:
+#+identifier: 20250313T225011
+
+* Deep Learning (Ian Goodfellow)
++ [[denote:20250313T195940][Linear Algebra Handbook]] (from Deep Learning by Ian Goodfellow)
++ [[denote:20250313T212329][Probability handbook]] (from Deep Learning by Ian Goodfellow)
++ [[denote:20250313T225239][Information Theory Handbook]] (from Deep Learning by Ian Goodfellow + Encoding and Encryption Course)
++ [[denote:20250314T161018][Numerical Computation]] (from Deep Learning by Ian Goodfellow) 

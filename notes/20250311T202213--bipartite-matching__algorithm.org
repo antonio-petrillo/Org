@@ -1,0 +1,18 @@
+#+title:      Bipartite Matching
+#+date:       [2025-03-11 Tue 20:22]
+#+filetags:   :algorithm:
+#+identifier: 20250311T202213
+
+* Problema
+Dato un grafo bipartito $B = (U, V, E)$ dove:
++ $U, V$ sono gli insiemi dei nodi (tali che $|V| = |U| = n$)
++ $E \subseteq U \times V$ sono gli archi del grafo
+
+Individuare un matching $M \subseteq E$ tale che:
++ $|M| = n$
++ Se $(u,v), (u^{'}, v^{'}) \in M$ allora $v \ne v^{'} \land u \ne u^{'}$ 
+
+* Riduzione ad un altro problema
+Ridurlo ad un problema di [[denote:20250310T200437][Max Flow]], basta aggiungere un ~target~, ~sink~ e dare peso $1$ a tutti gli archi, se esiste un *Max Flow* di grado $n$ il grafo è bipartito.
+
+[[../assets/max-flow-bipartite.png]]

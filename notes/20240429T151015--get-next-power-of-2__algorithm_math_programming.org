@@ -1,0 +1,29 @@
+#+title:      Get next power of 2
+#+date:       [2024-04-29 Mon 15:10]
+#+filetags:   :algorithm:math:programming:
+#+identifier: 20240429T151015
+
+* Algorithm
+#+begin_src c
+int next_power_of_2(int n) {
+  if (!(n & (n - 1))) {
+	return n; // already a power of 2
+  }
+  while(n & (n - 1)) {
+	n &= n - 1;
+  }
+  return n << 1;
+}
+#+end_src
+* Note
+The algorithm is pretty simplet but also clever.
+As shown in other algorithms, [[denote:20240424T141028][Kernighan population count]], the pattern =n & n-1= is used to toggle off $1$ bit in the binary representation.
+Hence $\forall n \in \mathbb{N}, n - 1 \lt n$, we have that the bit toggled off will never be the Most Significant Bit, except the case in which the number is a power of $2$.
+Since the main loop will stop when $n$ become an exact power of $2$ (see [[denote:20240429T150254][Is exact power of 2]]) at the end we return =n << 1=, in other word the next power of 2.
+** Sub note
+Since we toggle off at least one bit we know that the input is bigger than the power of $2$ that we get when we exit the =while= loop.
+* Time complexity
+Considering a /word/ of length $w$:
++ Worst case, $O(w)$.
++ Best case, $O(1)$, the input was already a power of $2$.
++ Average, since the main part of the algorithm is the same as [[denote:20240424T141028][Kernighan population count]], $O(\log_{2}(w))$.

@@ -1,0 +1,46 @@
+#+title: Org agenda
+#+author: Antonio Petrillo
+
+* DONE Effettua analisi [2/2]                               :health:
+CLOSED: [2025-02-26 Wed 00:42] SCHEDULED: <2025-02-24 Mon>
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2025-02-26 Wed 00:42]
+:END:
++ [X] analisi 
++ [X] consegna alla nutrizionista
+
+  
+* TODO Complete emacs config
++ ~make-sparse-keymap~ insead of random keys, better for maintainability and for ~which-key~ integration
++ ~org-todo-keywords~ better defined based on the context:
+  + uni: follow, examp, incourse, |, passed, abandoned
+  + book: reading, suspended, |, completed
+  + gtd: inbox, act, |, discard, schedule, store, add as a resource 
+  + todo: todo, wait, | done, cancelled
+
+* TODO Software to configure:
++ Emacs (never ending)
++ Nyxt
++ A twm for wayland
++ A twm for x11
+  
+* TODO Codecrafters Git                                              :proj:
+* TODO Codecrafters Shell :proj:
+* TODO Assemble the Charybidis [2/4]                                 :proj:
++ [X] print all parts
++ [ ] solder pcb
++ [X] wait for switches to arrive
++ [ ] flash firmware
+
+* Reading list                                                         :book:
+*** La caduta di Hyperion                                       :scifi:reading:
+*** Endymion                                                         :scifi:
+*** Il risveglio di Endymion                                            :scifi:
+*** Sandman                                                   :scifi:reading:
+*** Codici e Segreti :reading:
+*** Linear Algebra Done Right                                           :math:
+*** Understanding Analysis                                              :math:
+*** Serious Cryptography :programming:math:
+*** Java Concurrency in Practice :programming:
+*** Skiena :programming:
+

@@ -1,0 +1,74 @@
+#+title:      git
+#+date:       [2024-06-21 Fri 23:07]
+#+filetags:   :programming:software:versioning:
+#+identifier: 20240621T230734
+
+* Git config
++ `git config --get {var_name}` => read git config variable.
++ `git config --add --global {var_name} {value}` => set git config variable
++ It's stored (usually) under `$HOME/.gitconfig`
+* Basic config
+#+begin_src bash
+git config --add --global user.name "your name" # typically the gh name
+git config --add --global user.email "your@email" # typically the gh one
+git config --global init.defaultBranch master # name of the default branch (usually master or main)
+#+end_src
+* The 90% of git
++ `git add file_or_pattern_to_add` => add file to the stage
++ `git status` => see the current status of the stage
++ `git commit -m "commit message"` => commit the staged files
++ `git commit --amend -m "new commit message"` => change the content of the last commit message
++ `git {--no-pager} log {-n 10}` => log of the last $n$ commits, pager can be disabled with `--no-pager`
++ `git branch new_branch` => create a new branch from current location called /new_branch/
++ `git switch {-c} branch_name` => switch to /branch_name/, *-c* create the branche if it doesn't exist
++ `git push {name} {branch}` => push to remote repository
+** Note
++ `git switch` is a substitute for `git checkout`
+* The remaining 10%
++ `git cat-file -p {hash}` => see content of a specific commit
++ `git config --add {--global} user.email "your@email"` => set a variable global or locally
++ `git config --unset key` => unset a key
++ `git branch -m old new` => rename a branch
++ `git log --decorate={full|short|no}` => add some tui to git log
++ `git log --oneline` => shorter git log with some tui
++ `git log --graph` => ascii art of branches
++ `git reset --hard {commit-hash}` => reset stagend and unstaged change to current commit or the specified one
++ `git remote add {name} {uri}` => treat the /uri/ as a source of truth, with /name/ as alias, for our repo
++ `git remote remove {name}` => remove the named remote
++ `git reflog`, similar to `git log` but takes a specific *REFS* as argument and give information about that refs.
+** Note
++ `git log --graph --oneline --all` <= a more typical use of `git log`
++ `git merge` accept commit hash as parameters, even `git reflog` work
+* Gitignore
++ There can be multiple nested `.gitignore`, they apply from the directory they where placed
++ `/` is an anchor that especially match the root
++ `*` match wildcard
++ `!` negate the match
++ `#` line ignored, is a comment
+
+* Internals
++ See the command `git cat-file -p #commit-hash`
++ See the command `git hash-file -p #commit-hash`
++ Each commit is identified with an hash ([[https://en.wikipedia.org/wiki/SHA-1][SHA-1]])
++ Git store the information in form of objects under the folder *.git/objects*
++ Git represent directories as *tree*
++ Git represent files as *blob*
+* Rebase
++ Used to change the history on a branch, used to keep a simple linear history throw the repository.
++ `git rebase branch_name_to_rebase`
++ In case of conflicts:
+  + Solve the conflict
+  + `git add path/to/changed/files`
+  + `git rebase --continue` to continue the rebase
+* Squash
+Squash multiple commit into a single one, is done using `git rebase`.
+Steps to `squash`:
++ 1. `git rebase -i HEAD~n`, rebase interactively (here the `-i`) the last `n` commits on `HEAD`
++ 2. Change `pick` to `squash` except for the last commit
++ 3. Save and quit
++ 4. Done
+
+* Merge
++ `git merge branch_to_merge`
++ `git checkout --theirs /path/to/file` keep /theirs/ file version specified during merge
++ `git checkout --ours /path/to/file` keep /our/ file version specified during merge

@@ -1,0 +1,26 @@
+#+title:      Kernighan population count
+#+date:       [2024-04-24 Wed 14:10]
+#+filetags:   :algorithm:math:programming:
+#+identifier: 20240424T141028
+
+* Algorithm
+#+BEGIN_SRC c
+int pop_count(int n) {
+  int count = 0;
+  for (count; n != 0; count++) {
+	n &= n - 1;
+  }
+  return count;
+}
+#+END_SRC
+
+* Note
+The neat part of this algorithm is the body of the loop ~n &= n - 1~.
+With this instruction instead of probing /all the bits/ in the word, the algorithm jump only over the bit set to ~1~.
+The reason behind is that the difference (in number of bit set to $1$) between $n$ and $n-1$ is always one bit.
+Doing ~n &= n-1~ at each iteration a bit set to $1$ will be turned into a $0$, in this way the algorithm reach the base case much faster.
+
+* Time complexity
++ At most $O(w)$ where $w$ is the length of the word.
++ When $w$ is an exact power of $2$ it is a $O(1)$.
++ On average is an $\log_{2}(2)$ (I didn't find a proof)

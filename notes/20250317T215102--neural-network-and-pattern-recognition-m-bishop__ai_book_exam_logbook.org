@@ -1,0 +1,474 @@
+#+title:      Neural Network and Pattern Recognition (M. Bishop)
+#+date:       [2025-03-17 Mon 21:51]
+#+filetags:   :ai:book:exam:logbook:
+#+identifier: 20250317T215102
+#+STARTUP: fold
+
+Appunti sui vari capitoli e relative sezioni dal libro di testo consigliato per il corso di /Neural Network and Deep Learning/ della Federico II.
+
+* Chapter 1 - Intro [6/6]
++ [X] Section 1
++ [X] Section 2
++ [X] Section 3
++ [X] Section 4
++ [X] Section 8
++ [X] Section 9
+** Tipi di learning
++ Supervised:
+  Il processo di apprendimento /Supervised/ si ha quando abbiamo un dataset in cui ogni entry è labellata.
++ Unsupervised:
+  Non possiede (o ignora) il campo target del dataset così la rete estrae da sola le informazioni dai dati (in alcuni contesti i risultati di questi due primi approcci sono uguali).
++ Reinforcement:
+  Migliora con l'utilizzo, ad ogni output la rete chiede quanto fosse accurata la predizione ed aggiusta i parametri di conseguenza.
+** Error
+Una delle formule più usate (ed intuitive) per calcolare l'errore è:
+\begin{equation*}
+E = \frac 1 2 \sum_{n=1}^{N} (y(x^{(n)}; w) - t^{(n)})^2
+\end{equation*}
+In questa formula $x^{(n)}$ e $t^{(n)}$ sono da considerarsi elementi del dataset, $x$ è l'input, mentre $t$ è il valore atteso.
+Questa funzione di errore misuare la distanza tra il valore ottenuto e quello atteso.
+** Generalization
+Per stimare la capacità di un polinomio di generalizzare su nuovi dati (non visti quindi) è conveniente considerare il *root-mean-square* error (*RMS*).
+\begin{equation*}
+E^{RMS} = \sqrt{\frac 1 N \sum_{n=1}^{N} (y(x^{(n)}; w^*) - t^{(n)})^2}
+\end{equation*}
+Dove $w^*$ rappresenta il vettore che minimizza l'errore, notiamo che tutti gli altri parametri sono fissi e quindi $w$ è l'unico valore a variare.
+** Classificatori
+I *classificatori,* preso un input ci dicono a quale classe (finita enumerabile) appartiene, usata in problemi che richiedono 2 o più risposte.
+Ad esempio compro/non compro, riconosci gli elementi nell'immagine e così via.
+Vengono modellati con funzioni con la seguente firma:
+$$y_k = y_k(x; w)$$
+Dove $y_k$ indica che è la funzione discriminante per la classe $k$ mentre $w$ indica i pesi.
+La soluzione dei classificatori sono un set di funzioni discriminanti.
+** Regressori
+I regressori preso un input restituiscono un valore numerico.
+Ad esempio, sapendo che questi sono i movimenti del mercato predici le fluttuazioni per domani.
+$$y = y(x; w)$$
+La $w$ sono sempre i pesi, qui l'output è un valore.
+I regressori dividono lo spazio tramite hyperpiani.
+** Feature Extraction
+Prima di dare i dati in input li si pre processa per /renderli più maneggevoli/.
+Le reti *Convoluzionali* fanno qualcosa di simile ma in modo autonomo.
+** Curse of dimensionality
+Più aumento le dimensioni più i dati che ho diventano sparsi e questo genera una rappresentazione molto sparsa del nostro problema
+** Usare il teorema di Bayes per la classificazione
+Consideriamo un classificatore binario, quindi con $k=2$ classi ed un dataset con $l = 8$ feature.
+Indico con $C_k$ le classi e $X^l$ le feature, il numero nelle celle indica quanti elementi del dataset sono effettivamente in quella classe
+
+| P(C_k,X^l) | X^1 | X^{2} | X^{3} | X^{4} | X^{5} | X^{6} | X^{7} | X^{8} |
+|------------+-----+-------+-------+-------+-------+-------+-------+-------|
+| C_1        |   2 |     6 |     7 |     6 |     2 |     1 |     0 |     0 |
+| C_2        |   0 |     0 |     0 |     1 |     3 |     5 |     4 |     2 |
+|------------+-----+-------+-------+-------+-------+-------+-------+-------|
+
+Sommando una singola riga otteniamo la probabilità di appartenere a quella classe $P(C_1) = \sum_{i=1}^{8} P(C_1, X^i)$.
+La $P(C_k)$ è probabilità a posteriori di una singola classe.
+La singola cella è la probabilità congiunta $P(C_k, X^l)$.
+
+
+Usiamo Bayes.
+1. $P(X^l | C_k) = \frac {P(C_k, X^l)} {P(C_k)}$
+2. $P(C_k | X^l) = \frac {P(C_k, X^l)} {P(X_l)}$
+
+A noi interessa la seconda formula, ma è difficile da calcolare su dati empirici, possiamo semplificare il calcolo tramite la formula di Bayes.
+$$P(C_k | X^l) = \frac {P(X^l | C_k) P(C_k)} {P(X^l)}$$
+Cosa dice questa formula?
+$P(C_k|X^l)$ è la probabilità di appartenere alla classe $C_k$ dato che abbiamo osservato la feature $X^l$.
+In altre parole ci da la probabilità che il pattern appartenghi alla classe $C_k$ una volta osservato il vettore di feature $X^l$.
+
+La probabilità $P(X^l)$ può essere espressa come:
+$$P(X^l) = P(X^l | C_1)P(C_1) + P(X^l | C_2)P(C_2)$$
+** Bayes in generale
+Update the *degree of belief* starting from prior and observing a new event:
+\begin{equation*}
+posterior = \frac {likelihood \times prior} {normalization\_factor}
+\end{equation*}
+** Decision Boundary
+Per *minimizzare* l'errore di misclassificazione possiamo prendere la classe che *massimizza* la probabilità a posteriori.
+Osservando /feature vector x/ minimizziamo l'errore scegliendo la probabilità a posteriori tale che:
+\begin{equation*}
+P(C_i | x) > P(C_j | x), \forall i \ne j
+\end{equation*}
+Notiamo che $p(x)$ può essere semplificato.
+Riscrivendo tramite la formula di bayes:
+\begin{equation*}
+P(x|C_i)P(C_i) > P(x | C_j) P(C_j)
+\end{equation*}
+Possiamo quindi dividere lo spazio in varie *decision region* chiamiamo *decision boundaries* le /zone di confine/ tra queste regioni.
+Questa tecnica ci da un modo di stimare a quale classe appartengono i vettori $x$ in input.
+*** Osserviamo l'errore
+Consideriamo sempre un caso con 2 sole classi per semplificare la notazione.
+$$P(error) = P(x \in R_2, C_1) + P(x \in R_1, C_2)$$
+$$P(error)= P(x \in R_2 | C_1) P(C_1) + P(x \in R_1 | C_2) P(C_2)$$
+$$P(error)= \int_{R_2} p(x|C_1)P(C_1) dx + \int_{R_1} p(x|C_2)P(C_2) dx$$
+[[../assets/misclassification-error.png]]
+
+Minimizzare l'errore equivale a minimizzare l'area di /overlapping/
+*** Minimizzare l'errore
+$$P(correct) = \sum_{k=1}^{c} P(x \in R_k, C_k)$$
+$$P(correct) = \sum_{k=1}^{c} \int_{R_k} p(x|C_k)P(C_k) dx$$
+Questa probabilità come accennato sopra è minimizzata, scegliendo $R_k$ tale che $x$ viene assegnato a $R_k$.
+*** Discriminant functions
+Possiamo usare le formule indicate sopra per costuire un set di funzioni discriminanti.
+All'atto pratico non possiamo integrare come in analisi, o comunque non abbiamo tutti questi dati.
+* Chapter 2 - P&S
+Just a recap on probability and statistics.
+* Chapter 3 - Single Layer Neuron [3/3]
++ [X] Section 1
++ [X] Section 2
++ [X] Section 5
+** Intro
+Come accennato nel capitolo 1, invece che calcolare le funzioni discriminanti (espresse tramite la Bayes Rule) si approssimano a partire da untraining set (quindi a partire da dati).
+Le funzioni discriminanti possono essere approssimate da funzioni parametriche (anzichè calcolare le densità di probabilità) in cui cerchiamo un valore appropriato per i parametri.
+** Two Classes
+Come detto $x$ viene messa in $C_1$ se $y(x) > 0$ ed in $C_2$  se $y(x) < 0$ (con 2 classi basta una funzione discriminante).
+The simplest choice is:
+$$y(x) = w^Tx + w_0$$
+Dove $w$ sono i pesi e $w_0$ è il bias.
+La regione di decisione è $y(x) = 0$, che rappresentda un hyperpiano $d-1$ dimensionale ($|w| = d$).
+In altre parole se abbiamo punti in 3d, l'iperpiano è un piano, se abbiamo punti in 2d l'iperpiano è una retta, se abbiamo punti in 4d l'iperpiano è un volume e così via.
+Dati $x^A$ e $x^B$ due vettori sull'iperpiano abbiamo:
+$$y(x^A) = 0 = y(x^B) \iff w^T(x^A - x^B) = 0$$
+$w$ è normale ad ogni punto sull'hyperpiano, $w$ indica l'orientazione del piano.
+
+Sia $x$ un punto sull'hyperplane la distanza dal centro è data da:
+$$l = \frac {w^Tx} {||w||} = - \frac {w_0} {||w||}$$
+
+Il bias $w_0$ rappresenta l'offset dell'iperpiano (distanza dal centro dell'iperpiano).
+[[../assets/geom-bias.png]]
+
+Spesso includiamo il bias nel vettore $w$ (ovver $\hat w = <w_0, w>$), da cui:
+$$y(x) = \hat w^Tx$$
+** More than 2 classes ($k$ classes)
+In questo caso possiamo considerare:
+$$y_k(x) = w^T_kx + w_{k_0}$$
+
+L'hyperplane ha la forma:
+$$(w_k - w_j)^Tx + (w_{k_0} - w_{j_0}) = 0$$
+
+La distanza dall'origine è:
+$$-\frac {(w_{k_0} - w_{j_0})} {||w_k - w_j||}$$
+
+Gli output sono:
+$$\sum_{i=1}^{d} w_{ki}x_i + w_{k_0}$$
+
+Includendo il bias tra gli input (dandogli $w_0 = 1$ per non alterarlo).
+$$\sum_{i=0}^{d} w_{ki}x_i$$
+
+Abbiamo così realizzato una *Full Connected Network*.
+[[../assets/full-conn-net.png]]
+** Logistic Discrimination
+Per come abbiamo definito $y_k$ è una funzione lineare, questo non basta per il machine learning, vogliamo si che questo output lineare passi attraverso una funzione altamente non lineare.
+$$y_k(x) = g(w^T_kx + w_{k_0})$$
+$g$ è la *activation function* (funzione di attivazione).
+
+*** Sigmoide (Logistic Sigmoid)
+Una delle funzioni più utilizzate è la *sigmoide*
+$$sigmoid(a) = \frac 1 {1 + e^{-a}}$$
+
+Possiamo derivare la sigmoide con il seguente processo, sempre nel caso di classificazione a 2 classi e poi si generalizza da li.
+Consideriamo una classificazione a 2 classi, le classi sono distribuite secondo la *normale* con la stessa matrice di covarianza, $\Sigma_1 = \Sigma_2 = \Sigma$, tale che:
+$$p(x | C_k) = \frac 1 {(2\pi)^{\frac d 2} |\Sigma|^{\frac 1 2}} e^{- \frac 1 2 (x - \mu_k)^T\Sigma^{-1}(x - \mu_k)}$$
+
+Da cui
+
+$$p(C_1 | x) = \frac {p(x | C_1) P(C_1)} {p(x | C_1) P(C_1) + p(x | C_2) P(C_2)}$$
+
+Dividiamo tutto a destra per $p(x | C_1) P(C_1)$ e otteniamo
+$$p(C_1 | x) = \frac {1} {1 + \frac {p(x | C_2) P(C_2)} {p(x | C_1) P(C_1)
+}}$$
+
+Ponendo
+$$a = \ln \frac {p(x|C_1)P(C_1)} {p(x|C_2)P(C_2)}$$
+Otteniamo
+$$p(C_1|x) = \frac 1 {1 + e^{-a}}$$
+
+Questo mostra che possiamo usare la sigmoide al posto delle funzioni di densità
+*** Heaviside Step Function
+Questa modella il modo in cui funziona il sistema nervoso:
+
+\begin{equation*}
+g(a) =
+\begin{cases}
+0 & \text{when a < 0}\\
+1 & \text{when a $\ge$ 0}
+\end{cases}
+\end{equation*}
+
+Quando un neurone supera un certo threshold /fire/ (si attiva), vedi *Gödel, Escher, Bach*.
+
+Le prime reti ad utilizzare questa funzione di attivazione sono noti come *PERCEPTRON*.
+** Linearmente separabili
+Per come abbiamo definito le funzioni discriminanti funzionano solamente con problemi linearmente separabili, questo limite viene superato dagli approcci *deep*.
+Questo avviene perchè le reti /single layer/ operano dividendo lo spazio di input con un singolo hyperplane, se il problema non ammette una tale soluzione la rete neurale troverà difficilmente una soluzione.
+In alcuni casi (anche semplici) non è possibile definire le *region boundaries*, quindi il nostro approccio attuale non può funzionare.
+Ad esempio lo XOR non è linearmente separabile come si può vedere:
+[[../assets/xor-is-not-lin-sep.png]]
+** Single Layer Network (aka Perceptron)
+[[https://en.wikipedia.org/wiki/Frank_Rosenblatt][Rosenblatt]] è stato il primo ad aggiungere una funzione di attivazione non lineare all'output, in particolare basata sul /superamento della soglia/.
+Il perceptron apprende modificando i suoi parametri di input, ad ogni iterazione calcola il gradiente e modifica ogni peso in base ad esso, da notare che il tutto è moltiplicato per $\eta$ (ovvero il *learning rate*)
+* Chapter 4 - Multi Layer Perceptron [4/4]
++ [X] Section 1
++ [X] Section 2
++ [X] Section 3
++ [X] Section 8
+** Multilayer
+La prima sezione introduce il concetto di layers e concatenazioni di neuroni (dopo le funzioni di attivazione).
+** Topologie
+L'utilizzo di più strati permette di riconoscere anche pattern non per forza linearmente separabili.
+Anche il modo in cui sono collegati i layer forniscono varie proprietà alla rete.
+** Three Layer networks
+In questa sezione viene mostrato come un rete a 3 livelli (input, hidden1, hidden2, output) può approssimare bene (con errore $\varepsilon$ piccolo a piacere).
+Niente di troppo complicato (ma ovviamente non riuscirei a riprodurla), gli step sono più o meno i seguenti:
+1. Ogni funzione può essere approssimata a piacimento con la *trasformata di fourier*
+2. Per fare ciò ci basta riuscire ad appossimare un polinomio, seno e coseno
+3. Un singolo layer può fare ciò
+4. Quindi combinando più layer (i multilayer sono solo combinazioni lineari) è possibile riprodurre l'approssimazione di Fourief
+** Error Backpropagation
+Introduzione all'algoritmo di backpropagation e al matematicismo sottostante.
+L'idea di base è misurare l'errore e poi riaggiustare i pesi in modo da diminuirlo.
+Derivando l'errore capiamo come i vari pesi e bias lo influenzano e possiamo modificarli.
+Si chiama *back propagation* propio perchè dall'errore, misurabile _alla fine_ della network modifichiamo a ritroso (appunto /backpropagation/).
+La backpropagation non è per forza legata al *gradient descend* ma all'atto pratico sono sempre utlizzate insieme.
+Può essere applicata a funzioni (sempre *differenziabili* rispetto ad *INPUT, BIAS e WEIGHTS*) complicate a piacere, ma tipicamente si ha a che fare con prodotti matrici-vettore, quindi solo con somme e prodotti (piuttosto facili da derivare).
+
+In una *feedforward* ogni neurone calcola la propria *ATTIVAZIONE*:
+
+$a_j = \sum_i w_{ji}z_i$
+
+Dove $z_i$ è l'attivazione di un altro neurone (o input) inviato al neurone $j$ e $w_{ji}$ è il peso di questa connessione.
+La somma avviene su tutti i neuroni che inviano al neurone $j$.
+Ricordiamo che possiamo vedere i *bias* come pesi di input.
+Una volta calcolata l'attivazione $a_j$ il valore viene passato attraverso la *FUNZIONE di ATTIVAZIONE* $g$.
+
+$$z_j = g(a_j)$
+
+Per semplificare la notazione indicheremo con $y_j$ gli output di nodi interni, quindi dei neuroni negli hidden layer.
+Consideriamo l'errore su tutti i pattern di errore del dataset
+
+$$E = \sum_n E^n$$
+
+Dato che anche $E^n$ è differenziabile la possiamo vedere come:
+
+$$E^n = E^n(y_1, \cdots, y_c)$$
+
+Partendo da queste considerazioni vogliamo calcolare le derivate di $E$ rispetto a tutti i pesi e bias.
+Per poter calcolare l'errore ci servono prima tutti gli output della rete, per questo effettuiamo prima una
+
+$$ForwardPropagation$$
+
+Consideriamo ora la derivata di $E^n$ rispetto a $w_{ji}$, come accennato prima $E^n$ dipende direttamente dall'input $n$, modificare i pesi che calcolano $E^n$ modifica il comportamento della rete.
+
+*DA NOTARE CHE* stiamo dall'ultimo strato, quindi *QUELLO DI ATTIVAZIONE*.
+
+Per semplificare la notazione omettiamo l'apice $n$ da errore ed attivazione.
+
+$E^n$ dipende da $w_{ji}$ attraverso $a_j$ per il neurone $j$, possiamo quindi usare la /chain rule/
+
+$$\frac{\partial{E^n}}{\partial{w_{ji}}} = \frac{\partial{E^n}}{\partial{a_{j}}} \frac{\partial{a_j}}{\partial{w_{ji}}}$$
+
+Definiamo l'errore $\delta_j$ come:
+
+$$\delta_j = \frac{\partial{E^n}}{\partial{a_{j}}}$$
+
+Dato $a_j = \sum_i w_{ji}z_i$ derifando rispetto a $w_{ji}$ (ovvero $\partial{w_{ji}}$) vediamo che è una derivata semplicissima del tipo $f(x) = xa$, e quindi la derivata è $\frac{\partial{f}}{\partial{x}} = f'(x) = x$.
+Dato che deriviamo rispetto ad uno specifico peso tutti gli altri avranno derivata zero lasciano solo la $z_i$ associata al peso, appunto, per il quale stiamo derivando.
+
+$$\frac{\partial{a_j}}{\partial{w_{ji}}} = z_i$$
+
+Sostituendo questi due pezzi nell'equazione di partenza otteniamo
+
+$$\frac{\partial{E^n}}{\partial{w_{ji}}} = \delta_j z_i$$
+
+Nel caso di neuroni di output calcolare $\delta_k$ è semplice
+
+$$\delta_k = \frac{\partial{E^n}}{\partial{w_{ji}}} = g'(a_k)\frac{\partial{E^n}}{\partial{y_k}}} $$
+
+Per i neuroni hidden usiamo ancora la regola di catena
+
+$$\delta_j = \frac{\partial{E^n}}{\partial{a_j}} = \sum_k \frac{\partial{E^n}}{\partial{a_k}} \frac{\partial{a_k}}{\partial{a_j}}$$
+
+Dove $\sum_k$ rappresenta la somma di tutti i neuroni che vanno in input a $j$.
+Procediamo per step concentrandoci solo su $\sum_k \frac{\partial{E^n}}{\partial{a_k}} \frac{\partial{a_k}}{\partial{a_j}}$
+Per quanto visto prima $\frac{\partial{E^n}}{\partial{a_k}} = \delta_k$, quindi:
+$$\delta_j = \sum_k \delta_k \frac{\partial{a_k}}{\partial{a_j}}$$
+
+Una singola $\frac{\partial{a_k}}{\partial{a_j}} = z_j = g'(a_j) w_{kj}$, quindi:
+$$\delta_j = \sum_k \delta_k g'(a_j)w_{kj}$$
+
+Dato che $g'(a_j)$ non dipende da $k$ lo possiamo portare fuori dalla somma
+
+$$\delta_j = g'(a_j)\sum_k \delta_k w_{kj}$$
+
+Nell'immagine si può visualizzare questo procedimento
+[[../assets/back_prop_visual_prop.png]]
+
+Abbiamo ora un modo per calcolare $\delta_j$ a partire dai vari $\delta_k$ che ricevono input da $j$.
+Da notare che $g'(a_{j})$ è locale mentre la somma viene dagli step successivi.
+*** Risorse
++ [[https://www.youtube.com/watch?v=VMj-3S1tku0][Andrej Karpathy]]
+** Aggiornamento parametri
+Una volta calcolate le derivate possiamo aggiornare i parametri, il metodo più semplice è quello del *learning rate*, ovvero di spostarsi di un certa quantità $\eta$ (tipicamente piccola) per la derivata appena calcolata.
+Si può fare in modalità *on-line* dove ogni volta che si calcola una derivata si aggiornano i pesi, oppure *batch* dove vengono aggiornati una volta calcolate tutte le derivate.
+Nei due casi l'approccio è differente:
+- Online: $\Delta w_{ji} = - \eta \delta_ix_i$
+- Batch: $\Delta w_{ji} = - \eta \frac {\sum_n\delta_i^nx_i^n} {n}$
+** Efficienza
+Senza la back propagation (algoritmo) ad ogni forward saremmo costretti a propagare a ritroso solo una delle derivate rispetto all'input, considerando un input di dimensione $O(W)$ servono $O(W^2)$ operazioni (per ogni forward $O(W)$ una propagazione a ritroso $O(W)$).
+La back propagation permette di propagare a ritroso /in batch/, quindi il costo totale per aggiornare i pesi è $O(W) + O(W) = O(W)$.
+* Chapter 6 - Error Functions [4/4]
++ [X] Section 1
++ [X] Section 6
++ [X] Section 7
++ [X] Section 9
+
+Ricordiamo che il goal delle reti neurali non è quello di memorizzare il training set, ma quello di capire/catturare le funzioni che generano i dati.
+Il modo migliore di catturare questi generatori è conoscere $p(x, t)$ dove $x$ è l'input e $t$ il target, questa è piuttosto onerosa da calcolare e quindi calcoliamo $p(x, t) = p(t|x)p(x)$.
+Un altra formula da tenere a mente è $p(x) = \int_t p(x,t) dt$.
+Le funzioni di errore che vedremo sono basate sul fatto che le coppie $(x^{n}, t^{n})$ del dataset siano prese in modo casuale e sulla *maximum likelihood* che si può esprimere come:
+$$\mathcal{L} = \prod_n p(x^{n}, t^{n})$$
+$$\mathcal{L} = \prod_n p(t^{n}|x^{n})p(x^n)$$
+Definiamo l'errore come il logaritmo della likelihood
+$$E = -\ln \mathcal{L} = -\ln(\prod_n p(t^{n}|x^{n})p(x^{n})) = -\sum \ln (p(t^{n}|x^{n})) -\sum \ln(p(x^n))$$
+Il *meno* $-$ viene aggiunto perchè noi vogliamo spostarci nella direzione opposta rispetto all'errore.
+Come discussoin precedenza, la scelta di come implementare $p(t^n|x^n)p(x^n)$ ci da varie funzioni di errore (pratiche diciamo) che possono risolvere problemi diversi in modo più o meno accurato.
+Il termine $\sum \ln(p(x^n))$ non dipende dalla rete quindi lo possiamo ignorare.
+Siamo arrivati ad una funzione di errore del tipo
+$$E = -\sum \ln (p(t^{n}|x^{n}))$$
+** Sum of squares error
+Consideriamo un problema con $c$ classi $t_k, k \in {1, \cdots, k}$ in cui le classi target $t$ ed i dati $x$ siano indipendenti (quindi i dati li possiamo assumere distribuiti secondo una *Gaussiana*), così possiamo scrivere:
+$$p(t|x) = \prod_{k=1}^{c}p(t_{k}|x)$$
+La distribuzione gaussiana implica che $t_k$ è data da una funzione deterministica di $x$ più del rumore $\varepsilon$ gaussiano, quindi:
+$$t_k = h_k(x) + \varepsilon_k$$
+Quindi $p(\varepsilon_k)$ è:
+$$p(\varepsilon_k) = \frac 1 {\sqrt{2\pi\sigma^2}} e^{-\frac {\varepsilon_k^2}{2\sigma^2}}$$
+$\varepsilon_k$ è facilmente calcolabile:
+$$\varepsilon_k = t_k - h_k(x)$$
+Quindi la probabilità delle classi di output diventa
+$$p(t_{k}|x) = \frac 1 {\sqrt{2\pi\sigma^2}} e^{-\frac {\{y_k(x;w) - t_{k}^{2}\}}{2\sigma^2}}$$
+Qui abbiamo sostituito $h_k$ con il modello $y_{k}(x;w)$.
+Ora abbiamo una funzione per l'errore:
+$$E = \frac 1 {2\sigma^{2}}\sum_{n=1}^{k=1}\sum_{k=1}^{c}\{y_k(x;w)^n - t^n_k\}^2 + Nc\ln\sigma + \frac {Nc} 2 \ln (2\pi)$$
+
+Notiamo che se conosciamo $w^*$ che  minimizziamo l'errore possiamo calcolare $\sigma^2$:
+$$\sigma^2 = \frac 1 {Nc} \sum_{n=1}^{N}\sum_{k=1}^{c}\{y_k(x^n, w^*)) - t_k\}^{2}$$
+$\sigma^2$ è proporzionale all'errore residuo della funzione di errore (somma dei quadrati) al suo minimo.
+
+
+L'errore dipende solo dai pesi quindi possiamo eliminare il secondo e terzo termine (ovvero $Nc\ln\sigma + \frac {Nc} 2 \ln (2\pi)$), questo ci riporta alla funzione di errore che abbiamo visto fino ad ora.
+$$E = \frac 1 {2}\sum_{n=1}^{k=1}\sum_{k=1}^{c}\{y_k(x;w)^n - t^n_k\}^2$$
+Ovvero
+$$E = \frac 1 {2}\sum_{n=1}^{k=1}||y_k(x;w)^n - t^n_k||^2$$
+** Root Mean Square
+$$E^{RMS} = \frac {\sum_n ||y_k(x^n, w^*) - t^n||^{2}}  {\sum_n||t^n - \bar t||^{2}}$$
+Dove $w^*$ rappresenta i pesi della *trained network*, $\bar t$ indica la media del test vector
+$$\bar t = \frac 1 {N'} \sum_{n = 1}^{N'} t^n}$$
+Questo valore è sempre limitato.
+Minimizzare questo errore comporta che la rete minimizza in base alla media del test set.
+** Problemi di classificazione
+Abbiamo visto il *mean square error* ed anche il *root mean square error* sono utili e minimizzano la probabilità di missclassificazione, però tutte le proprietà mostrate sono state estrapolate a partire da alcune assunzioni, come ad esempio che i dati abbiano una distribuzione normale $\mathcal{ N}$, in problemi di classificazione non è mai il caso, per questo occorre trovare una funzione di errore più adatta a questo tipo di problema.
+I problemi di classificazione vengono meglio descritti da una distribuzione Bernoulliana (2 classi) e Multinomiale (K classi).
+** Cross Entropy for 2 classes
+We have 2 classes $C_1$ and $C_2$, we want to compute the posterior probability:
++ $P(C_1|x)$
++ $P(C_2|x)$
+
+Se consideriamo $y = P(C_1 | x)$ allora $P(C_2|x) = 1 - y$.
+Usiamo uno schema di codifica per il target in cui $t = 1$ se appartiene alla classe $C_1$ e $t=0$ se l'input è in $C_2$, con questo schema possiamo scrivere la probabilità di osservare uno degli output come una Bernoulliana:
+$$p(t|x) = y^{t}(1 - y)^{1 - t}$$
+Con questa formula consideriamo ora la probabilità di osservare il trianing set (Ovvero la probabilità di osservare tutto il training set di fila), in altre parole calcoliamo la likelihood.
+$$\prod_n (y^n)^{t^n}(1 - y^n)^{1 - t^{n}}$$
+Come negli altri casi conviene *minimizzare il logaritmo negativo*, otteniamo così la funzione di errore della *cross-entropy*.
+$$E = -\sum_{n}\{t^{n}\ln(y^{n}) + (1 - t^{n})\ln(1 - y^{n})\}$$
+*** Proprietà della cross entropy (Per la backpropagation)
+Differenziamo l'errore rispetto all'output ottenuto $y^{n}$.
+$$\frac {\partial{E}} {\partial{y^{n}}} =  - \frac {t^{n}} {y^{n}} + \frac {(1 - t^{n})} {(1 - y^{n})}$$
+
+$$\frac {\partial{E}} {\partial{y^{n}}} =   \frac {-t^{n}(1 - y^{n}) + y^{n}(1 - t^{n})} {y^{n}{(1 - y^{n})}$$
+
+$$\frac {\partial{E}} {\partial{y^{n}}} =   \frac {-t^{n} + t^{n}y^{n} + y^{n} - t^{n}y^{n}} {y^{n}{(1 - y^{n})}$$
+
+$$\frac {\partial{E}} {\partial{y^{n}}} =  \frac {(y^{n} - t^{n})} {y^{n}(1 - y^{n})}$$
+
+Questa quantità è minimizzata quando
+$$\forall n, y^{n} = t^{n}$$
+Dato che l'output può essere visto come una probabilità possiamo usare la *logistic sigmoid* come attivazione, quindi l'errore rispetto all'attivazione è solamente:
+$$\delta^{n} = \frac {\partial{E}} {\partial{a^{n}}} = y^{n} - t^{n}$$
+*** Cosa fare se $t^{n}$ è continua?
+L'errore è minimo quando (anche nel caso in cui la variabile sia continua)
+$$E_{min} = -\sum_{n}\{t^{n}\ln(t^{n}) + (1 - t^{n})\ln(1 - t^{n})\}$$
+In questo caso abbiamo perso informazioni sulla $y^{n}$ (ovvero l'output della rete), quindi nel caso in cui $t^{n}$ continua utilizziamo la differenza tra $E$ e $E_{min}$
+$$E_{continuos} = E - E_{min}$$
+$$E_{continuos} = -\sum_{n}\{t^{n}\ln\frac{y^{n}}{t^{n}} + (1 - t^{n})\ln\frac {1 - y^{n}} {1 - t^{n}}\}$$
+
+** Cross Entropy a più classi ($c$ classi)
+Generalizzare è piuttosto semplice, in questo caso la probabilità di osservare il training set è:
+$$p(t^{n}|x^{n}) = \prod_{k=1}^{c} (y_{k}^{n})^{t^{n}}$$
+Quindi l'errore è
+$$E = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln y_{k}^{n}$$
+Che è minimo quando
+$$E_{min} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln t_{k}^{n}$$
+E sempre nel caso in cui $E$ sia continua possiamo usare la differnza con il minimo, ottenendo
+$$E_{continuos} = E - E_{min}$$
+$$E_{continuous} = - \sum_{n}\sum_{k=1}^{c}t_{k}^{n}\ln \frac {y_{k}^{n}} {t_{k}^{n}}$$
+* Chapter 7 - Parameter Optimization Algorithm [3/3]
++ [X] Section 1
++ [X] Section 4
++ [X] Section 5
+** Error surfaces
+Find the weight vector $w$ such that $E(w) = 0$ (minimize the error).
+Al variare di $w$ genera una superficie che risiede nello spazio dei pesi della rete, quindi possiamo visualizzare l'errore come una superficie.
+Come vedremo il *gradient descend* soffre di un problema di minimo locale, in altre parole possiamo capire quando abbiamo trovato un minimo per $\nabla E$ ma nessuno ci assicura che questo sia il minimo assoluto come si può vedere nell'immagine:
+[[../assets/gradient-descent-multiple-local-minimum.png]]
+Here $D$ is the global minimum and $A,B,C$ are local, we don't know on which one the gradient descent will go.
+Non esiste una forma chiusa quindi lo approssimiamo in iterazioni successive (*epoch*).
+** Optimization in practice
+In pratica possiamo ottimizzare l'apprendimento modificando:
++ come inizializziamo i pesi
++ come calcoliamo l'errore
++ come terminiamo l'apprendimento
++ quali funzioni di attivazione utilizzare
+*** Inizializzazione pesi
+Per evitare eventuali problemi di simmetria nella rete i pesi vanno inizializzati con valori casuali piccoli, abbastanza piccoli che non saturino la funzione di attivazione (il libro considera la sigmoide in questo caso).
+Usare tutti valori troppo piccoli rallenta però l'addestramento.
+*** Criterio di terminazione
+Il più semplice è limitare il numero di allenameti, di solito ci si riferisce a questa tecnica con il termine di *epoch*.
+Un'altro è quello di terminare quando la *loss* scende sotto una certa soglia o in alternativa quando per un determinato numero di epoche la rete non migliora.
+** Gradient descent
+Il criterio di aggioramento visto fino ad ora è
+$$\Delta w^{(\tau)} = -\eta \nabla E|_{w^{(\tau)}}$$
+Qui $\eta$ è il learning rate e caratterizza quanto velocemente apprende la rete, un valore troppo piccolo rallenta di molto il processo di training, dall'altra parte un valore troppo grande potrebbe far spostare l'errore da un punto ad un altro, tipicamente si sceglie un valore piccolo e poi si va di /fine tuning/  se necessario.
+*** Momentum
+Per riprendere la metafora della superficie di errore, introduciamo il *momento* che, proprio come in fisica, indica il momento di inerzia di un corpo.
+Idealmente se la nostra funzione di errore sta scendendo rapidamente il momento la spingerà ancora di più lungo la direzione in cui sta andando (in base a quanto tempo si è spostata in quella direzione), questo aiuta a superare in molti casi dei minimi locali in cui si bloccherebbe il gradient descend.
+$$\Delta w^{(\tau)} = -\eta \nabla E|_{w^{(\tau)}} + \mu \Delta w^{(\tau - 1)}$$
+Qui $\mu$ è un parametro scelto da noi, di solito viene chiamato *MOMENTUM PARAMETER* ($0 \le \mu \le 1$).
+Riassumendo il /momentum/ aiuta quando:
++ l'apprendimento oscilla
++ l'apprendimento è troppo lento
+* Chapter 8 - Pre processing and feature extractions [3/3]
++ [X] Section 1
++ [X] Section 2
++ [X] Section 5
+Tipicamente prima di allenare la rete (o utilizzarla) occorre trasformare i dati in un formato più digeribile/comodo.
+** Feature extraction
+Anzichè fornire i dati così come li ottieniamo possiamo modificarli cercando di manternere quanta più informazione possibile, ecco alcuni esempi:
++ nell'MNIST dataset anzichè usare 256x256 pixel, le immagini vengono ridotte a 28x28
++ in IRIS dataset anzichè usare tutti i dati delle iris ci si si focalizza solo sulla foglia ed il sepalo (non so cosa cazzo sia)
++ con le immagini si possono usare dei filtri per ridurre il numero di pixel (gaussian filter et simila)
+** Input normalization
+Si applica quando vogliamo normalizzare tutti gli input per avere valori simili.
+Occorre trattare ogni variabile indipendentemente, per ognuna di esse calcoliamo la media e varianza
+$$\bar x_{i} = \frac 1 N \sum_{n=1}^{N}x_{i}^{(n)}$$
+$$\sigma_{i}^{2} = \frac 1 {N -1} \sum_{n=1}^{N}(x_{i}^{(n)} - \bar x_{i}})^{2}$$
+Dove $n$ varia da $\{1, \cdots, N\}$ sulle label dei pattern.
+Definiamo ora il nuovo dataset normalizzato come
+$$\tilde x_{i}^{n} = \frac {x_{i}^{n} - \bar x_{i}^{n}} {\sigma_{i}}$$
+Queste nuove variabili hanno media $0$ e varianza $1$, quindi sono distribuiti normalemente secondo $\mathcal{N}(x_i, \mu=0, \sigma=1), i \in \{1, \cdots, N\}$.
+** Feature selection
+Nel caso abbiamo alcune variabili fortemente correlate con altre, possiamo ridurre la dimensione del dataset scartando alcune di queste.
+Per farla ultra banale
+#+begin_example
+Se una variabile che indica il tempo dice che piove non ho bisogno di un'altra variabile che mi dice se serve l'ombrello.
+La prima può servire anche per altri tipi di inferenze mentre la seconda no, quindi conviene mantenere la prima variabile.
+#+end_example

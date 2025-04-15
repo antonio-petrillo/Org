@@ -1,0 +1,12 @@
+#+title:      Bit Algorithms
+#+date:       [2024-04-24 Wed 14:07]
+#+filetags:   :algorithm:math:meta:programming:
+#+identifier: 20240424T140717
+
+* Algorithms
++ [[denote:20240424T141028][Kernighan population count]]
++ [[denote:20240429T150254][Is exact power of 2]]
++ [[denote:20240429T151015][Get next power of 2]]
++ [[denote:20240429T152157][Fast logarithm of 2]]
+* Resources
++ [[https://graphics.stanford.edu/~seander/bithacks.html][Bit Twiddling Hacks]]

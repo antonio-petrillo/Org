@@ -1,0 +1,46 @@
+#+title:      Fast logarithm of 2
+#+date:       [2024-04-29 Mon 15:21]
+#+filetags:   :algorithm:math:programming:
+#+identifier: 20240429T152157
+
+* Algorithm
+#+begin_src c
+int fast_log_2(int n) {
+  int offset = 0;
+  while(n & (n - 1)) {
+	offset |= 1;
+	n &= n - 1;
+  }
+  return popcount((n << offset) - 1);
+}
+#+end_src
+See [[denote:20240424T141028][Kernighan population count]] for the =popcount= algorithm.
+
+** Even shorter
+We can use the [[denote:20240429T151015][Get next power of 2]] and write the following oneliner.
+#+begin_src c
+int fast_log_2(int n) {
+  return popcount(next_power_of_2(n) - 1);
+}
+#+end_src
+* Note
+This algorithm exploit the binary representation of a number $n$.
+If $n$ is an exact power of $2$, the logarithm correspond to the number of bit shifted from the Least Significant Bit.
+Here the trick is to get the next power of $2$ and count the bit set to $1$ in it predecessor.
+Note that the predecessor of a power of $2$ it is composed of only bits set to $1$.
+| Decimal | Binary |
+|---------+--------|
+|       0 |   0000 |
+|       1 |   0001 |
+|       2 |   0010 |
+|       3 |   0011 |
+|       4 |   0100 |
+|       5 |   0101 |
+|       6 |   0110 |
+|       7 |   0111 |
+|       8 |   1000 |
+* Time Complexity
+Considering a /word/ of length $w$:
++ Worst case, $O(w)$.
++ Best case, $O(1)$, the input was already a power of $2$.
++ Average, since the main part of the algorithm is the same as [[denote:20240424T141028][Kernighan population count]], $O(\log_{2}(w))$.

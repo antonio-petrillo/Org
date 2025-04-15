@@ -1,0 +1,27 @@
+#+title:      Max Flow
+#+date:       [2025-03-10 Mon 20:04]
+#+filetags:   :algorithm:
+#+identifier: 20250310T200437
+
+* Problem
+Data una rete/network $N = (V, E, s, t, c)$, dove $G=(V,E)$ è un grafo, $s,t$ sono vertici e $c$ sono i costi associati agli archi.
+** Definizione di *flow*:
+Assegnare ad ogni nodo un peso $f(i,j)$ tale che la somma dei pesi in input sia uguale a quella dei pesi in output.
+** Algoritmo (Ford-Fulkerson) 
+Data un Network $N = (V, E, s, t, c)$:
+1. prendo un percorso casuale nella rete
+2. di questo percorso prendo il costo minore tra gli archi $c(i,j)$
+3. Aggiorno la rete in $N^' = (V, E^', s, t, c^')$ dove:
+   + Rimuovo da $E$ tutti gli archi per cui il peso scelto $f(i,j) = c(i, j)$ 
+   + Se $f(i,j) > 0 \land f(i, j) < c(i, j)$ aggiungo in $E$ un arco inverso $(j, i)$ con peso $c'(j, i) = f(j, i)$
+   + Ai costi lungo il percorso scelto sottraggo il peso /che passa/ sull'arco $c^'(i, j) = c(i, j) - f(i, j)$
+     
+4. Se nella rete $N^'$ esiste un percorso da $s$ a $t$ può essere ancora migliorata 
+
+Il tempo è circa $O(n³C)$ (una ricerca per ogni $O(n²)$ per ogni nodo $n$) dove $C$ rappresenta la capacità massima di un arco.
+L'encoding di $C$ può essere esponenziale e rendere l'algoritmo inutile.
+Ovvero $C$ viene rappresentato in una base $b > 1$, ad esempio consideriamo $b = 2$ quindi binario, $m = \log_2(C)$ è il numero di bit necessari.
+Con $m$ bit posso rappresentare $2^m$ valori (in generale $b^m$), se consideriamo una rete in cui ad ogni iterazione il flusso aumenta sempre di $1$ per raggiungere il massimo occorrono un numero esponenziale di iterazioni.
+Questo algoritmo è falsamente polinomiale, anche detto *Pseudo Polinomiale*.
+
+Si può dimostrare che se si usa una *BFS* il costo diventa semplicemente $O(n³)$, ignorando quindi $C$.

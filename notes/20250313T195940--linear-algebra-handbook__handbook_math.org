@@ -1,0 +1,69 @@
+#+title:      Linear Algebra Handbook
+#+date:       [2025-03-13 Thu 19:59]
+#+filetags:   :handbook:math:
+#+identifier: 20250313T195940
+
+* Multiplication
+$$C = AB \iff c_{i,j}=\sum_k{a_{i,k}b_{k,j}}$$
+
+* Distribution
+$$A(B + C) = AB + AC$$
+
+* Associativity
+$$A(BC) = (AB)C$$
+
+* Transpose + Property
+$$(AB)^T = B^TA^T$$
+
+* Identity
+$$\forall x \in \mathbb{R}, I_nx = x$$
++ $A^{-1}A= I$
++ $AA^{-1}= I$
+
+* Solve linear systems
+1. $Ax = b$
+2. $A^{-1}Ax=A^{-1}b$
+3. $Ix = A^{-1}b$
+4. $x =  A^{-1}b$
+
+* Linear combination
++ $Ax = \sum_i{x_iA_{.,i}}$
+
+* Norms
+Una norma è una funzione $norm : R^n \rightarrow R^+$ con le seguenti proprietà:
++ $f(x) = 0 \implies x = 0$
++ $f(x + y) \le f(x) + f(y)$ diseguaglianza triangolare
++ $\forall \alpha \in \mathbb{R}: f(\alpha x) = |\alpha| f(x)$ 
+
+Una funzione con queste proprietà si può considerare come la distanza fra 2 punti.
+** $L^p$ norm
+$$||x||_p = (\sum_i{|x_i|^p})^{\frac 1 p}$$
+** Norma euclidea $p=2$
+$$||x||_p = (\sum_i{|x_i|^2})^{\frac 1 2}$$
+** Max norm
+$$||x||_{\infty} = \max_i|x_i|$$
+** Frobenius norm
+$$||A||_F= \sqrt{\sum_{i,j} {a_{i,j}^2}}$$
+* Dot product
+$$x^Ty = \sum_i{x_iy_i}$$
+Il dot product si può definire in termini di norma euclidee: $x^Ty = ||x||_2||y||_y cos(\theta)$, $\theta$ è l'angolo compreso fra $x$ e $y$
+
+* Matrici speciali 
+** Matrici Simmetriche (Symmetric)
+$$A = A^T$$
+** Matrici Ortogonali (Orthogonal)
+$$A^TA=AA^T = I$$
+Quindi l'inverso per le matrici ortogonali è la trasposta $A^T = A^{-1}$.
+Le righe e le colonne sono tutte ortonormali.
+
+* Autovalori e Autovettori (Eigenvector and Eigenvalues)
+Il vettore $v$ è un autovettore se $Av = \lambda v$ dove $\lambda$ è detto autovalore.
+Se $v$ è un autovettore lo è anche ogni vettore $\forall s \in \mathbb{R}, sv$, per questo ci si può concentrare solo sugli autovettori unitari.
+Una matrice $A$ si può decomporre in autovettori e autovalori (/eigendecomposition/) ${v^{(1)}, \cdots, v^{(n)}}$ e ${\lambda^{(1)}, \cdots, \lambda^{(n)}}$.
+$$A = Vdiag(\lambda)V^{-1}$$
+Dove $\lambda$ è un vettore di autovalori.
+
+* Traccia (Trace) 
+$$Tr(A) = \sum_i{a_{i,i}}$$
+Implementare la norma di Frobenius con la *Trace*:
+$$||A||_F = \sqrt{Tr(A^TA)}$$

@@ -1,0 +1,33 @@
+#+title:      Normal Forms
+#+date:       [2024-07-02 Tue 16:11]
+#+filetags:   :database:
+#+identifier: 20240702T161126
+
+* First Normal Form (1NF)
++ Each table has a unique primary key
++ A row cannot have a nested table as its value
+
+* Second Normal Form (2NF)
++ Inherit *1NF*
++ All columns that are not part of the /primary key/ are dependant on the _entire_ primary key
+
+** Note
++ 2NF may cause performance issue
++ Rule of thumb:
+  1. Implement 2NF
+  2. De-normalize only for performance reason
+
+* Third Normal Form (3NF)
++ Inherit *2NF*
++ All columns that aren't part of the /primary key/ are dependant _only_ on the primary key.
+
+** Note
++ Same as 2NF
+
+* Boyce-Codd Normal Form (BCNF or 3.5NF)
++ Inherit *3NF*
++ A column that's part of a primary key can not be entirely dependent on a column that's not part of that primary key
+
+** Note
++ Same as 3NF
++ Can happen when there are multiple candidate keys and some column are overlapping (overlapping primary keys)

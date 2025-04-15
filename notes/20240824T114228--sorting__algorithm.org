@@ -1,0 +1,45 @@
+#+title:      sorting
+#+date:       [2024-08-24 Sat 11:42]
+#+filetags:   :algorithm:
+#+identifier: 20240824T114228
+
+* Insertion Sort
+** Steps:
+1. Iterate until the end of the sequence, start from the second element
+2. Iterate backwards until:
+   + reach the first position
+   + the element in the current position is smaller than the previous
+3. Swap the element with the predecessor
+** Code:
+#+begin_src odin
+package main
+import "core:fmt"
+import "core:testing"
+
+insertion_sort :: proc(datas: []int) {
+    i, j: int
+    for  i = 1; i < len(datas); i = i + 1 {
+        for j > 0 && (datas[j] < datas[j - 1]) {
+            datas[j], datas[j - 1] = datas[j - 1], datas[j]
+        }
+    }
+}
+
+@(test)
+test_insertion_sort :: proc(t: ^testing.T) {
+
+    arr := [?]int{5, 4, 3, 2, 1, 0}
+    insertion_sort(arr[:])
+
+    size := len(arr)
+    for el, idx in arr {
+        testing.expect_value(t, el, size - 1 - idx)
+    }
+
+}
+#+end_src
+** Notes
+The *Heap sort* algorithm is a generalized version of insertion sort.
+** Complexity
++ Time: $O(n)$
++ Space: $O(n)$
